@@ -1,0 +1,69 @@
+.game {
+  text-align: center;
+  padding: 2rem;
+}
+
+.score {
+  margin-top: 30px;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.breed {
+  color: #8e44ad;
+  text-transform: capitalize;
+}
+
+.dog-grid {
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dog-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 3px solid transparent;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.dog-image:hover {
+  transform: scale(1.05);
+  border-color: #8e44ad;
+}
+.lives {
+  margin: 30px;
+  font-size: 1.2rem;
+  color: crimson;
+}
+
+.game-over {
+  font-size: 2rem;
+  color: darkred;
+}
+
+.restart-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #8e44ad;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.restart-btn:hover {
+  transform: scale(1.1);
+}
+@media (max-width: 450px) {
+  .dog-image {
+    min-width: 280px;
+    min-height: 280px;
+  }
+}
