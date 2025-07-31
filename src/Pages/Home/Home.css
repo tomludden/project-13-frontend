@@ -7,6 +7,17 @@
   height: 400px;
   border-radius: 10px;
   object-fit: cover;
-
   margin-top: 50px;
+}
+
+@media (max-width: 500px) {
+  .home-img {
+    width: 300px;
+    height: 300px;
+    margin: auto;
+  }
+  .home h1 {
+    font-size: 30px;
+    margin-bottom: 50px;
+  }
 }

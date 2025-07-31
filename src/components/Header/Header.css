@@ -24,3 +24,10 @@ header a {
 header a.active {
   border-bottom: 3px solid black;
 }
+
+@media (max-width: 500px) {
+  header a {
+    font-weight: 400;
+    font-size: 16px;
+  }
+}
