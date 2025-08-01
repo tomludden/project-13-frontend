@@ -142,7 +142,7 @@ const Game = () => {
         <>
           <p className='score'>Score: {score}</p>
           <p className='lives'>❤️ Lives: {lives}</p>
-          {!gameOver && <p className='timer'>⏱ Time left: {timer}s</p>}
+          {!gameOver && <p className='timer'>⏳ Time left: {timer}s</p>}
 
           {gameOver ? (
             <>
