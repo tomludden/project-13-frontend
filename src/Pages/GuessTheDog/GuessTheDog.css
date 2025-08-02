@@ -11,7 +11,7 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 40%;
+  margin-top: 30svh;
 }
 
 .start-btn:hover {
@@ -24,6 +24,21 @@
   margin-bottom: 1rem;
 }
 
+.score-num {
+  color: red;
+}
+
+.heart {
+  color: black;
+}
+
+.time {
+  color: black;
+}
+
+.live {
+  color: black;
+}
 .breed {
   color: #8e44ad;
   text-transform: capitalize;

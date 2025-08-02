@@ -1,15 +1,12 @@
-import { useState } from 'react'
+import { useCallback } from 'react'
 
 const getBreedFromUrl = (url) => {
   const match = url.match(/breeds\/([^/]+)\//)
   return match ? match[1].replace('-', ' ') : 'Unknown'
 }
 
-export function useDogGameImages() {
-  const [dogImages, setDogImages] = useState([])
-  const [correctBreed, setCorrectBreed] = useState('')
-
-  const fetchDogs = async () => {
+export const useDogImages = (dispatch) => {
+  const fetchDogs = useCallback(async () => {
     const newImages = []
 
     while (newImages.length < 3) {
@@ -25,13 +22,11 @@ export function useDogGameImages() {
     const correctIndex = Math.floor(Math.random() * 3)
     const correct = getBreedFromUrl(newImages[correctIndex])
 
-    setDogImages(newImages)
-    setCorrectBreed(correct)
-  }
+    dispatch({
+      type: 'SET_DOGS',
+      payload: { images: newImages, correctBreed: correct }
+    })
+  }, [dispatch])
 
-  return {
-    dogImages,
-    correctBreed,
-    fetchDogs
-  }
+  return fetchDogs
 }
