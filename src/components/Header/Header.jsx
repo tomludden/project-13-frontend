@@ -1,7 +1,9 @@
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import './Header.css'
 
-const Header = () => {
+const Header = React.memo(() => {
+  console.log('im the header')
   return (
     <header>
       <nav>
@@ -24,6 +26,6 @@ const Header = () => {
       </nav>
     </header>
   )
-}
+})
 
 export default Header

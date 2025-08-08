@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import './FunDogFacts.css'
+import ChatWidget from '/src/components/chatButton/chatButton'
 
 const FunDogFacts = () => {
   const [fact, setFact] = useState('')
@@ -87,6 +88,7 @@ const FunDogFacts = () => {
           </div>
         </div>
       )}
+      <ChatWidget />
     </div>
   )
 }

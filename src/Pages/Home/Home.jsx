@@ -1,5 +1,6 @@
 import React from 'react'
 import './Home.css'
+import ChatWidget from '/src/components/chatButton/chatButton'
 
 const Home = () => {
   return (
@@ -7,9 +8,10 @@ const Home = () => {
       <h1>Welcome Dog Lovers!</h1>
       <img
         className='home-img'
-        src='/public/assets/home-dog-image.jpg'
+        src='/assets/home-dog-image.jpg' // assuming public/assets is correct
         alt='Cute Dog'
       />
+      <ChatWidget />
     </div>
   )
 }
