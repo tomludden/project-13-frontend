@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom'
 import './Header.css'
 
 const Header = React.memo(() => {
-  console.log('im the header')
   return (
     <header>
       <nav>
