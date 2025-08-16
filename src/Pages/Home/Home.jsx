@@ -1,6 +1,5 @@
 import React from 'react'
 import './Home.css'
-import ChatWidget from '/src/components/chatButton/chatButton'
 
 const Home = () => {
   return (
@@ -11,7 +10,6 @@ const Home = () => {
         src='/assets/home-dog-image.jpg' // assuming public/assets is correct
         alt='Cute Dog'
       />
-      <ChatWidget />
     </div>
   )
 }

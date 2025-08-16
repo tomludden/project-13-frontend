@@ -1,44 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import './FunDogFacts.css'
-import ChatWidget from '/src/components/chatButton/chatButton'
+import { useDogFact } from '../../Hooks/useDogFact'
+import { useDogImage } from '../../Hooks/useDogImage'
 
 const FunDogFacts = () => {
-  const [fact, setFact] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [dogImage, setDogImage] = useState('')
-  const [imageLoading, setImageLoading] = useState(false)
+  const { fact, loading, fetchFact } = useDogFact()
+  const { dogImage, fetchDogImage, setDogImage } = useDogImage()
   const [searchParams, setSearchParams] = useSearchParams()
   const showDetails = searchParams.get('showDetails') === 'true'
-
-  const fetchFact = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('https://dogapi.dog/api/v2/facts')
-      const data = await res.json()
-      const body = data.data?.[0]?.attributes?.body
-      setFact(body || 'No fact found.')
-    } catch (error) {
-      console.error('Error fetching fact:', error)
-      setFact('Could not fetch dog fact right now.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const fetchDogImage = async () => {
-    setImageLoading(true)
-    try {
-      const res = await fetch('https://dog.ceo/api/breeds/image/random')
-      const data = await res.json()
-      setDogImage(data.message)
-    } catch (error) {
-      console.error('Error fetching image:', error)
-      setDogImage('')
-    } finally {
-      setImageLoading(false)
-    }
-  }
 
   const openPopup = () => {
     setSearchParams({ showDetails: 'true' })
@@ -50,14 +20,10 @@ const FunDogFacts = () => {
   }
 
   useEffect(() => {
-    fetchFact()
-  }, [])
-
-  useEffect(() => {
     if (showDetails) {
       fetchDogImage()
     }
-  }, [showDetails])
+  }, [showDetails, fetchDogImage])
 
   return (
     <div className='dog-fact-container'>
@@ -78,17 +44,12 @@ const FunDogFacts = () => {
             </span>
             <h3>Fun Dog Fact</h3>
             <p>{fact}</p>
-            {imageLoading ? (
-              <p>Loading image...</p>
-            ) : (
-              dogImage && (
-                <img src={dogImage} alt='Random Dog' className='dog-image' />
-              )
+            {dogImage && (
+              <img src={dogImage} alt='Random Dog' className='dog-image' />
             )}
           </div>
         </div>
       )}
-      <ChatWidget />
     </div>
   )
 }

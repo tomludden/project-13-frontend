@@ -1,8 +1,7 @@
 import React, { useEffect, useReducer } from 'react'
 import './GuessTheDog.css'
-import { useDogImages } from '/src/components/useDogImages.js'
-import { useGameTimer } from '/src/components/useGameTimer.js'
-import ChatWidget from '/src/components/chatButton/chatButton'
+import { useDogImages } from '/src/Hooks/useDogImages.js'
+import { useGameTimer } from '/src/Hooks/useGameTimer.js'
 
 const initialState = {
   dogImages: [],
@@ -124,7 +123,6 @@ const Game = () => {
           )}
         </>
       )}
-      <ChatWidget />
     </div>
   )
 }
