@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
-import { AuthContext } from '../../components/AuthContext.jsx'
+import { AuthContext } from '../AuthContext.jsx'
 import { FaBars } from 'react-icons/fa'
 import './hamburger.css'
 

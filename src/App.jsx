@@ -10,6 +10,7 @@ import DogLoader from './components/DogLoader/DogLoader.jsx'
 import SuitableDog from './Pages/SuitableDog/SuitableDog.jsx'
 import Shop from './Pages/Shop/Shop.jsx'
 import Hamburger from './components/hamburger/Hamburger.jsx'
+
 import RegisterPage from './Pages/register/register.jsx'
 import LoginPage from './Pages/login/login.jsx'
 import FavouritesPage from './Pages/FavouritesPage/FavouritesPage.jsx'
