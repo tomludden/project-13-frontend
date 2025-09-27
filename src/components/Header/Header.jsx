@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import './Header.css'
 import { AuthContext } from '../../components/AuthContext.jsx'
-import Hamburger from '../hamburger/Hamburger.jsx'
+import Hamburger from '../Hamburger/Hamburger.jsx'
 import { FaHeart, FaUser } from 'react-icons/fa'
 
 const Header = React.memo(() => {

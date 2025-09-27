@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AuthContext } from '../AuthContext.jsx'
 import { FaBars } from 'react-icons/fa'
-import './hamburger.css'
+import './Hamburger.css'
 
 const Hamburger = () => {
   const { user, logout } = useContext(AuthContext)

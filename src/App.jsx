@@ -9,7 +9,7 @@ import ChatWidget from './components/chatButton/chatButton.jsx'
 import DogLoader from './components/DogLoader/DogLoader.jsx'
 import SuitableDog from './Pages/SuitableDog/SuitableDog.jsx'
 import Shop from './Pages/Shop/Shop.jsx'
-import Hamburger from './components/hamburger/Hamburger.jsx'
+import Hamburger from './components/Hamburger/Hamburger.jsx'
 
 import RegisterPage from './Pages/register/register.jsx'
 import LoginPage from './Pages/login/login.jsx'
