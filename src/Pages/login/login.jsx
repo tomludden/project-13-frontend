@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../components/AuthContext'
-import { showPopup } from '../../components/ShowPopup/showPopup'
+import { showPopup } from '../../components/ShowPopup/ShowPopup'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import { apiFetch } from '../../components/apiFetch'
 import './login.css'

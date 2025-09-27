@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { AuthContext } from '../../components/AuthContext'
-import { useFavourites } from '../../hooks/useFavourites'
+import { useFavourites } from '../../Hooks/useFavourites'
 import ProductCard from '../../components/ProductCard/ProductCard'
 import DogLoader from '../../components/DogLoader/DogLoader'
 import './FavouritesPage.css'

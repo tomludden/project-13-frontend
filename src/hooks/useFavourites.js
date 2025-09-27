@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useContext } from 'react'
-import { showPopup } from '../components/ShowPopup/showPopup'
+import { showPopup } from '../components/ShowPopup/ShowPopup'
 import { AuthContext } from '../components/AuthContext'
 import { apiFetch } from '../components/apiFetch'
 

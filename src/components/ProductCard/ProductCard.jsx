@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react'
 import mojs from '@mojs/core'
 import { AuthContext } from '/src/components/AuthContext'
-import { showPopup } from '../ShowPopup/showPopup.js'
+import { showPopup } from '../ShowPopup/ShowPopup.js'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import './ProductCard.css'
 

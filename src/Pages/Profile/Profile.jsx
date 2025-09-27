@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { AuthContext } from '../../components/AuthContext.jsx'
 import './Profile.css'
-import { showPopup } from '../../components/ShowPopup/showPopup.js'
+import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
 import PasswordInput from '../../components/PasswordInput/PasswordInput.jsx'
 import { useNavigate } from 'react-router-dom'
 import { apiFetch } from '../../components/apiFetch.js'

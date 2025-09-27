@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 import { AuthContext } from './AuthContext'
-import { showPopup } from './ShowPopup/showPopup'
+import { showPopup } from './ShowPopup/ShowPopup'
 
 const ProtectedRoute = ({ children, requireAdmin = false }) => {
   const { user } = useContext(AuthContext)
