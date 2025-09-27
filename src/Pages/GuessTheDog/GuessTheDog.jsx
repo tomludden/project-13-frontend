@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react'
 import './GuessTheDog.css'
 import { DogImages } from '../../components/DogImages.js'
 import { GameTimer } from '../../components/GameTimer.js'
-import { gameReducer, initialState } from '../../reducers/gameReducer.jsx'
+import { gameReducer, initialState } from '../../Reducers/gameReducer.jsx'
 
 const GuessTheDog = () => {
   const [state, dispatch] = useReducer(gameReducer, initialState)
