@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export const useGameTimer = ({
+export const GameTimer = ({
   started,
   gameOver,
   timer,

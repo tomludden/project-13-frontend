@@ -1,0 +1,25 @@
+.popup-message {
+  position: fixed;
+  top: 65%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  background: #423838;
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  z-index: 9999;
+  opacity: 0.9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeOut 1s ease-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+}

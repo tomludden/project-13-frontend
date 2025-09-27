@@ -1,0 +1,224 @@
+.cardDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 20px;
+}
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 30px;
+}
+
+.dogCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  justify-content: space-evenly;
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.42);
+  border-bottom: 1.5px solid rgb(6, 5, 5);
+}
+.dogCard:hover {
+  background-color: #e0e0e0;
+  width: 300px;
+  border-radius: 10px;
+}
+.resultsText {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+.popup-content h2 {
+  text-align: center;
+  font-weight: 300;
+  font-size: 28px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.popup-content p {
+  padding: 10px;
+}
+
+.close-btn:hover {
+  color: var(--accent-color);
+}
+
+.dogImgLarge {
+  width: 100%;
+  height: auto;
+  max-height: 270px;
+  object-fit: cover;
+  margin: 15px 0;
+  border-radius: 8px;
+}
+
+.popup-content {
+  transform: scale(0.8);
+  opacity: 0;
+  animation: popupFadeIn 0.3s forwards;
+}
+
+@keyframes popupFadeIn {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  left: 15px;
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+.close-btn:hover {
+  transform: scale(1.1);
+  color: var(--accent-color);
+}
+.dogImg {
+  width: 260px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.dogName {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+.cardDiv > div:hover {
+  transform: scale(1.1);
+}
+.questionnaire {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 90vh;
+  width: 100%;
+  gap: 15px;
+}
+.questionnaire > div {
+  display: flex;
+  justify-content: center;
+}
+.questionnaire h2 {
+  padding-top: 30px;
+}
+.options {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.optionInput {
+  width: 280px;
+  padding: var(--button-padding);
+  border: 0.5px solid var(--input-border-color);
+  cursor: pointer;
+  border-radius: var(--button-border-radius);
+  background-color: var(--button-color);
+}
+.optionInput:hover {
+  border: 1.5px solid #8e44ad;
+}
+.questionnaire-back-btn {
+  width: 120px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  padding: var(--button-padding);
+  border: 0.5px solid var(--button-border-color);
+  cursor: pointer;
+  border-radius: var(--button-border-radius);
+  background-color: var(--button-color);
+}
+.questionnaire-back-btn:hover {
+  border: 1.5px solid var(--button-hover-border-color);
+}
+.cardDiv {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  margin-top: 20px;
+}
+.repeatButton {
+  width: 120px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  padding: var(--button-padding);
+  border: 0.5px solid var(--button-border-color);
+  cursor: pointer;
+  border-radius: var(--button-border-radius);
+  background-color: var(--button-color);
+}
+.repeatButton:hover {
+  border: 1.5px solid var(--button-hover-border-color);
+  transform: scale(1.05);
+}
+.repeat {
+  text-align: center;
+}
+.dogImgLarge {
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.42);
+  border-bottom: 2px solid rgb(6, 5, 5);
+}
+.dogImgLarge button.questionnaire-button {
+  width: 120px;
+  padding: var(--button-padding);
+  border: 0.5px solid var(--button-border-color);
+  cursor: pointer;
+  border-radius: var(--button-border-radius);
+  background-color: var(--button-color);
+}
+.dogImgLarge .questionnaire-button:hover {
+  border: 1.5px solid var(--button-hover-border-color);
+  transform: scale(1.05);
+}
+@media (max-width: 580px) {
+  .popup-content {
+    max-width: 90%;
+  }
+}

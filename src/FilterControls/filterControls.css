@@ -1,0 +1,40 @@
+.filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+.filter select,
+.filter input {
+  padding: var(--button-padding);
+  border: 1px solid var(--button-border-color);
+  border-radius: var(--button-border-radius);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  width: 150px;
+}
+
+.filter select:hover,
+.filter input:hover {
+  border-color: var(--button-hover-border-color);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.filter button {
+  padding: var(--button-padding);
+  background-color: var(--fill-button-color);
+  color: var(--fill-button-text);
+  font-size: 14px;
+  border: none;
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.filter button:hover {
+  background-color: var(--fill-button-hover-color);
+  transform: scale(1.05);
+}

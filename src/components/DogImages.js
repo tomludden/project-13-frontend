@@ -5,7 +5,7 @@ const getBreedFromUrl = (url) => {
   return match ? match[1].replace('-', ' ') : 'Unknown'
 }
 
-export const useDogImages = (dispatch) => {
+export const DogImages = (dispatch) => {
   const fetchDogs = useCallback(async () => {
     const newImages = []
 

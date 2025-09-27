@@ -7,6 +7,24 @@
   list-style: none;
   text-decoration: none;
   font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+}
+
+:root {
+  --background-color: rgb(234, 234, 234);
+  --text-color: rgb(12, 11, 11);
+  --header-color: rgba(255, 255, 255, 0.95);
+  --accent-color: #8e44ad;
+  --input-border-color: #cfc1c1;
+  --button-color: #fff;
+  --button-border-color: #827777;
+  --button-hover-border-color: #8e44ad;
+  --button-border-radius: 6px;
+  --button-padding: 8px 12px;
+  --fill-button-color: #8e44ad;
+  --fill-button-text: #fff;
+  --fill-button-hover-color: #793a94;
+  --alt-card-color: #e3dee4;
 }
 
 body {

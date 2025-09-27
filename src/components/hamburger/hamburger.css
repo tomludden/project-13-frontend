@@ -1,0 +1,137 @@
+.hamburger-btn {
+  display: none;
+}
+
+.hamburger-menu {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .hamburger-btn {
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 1100;
+    position: fixed;
+    top: 20px;
+    right: 30px;
+  }
+
+  .hamburger-btn span {
+    height: 3px;
+    width: 25px;
+    background: #333;
+    margin-bottom: 4px;
+    border-radius: 3px;
+  }
+  .hamburger-btn:hover {
+    transform: scale(1.1);
+    color: var(--accent-color);
+  }
+
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: -250px;
+    height: fit-content;
+    width: 190px;
+    border-radius: 10px;
+    margin-top: 50px;
+    padding-bottom: 15px;
+    background: #fff;
+    list-style: none;
+    transition: right 0.3s ease;
+    z-index: 1050;
+  }
+
+  .hamburger-menu.open {
+    right: 0;
+  }
+  .hamburger-menu.open a {
+    color: black;
+  }
+  .hamburger-menu.open a:active {
+    color: #8e44ad;
+    background-color: var(--button -color);
+  }
+  .hamburger-menu.open a:hover {
+    color: #8e44ad;
+  }
+  .hamburger-menu li {
+    margin: 20px 0;
+  }
+
+  .close-btn-hamburger:hover {
+    transform: scale(1.1);
+    color: var(--accent-color);
+  }
+
+  .nav-list a {
+    color: black;
+  }
+  .nav-list a:active {
+    color: #8e44ad;
+    border-bottom: 1px solid black;
+  }
+  .nav-list a:hover {
+    color: #8e44ad;
+    border-bottom: 1px solid black;
+  }
+
+  body.menu-open {
+    overflow-x: hidden;
+
+    .logout-btn,
+    .header-btn {
+      width: 100px;
+      padding: var(--button-padding);
+      border: 0.5px solid var(--button-border-color);
+      border-radius: var(--button-border-radius);
+      cursor: pointer;
+      background-color: var(--button-color);
+      transition: all 0.2s ease;
+    }
+    .logout-btn:hover,
+    .header-btn:hover {
+      border: 1.5px solid var(--button-hover-border-color);
+      transform: scale(1.05);
+    }
+
+    .hamburger-menu.open {
+      right: 0;
+    }
+
+    .close-btn-hamburger {
+      position: absolute;
+      margin: 20px;
+      background-color: transparent;
+      border: none;
+      top: -40px;
+      left: -20px;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-color, #333);
+      transition: transform 0.2s ease;
+    }
+
+    .close-btn-hamburger:hover {
+      transform: scale(1.1);
+      color: var(--accent-color);
+    }
+
+    .hamburger-menu a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .hamburger-menu a:hover {
+      color: var(--accent-color);
+      border-bottom: 1px solid black;
+    }
+  }
+}

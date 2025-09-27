@@ -1,10 +1,12 @@
 .dog-fact-container {
-  background-color: #cdccc9;
+  background-color: var(--alt-card-color);
   padding: 1.5rem;
+  width: 90%;
   border-radius: 10px;
+  border: 1px solid var(--button-border-color);
   text-align: center;
-  margin-top: 2rem;
-  box-shadow: 10px 10px 42px -9px rgba(0, 0, 0, 0.75);
+  margin: auto;
+  margin-top: 100px;
 }
 
 .dog-fact {
@@ -13,58 +15,20 @@
   color: #333;
 }
 
-.new-fact-btn {
-  padding: 0.5rem 1rem;
-  margin-right: 20px;
-  background-color: #8e44ad;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.new-fact-btn:hover {
-  transform: scale(1.1);
-}
-
+.new-fact-btn,
 .fact-details-btn {
-  padding: 0.5rem 1rem;
-  margin-left: 20px;
-  background-color: #c87b32;
-  color: white;
+  padding: var(--button-padding);
+  margin: 0px 20px;
+  background-color: var(--fill-button-color);
+  color: var(--fill-button-text);
   border: none;
-  border-radius: 5px;
+  border-radius: var(--button-border-radius);
   cursor: pointer;
 }
 
+.new-fact-btn:hover,
 .fact-details-btn:hover {
   transform: scale(1.1);
-}
-
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.popup-content {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  background: white;
-  padding: 20px;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  border-radius: 8px;
-  position: relative;
 }
 
 .dog-image {
@@ -74,12 +38,17 @@
   border-radius: 12px;
 }
 
-.close-btn {
+.close-btn-popup {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
+  top: 15px;
+  left: 15px;
+  font-size: 30px;
   cursor: pointer;
+}
+
+.close-btn-popup:hover {
+  transform: scale(1.2);
+  color: var(--accent-color);
 }
 
 @media (max-width: 425px) {

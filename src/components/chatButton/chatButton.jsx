@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { MessageSquare } from 'lucide-react'
 import './chatButton.css'
@@ -7,6 +7,7 @@ export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const { register, handleSubmit, reset } = useForm()
+  const panelRef = useRef(null)
 
   const onSubmit = (data) => {
     setIsSubmitted(true)
@@ -16,6 +17,24 @@ export default function ChatWidget() {
       setIsOpen(false)
     }, 3000)
   }
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (panelRef.current && !panelRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
 
   return (
     <div className='chat-widget-root'>
@@ -30,7 +49,12 @@ export default function ChatWidget() {
       )}
 
       {isOpen && (
-        <div className='chat-panel' role='dialog' aria-modal='true'>
+        <div
+          ref={panelRef}
+          className='chat-panel'
+          role='dialog'
+          aria-modal='true'
+        >
           {isSubmitted ? (
             <div className='chat-success'>
               <p className='chat-success-title'>Message received</p>

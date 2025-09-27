@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-export function useDogImage() {
+export function DogImage() {
   const [dogImage, setDogImage] = useState('')
 
   const fetchDogImage = useCallback(async () => {
@@ -8,8 +8,7 @@ export function useDogImage() {
       const res = await fetch('https://dog.ceo/api/breeds/image/random')
       const data = await res.json()
       setDogImage(data.message)
-    } catch (error) {
-      console.error('Error fetching image:', error)
+    } catch {
       setDogImage('')
     }
   }, [])

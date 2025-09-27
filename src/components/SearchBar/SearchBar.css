@@ -1,0 +1,32 @@
+.search-bar {
+  position: relative;
+  width: 80%;
+  max-width: 400px;
+  margin: 20px;
+  margin: auto;
+}
+
+.search-bar input {
+  width: 80%;
+  display: flex;
+  margin: auto;
+  padding: 8px 30px 8px 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+.search-bar .clear-search {
+  position: absolute;
+  right: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 25px;
+  color: #999;
+  transition: color 0.2s;
+}
+
+.search-bar .clear-search:hover {
+  color: #333;
+}
