@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { MessageSquare } from 'lucide-react'
-import './chatButton.css'
+import './ChatButton.css'
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)

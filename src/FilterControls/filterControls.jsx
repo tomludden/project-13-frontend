@@ -1,5 +1,5 @@
 import React from 'react'
-import './filterControls.css'
+import './FilterControls.css'
 
 const FilterControls = ({
   size,

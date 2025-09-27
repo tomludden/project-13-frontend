@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../components/AuthContext'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import { showPopup } from '../../components/ShowPopup/ShowPopup'
-import './register.css'
+import './Register.css'
 import { apiFetch } from '../../components/apiFetch'
 
 const RegisterPage = () => {

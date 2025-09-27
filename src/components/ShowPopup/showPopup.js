@@ -1,4 +1,4 @@
-import './showPopup.css'
+import './ShowPopup.css'
 
 export function showPopup(message) {
   const popup = document.createElement('div')
