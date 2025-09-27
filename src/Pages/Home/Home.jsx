@@ -21,7 +21,7 @@ const Home = () => {
 
       <img
         className='home-img'
-        src='./public/home-dog-image.jpg'
+        src='/src/images/home-dog-image.jpg'
         alt='Cute Dog'
       />
 
