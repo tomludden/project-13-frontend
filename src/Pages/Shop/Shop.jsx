@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { AuthContext } from '../../components/AuthContext.jsx'
 import { useProducts } from '../../hooks/useProducts'
-import { useFilters } from '../../Hooks/useFilters'
+import { useFilters } from '../../hooks/useFilters'
 import FilterControls from '../../FilterControls/filterControls.jsx'
 import { useFavourites } from '../../hooks/useFavourites'
 import { usePagination } from '../../hooks/usePagination'
