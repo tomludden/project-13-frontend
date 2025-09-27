@@ -1,6 +1,6 @@
 import React from 'react'
 import './DogLoader.css'
-import dogIcon from '../../assets/dog1.png'
+import dogIcon from './public/dog1.png'
 
 const DogLoader = () => {
   return (

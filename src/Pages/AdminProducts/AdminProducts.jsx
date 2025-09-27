@@ -10,7 +10,7 @@ import './AdminProducts.css'
 import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
 import { apiFetch } from '../../components/apiFetch'
 
-const PLACEHOLDER = '/placeholder.png'
+const PLACEHOLDER = './public/placeholder.png'
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([])

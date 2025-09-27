@@ -20,9 +20,7 @@ const PasswordInput = ({ value, onChange, placeholder = 'Password', name }) => {
         onClick={() => setShowPassword(!showPassword)}
       >
         <img
-          src={
-            showPassword ? '/src/assets/visible.png' : '/src/assets/hide.png'
-          }
+          src={showPassword ? './public/visible.png' : './public/hide.png'}
           alt={showPassword ? 'Hide password' : 'Show password'}
           className='toggle-icon'
         />
