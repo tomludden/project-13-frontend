@@ -1,4 +1,4 @@
-# Dog Lovers 
+# Dog Lovers
 
 A fun React app that includes a **Guess the Dog Game** & a page to learn **Fun Dog facts**. Also a cool questionnaire that help you to find your **perfect buddy**, and a **shop** to find the perfect toys for your best friend.
 
@@ -20,6 +20,7 @@ There is a json file named **mergedDogdFull.json** that contains collected infor
 - Guess the dog breed from images (Dog CEO API)
 - Score tracking
 - 5 lives per game
+- Timing function
 - Restart on game over
 - Display random dog facts (Dog Facts API)
 - Client-side routing with React Router
@@ -31,13 +32,11 @@ There is a json file named **mergedDogdFull.json** that contains collected infor
 - [Dog CEO API](https://dog.ceo/dog-api/)
 - [Dog Facts API](https://dogapi.dog/)
 
-
-
 # Shop
+
 Products in the shop are **scraped** from the internet using a tool named **scraper.js**.
 
 In the the shop you can add and remove your **favourites** to your favourites page by clicking the **heart button**, from the favourites page you can remove the products by clicking on the **heart button**. By clicking on the product you will be brought to the page where you can by the product.
-
 
 # Admin Product Dashboard
 
@@ -71,16 +70,17 @@ A full-stack admin dashboard for managing products with image uploads, scraping,
 
 You can setup admin accounts
 node createAdmin.js
+
 ### Admin Routes (require JWT token)
 
-| Method | Endpoint                    | Description             |
-|--------|-----------------------------|-------------------------|
-| GET    | `/api/products`             | Fetch all products      |
-| GET    | `/api/products/:id`         | Fetch product by ID     |
-| POST   | `/api/products/create`      | Create product          |
-| PUT    | `/api/products/update/:id`  | Update product          |
-| DELETE | `/api/products/delete/:id`  | Delete product          |
-| GET    | `/api/products/scrape`      | Scrape products         |
+| Method | Endpoint                   | Description         |
+| ------ | -------------------------- | ------------------- |
+| GET    | `/api/products`            | Fetch all products  |
+| GET    | `/api/products/:id`        | Fetch product by ID |
+| POST   | `/api/products/create`     | Create product      |
+| PUT    | `/api/products/update/:id` | Update product      |
+| DELETE | `/api/products/delete/:id` | Delete product      |
+| GET    | `/api/products/scrape`     | Scrape products     |
 
 > All admin routes require header: `Authorization: Bearer <your_token>`
 
@@ -91,55 +91,55 @@ node createAdmin.js
 - **File**: `cron.js`
 
 #### What It Does:
+
 1. **Scrapes products** from Guaw.com using Cheerio + Axios
 2. **Uploads images** to Cloudinary
 3. **Upserts products** into MongoDB
 4. **Cleans favourites** by removing references to deleted products
 
 #### Logs:
+
 - Success messages for scrape and cleanup
 - Error messages with stack trace
-- 
+-
+
 ### Project Structure
 
-
-
-├── public/                     # Static assets
+├── public/ # Static assets
 ├── src/
-│   ├── api/
-│   │   ├── controllers/        # Product logic (CRUD, scrape, cleanup)
-│   │   │   └── products.js
-│   │   ├── models/             # Mongoose schemas
-│   │   │   ├── products.js
-│   │   │   └── users.js
-│   │   ├── routes/             # Express routes
-│   │   │   └── products.js
-│   ├── config/
-│   │   └── db.js               # MongoDB connection
-│   ├── middlewares/
-│   │   ├── auth.js             # JWT authentication
-│   │   ├── adminAuth.js        # Role-based access control
-│   │   └── file.js             # Multer + Cloudinary config
-│   ├── utils/
-│   │   ├── cloudinaryHelper.js # Image upload + publicId extraction
-│   │   └── jwtHelper.js        # Token generation and verification
-│   ├── pages/
-│   │   └── AdminProducts.jsx   # Admin dashboard UI
-│   ├── styles/
-│   │   └── AdminProducts.css   # Styling for dashboard and modals
-│   └── index.js                # Frontend entry point
-├── createAdmin.js              # Script to seed admin user
-├── scraper.js                  # CLI scraper for Guaw.com
-├── cron.js                     # Daily scheduled scrape + cleanup
-├── .env                        # Environment variables
-├── package.json                # Project metadata and dependencies
-└── README.md                   # Project documentation
-
-
+│ ├── api/
+│ │ ├── controllers/ # Product logic (CRUD, scrape, cleanup)
+│ │ │ └── products.js
+│ │ ├── models/ # Mongoose schemas
+│ │ │ ├── products.js
+│ │ │ └── users.js
+│ │ ├── routes/ # Express routes
+│ │ │ └── products.js
+│ ├── config/
+│ │ └── db.js # MongoDB connection
+│ ├── middlewares/
+│ │ ├── auth.js # JWT authentication
+│ │ ├── adminAuth.js # Role-based access control
+│ │ └── file.js # Multer + Cloudinary config
+│ ├── utils/
+│ │ ├── cloudinaryHelper.js # Image upload + publicId extraction
+│ │ └── jwtHelper.js # Token generation and verification
+│ ├── pages/
+│ │ └── AdminProducts.jsx # Admin dashboard UI
+│ ├── styles/
+│ │ └── AdminProducts.css # Styling for dashboard and modals
+│ └── index.js # Frontend entry point
+├── createAdmin.js # Script to seed admin user
+├── scraper.js # CLI scraper for Guaw.com
+├── cron.js # Daily scheduled scrape + cleanup
+├── .env # Environment variables
+├── package.json # Project metadata and dependencies
+└── README.md # Project documentation
 
 ### Technologies Used
 
 **Frontend**
+
 - React
 - React Hook Form
 - Axios
@@ -147,27 +147,33 @@ node createAdmin.js
 - Lucide React
 
 **Backend**
+
 - Node.js
 - Express
 - Mongoose (MongoDB)
 
 **Authentication**
+
 - JWT (JSON Web Tokens)
 - bcrypt (password hashing)
 
 **Image Upload**
+
 - Cloudinary
 - Multer
 - multer-storage-cloudinary
 
 **Scraping**
+
 - Puppeteer
 - Axios
 - Cheerio
 
 **Scheduling**
+
 - node-cron
 
 **Dev Tools**
+
 - dotenv
 - Insomnia (API testing)
