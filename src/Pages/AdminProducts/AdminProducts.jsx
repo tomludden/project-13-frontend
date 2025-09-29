@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import link from 'react-router-dom'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import FilterControls from '../../FilterControls/FilterControls.jsx'
 import { useFilters } from '../../Hooks/useFilters.js'
@@ -176,12 +177,15 @@ const AdminProducts = () => {
             {visibleProducts.length > 0 ? (
               visibleProducts.map((p) => (
                 <div key={p._id} className='product-card'>
-                  <img
-                    src={p.imageUrl || PLACEHOLDER}
-                    alt={p.name}
-                    loading='lazy'
-                  />
-                  <h4>{p.name}</h4>
+                  <Link to={`/products/${p._id}`} className='product-link'>
+                    <img
+                      src={p.imageUrl || PLACEHOLDER}
+                      alt={p.name}
+                      loading='lazy'
+                    />
+                    <h4>{p.name}</h4>
+                    <p>{p.description}</p>
+                  </Link>
                   <p>€{Number(p.price).toFixed(2)}</p>
                   {p.rating && <p>Rating: {p.rating} ⭐</p>}
                   <div className='card-buttons'>
