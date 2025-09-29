@@ -134,15 +134,14 @@ h2 {
   align-items: center;
   height: 90vh;
   width: 100%;
+  padding: 0px 20px;
   gap: 15px;
 }
 .questionnaire > div {
   display: flex;
   justify-content: center;
 }
-.questionnaire h2 {
-  padding-top: 30px;
-}
+
 .options {
   width: 100%;
   display: flex;
