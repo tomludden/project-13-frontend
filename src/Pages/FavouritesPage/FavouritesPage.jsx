@@ -7,7 +7,7 @@ import './FavouritesPage.css'
 
 const FavouritesPage = () => {
   const { user } = useContext(AuthContext)
-  const { favourites, loadingIds, toggleFavourite } = useFavourites()
+  const { favourites, loading, loadingIds, toggleFavourite } = useFavourites()
 
   if (!user?._id) {
     return (
