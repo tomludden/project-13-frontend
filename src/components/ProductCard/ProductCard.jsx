@@ -22,7 +22,7 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
     onToggleFavourite(product)
   }
 
-  const animateHeart = () => {
+  /* const animateHeart = () => {
     if (!buttonRef.current) return
 
     const scaleCurve = mojs.easing.path(
@@ -31,31 +31,31 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
 
     const burst1 = new mojs.Burst({
       parent: buttonRef.current,
-      radius: { 0: 100 },
+      radius: { 0: 15 }, // max spread from center
       angle: { 0: 45 },
-      y: -10,
-      count: 10,
+      y: 0, // no vertical offset
+      count: 6,
       children: {
         shape: 'circle',
-        radius: 20,
-        fill: ['red', 'transparent'],
-        strokeWidth: 10,
-        duration: 500
+        radius: 2, // very small dots
+        fill: ['red'],
+        strokeWidth: 0, // no stroke
+        duration: 300
       }
     })
 
     const burst2 = new mojs.Burst({
       parent: buttonRef.current,
-      radius: { 0: 125 },
+      radius: { 0: 15 },
       angle: { 0: -45 },
-      y: -10,
-      count: 10,
+      y: 0,
+      count: 6,
       children: {
         shape: 'circle',
-        radius: 20,
-        fill: ['transparent', 'red'],
-        strokeWidth: 10,
-        duration: 400
+        radius: 2,
+        fill: ['red'],
+        strokeWidth: 0,
+        duration: 300
       }
     })
 
@@ -70,7 +70,21 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
     const timeline = new mojs.Timeline()
     timeline.add(burst1, burst2, scaleTween)
     timeline.play()
-  }
+  } */
+
+  const ripple = new mojs.Shape({
+    parent: buttonRef.current,
+    shape: 'circle',
+    radius: { 0: 30 }, // expands to 30px
+    stroke: 'red',
+    strokeWidth: { 6: 0 }, // fades stroke
+    opacity: { 1: 0 },
+    duration: 500,
+    easing: 'cubic.out',
+    isShowStart: true
+  })
+
+  ripple.play()
 
   return (
     <div className='product-card'>
@@ -92,7 +106,13 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
         onClick={handleFavouriteClick}
         className={`heart-btn ${isFavourite ? 'active' : ''}`}
       >
-        {isFavourite ? <AiFillHeart size={24} /> : <AiOutlineHeart size={24} />}
+        <span className='heart-icon'>
+          {isFavourite ? (
+            <AiFillHeart size={24} />
+          ) : (
+            <AiOutlineHeart size={24} />
+          )}
+        </span>
       </button>
     </div>
   )

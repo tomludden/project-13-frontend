@@ -35,24 +35,6 @@
   color: red;
 }
 
-.heart-btn#heart {
-  width: 100px;
-  height: 90px;
-  position: relative;
-}
-
-.heart-btn#heart:before,
-.heart-btn#heart:after {
-  content: '';
-  position: absolute;
-  width: 50px;
-  height: 80px;
-  background: dimgrey;
-  border-radius: 50px 50px 0 0;
-  transform-origin: 0 100%;
-  transition: background 0.3s ease;
-}
-
 .heart-btn#heart:before {
   left: 50px;
   transform: rotate(-45deg);

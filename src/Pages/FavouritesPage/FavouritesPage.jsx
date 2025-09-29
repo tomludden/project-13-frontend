@@ -7,16 +7,12 @@ import './FavouritesPage.css'
 
 const FavouritesPage = () => {
   const { user } = useContext(AuthContext)
-  const { favourites, loading, loadingIds, toggleFavourite } = useFavourites()
+  const { favourites, loadingIds, toggleFavourite } = useFavourites()
 
   if (!user?._id) {
     return (
       <p className='fav-page-text'>Please log in to see your favourites.</p>
     )
-  }
-
-  if (loading) {
-    return <DogLoader />
   }
 
   return (
@@ -26,6 +22,7 @@ const FavouritesPage = () => {
         <p className='fav-page-text'>You have no favourites yet.</p>
       )}
       <div className='products'>
+        <DogLoader />
         {favourites.map((p) => (
           <ProductCard
             key={p._id}
