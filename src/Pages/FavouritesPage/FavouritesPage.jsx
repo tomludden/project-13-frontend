@@ -15,6 +15,10 @@ const FavouritesPage = () => {
     )
   }
 
+  if (loading) {
+    return <DogLoader />
+  }
+
   return (
     <div>
       <h2>My Favourites</h2>
@@ -22,7 +26,6 @@ const FavouritesPage = () => {
         <p className='fav-page-text'>You have no favourites yet.</p>
       )}
       <div className='products'>
-        <DogLoader />
         {favourites.map((p) => (
           <ProductCard
             key={p._id}

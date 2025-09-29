@@ -21,11 +21,6 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
 
     onToggleFavourite(product)
   }
-  const rect = buttonRef.current.getBoundingClientRect()
-
-  burst1.el.style.position = 'fixed'
-  burst1.el.style.left = `${rect.left + rect.width / 2}px`
-  burst1.el.style.top = `${rect.top + rect.height / 2}px`
 
   const animateHeart = () => {
     if (!buttonRef.current) return
