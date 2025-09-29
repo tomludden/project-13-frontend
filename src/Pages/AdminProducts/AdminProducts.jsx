@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import link from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import FilterControls from '../../FilterControls/FilterControls.jsx'
 import { useFilters } from '../../Hooks/useFilters.js'
