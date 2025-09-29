@@ -1,7 +1,7 @@
 .chat-widget-root {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  right: 20px;
+  bottom: 20px;
   z-index: 9999;
   font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial;
@@ -122,4 +122,9 @@
 .chat-success-title {
   font-weight: 700;
   color: #059669;
+}
+@media (max-width: 400px) {
+  .chat-widget-root {
+    right: 10px;
+  }
 }
