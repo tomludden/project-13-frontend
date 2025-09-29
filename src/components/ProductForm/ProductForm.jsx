@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './ProductForm.css'
 
-const PLACEHOLDER = '/placeholder.png'
+const PLACEHOLDER = './assets/images/placeholder.png'
 
 function DropZone({ handleFileChange }) {
   const fileInputRef = useRef(null)
