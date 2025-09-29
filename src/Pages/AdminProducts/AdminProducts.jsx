@@ -177,15 +177,17 @@ const AdminProducts = () => {
               visibleProducts.map((p) => (
                 <div key={p._id} className='product-card'>
                   <a
-                    href={product.url || '#'}
+                    href={p.url || '#'}
                     target='_blank'
                     rel='noopener noreferrer'
                     className='product-link'
                   >
-                    {product.imageUrl && (
-                      <img src={product.imageUrl} alt={product.name} />
-                    )}
-                    <h4>{product.name || 'Unnamed'}</h4>
+                    <img
+                      src={p.imageUrl || PLACEHOLDER}
+                      alt={p.name}
+                      loading='lazy'
+                    />
+                    <h4>{p.name || 'Unnamed'}</h4>
                   </a>
                   <p>€{Number(p.price).toFixed(2)}</p>
                   {p.rating && <p>Rating: {p.rating} ⭐</p>}
