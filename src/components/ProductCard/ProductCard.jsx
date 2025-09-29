@@ -21,8 +21,13 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
 
     onToggleFavourite(product)
   }
+  const rect = buttonRef.current.getBoundingClientRect()
 
-  /* const animateHeart = () => {
+  burst1.el.style.position = 'fixed'
+  burst1.el.style.left = `${rect.left + rect.width / 2}px`
+  burst1.el.style.top = `${rect.top + rect.height / 2}px`
+
+  const animateHeart = () => {
     if (!buttonRef.current) return
 
     const scaleCurve = mojs.easing.path(
@@ -70,21 +75,7 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
     const timeline = new mojs.Timeline()
     timeline.add(burst1, burst2, scaleTween)
     timeline.play()
-  } */
-
-  const ripple = new mojs.Shape({
-    parent: buttonRef.current,
-    shape: 'circle',
-    radius: { 0: 30 }, // expands to 30px
-    stroke: 'red',
-    strokeWidth: { 6: 0 }, // fades stroke
-    opacity: { 1: 0 },
-    duration: 500,
-    easing: 'cubic.out',
-    isShowStart: true
-  })
-
-  ripple.play()
+  }
 
   return (
     <div className='product-card'>
