@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../components/AuthContext'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
@@ -10,46 +10,63 @@ const RegisterPage = () => {
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
 
   const { setUser } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const handleRegister = async (ev) => {
-    ev.preventDefault()
-    if (!userName || !email || !password) {
-      showPopup('All fields are required', 'error')
-      return
-    }
+  const handleUserNameChange = useCallback(
+    (e) => setUserName(e.target.value),
+    []
+  )
+  const handleEmailChange = useCallback((e) => setEmail(e.target.value), [])
+  const handlePasswordChange = useCallback(
+    (e) => setPassword(e.target.value),
+    []
+  )
 
-    try {
-      const data = await apiFetch('/users/register', {
-        method: 'POST',
-        data: { userName, email, password }
-      })
+  const payload = useMemo(
+    () => ({ userName, email, password }),
+    [userName, email, password]
+  )
 
-      const loggedInUser = {
-        _id: data.user._id,
-        userName: data.user.userName,
-        email: data.user.email,
-        role: data.user.role || 'user',
-        favourites: data.user.favourites || [],
-        token: data.token
+  const handleRegister = useCallback(
+    async (ev) => {
+      ev.preventDefault()
+      if (!userName || !email || !password) {
+        showPopup('All fields are required', 'error')
+        return
       }
 
-      setUser(loggedInUser)
-      localStorage.setItem('user', JSON.stringify(loggedInUser))
+      try {
+        const data = await apiFetch('/users/register', {
+          method: 'POST',
+          data: payload
+        })
 
-      showPopup('Registration successful', 'success')
-      navigate('/', { replace: true })
-    } catch (err) {
-      console.error('Register error:', err)
-      showPopup(
-        err.message || 'Registration failed. Please try again.',
-        'error'
-      )
-    }
-  }
+        const loggedInUser = {
+          _id: data.user._id,
+          userName: data.user.userName,
+          email: data.user.email,
+          role: data.user.role || 'user',
+          favourites: data.user.favourites || [],
+          token: data.token
+        }
+
+        setUser(loggedInUser)
+        localStorage.setItem('user', JSON.stringify(loggedInUser))
+
+        showPopup('Registration successful', 'success')
+        navigate('/', { replace: true })
+      } catch (err) {
+        console.error('Register error:', err)
+        showPopup(
+          err.message || 'Registration failed. Please try again.',
+          'error'
+        )
+      }
+    },
+    [userName, email, password, payload, setUser, navigate]
+  )
 
   return (
     <div className='register-container'>
@@ -59,24 +76,22 @@ const RegisterPage = () => {
           type='text'
           placeholder='Username'
           value={userName}
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={handleUserNameChange}
           required
         />
         <input
           type='email'
           placeholder='Email'
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleEmailChange}
           required
         />
-
         <PasswordInput
           name='password'
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
           placeholder='Password'
         />
-
         <button type='submit' id='registerbtn'>
           Register
         </button>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import FilterControls from '../../FilterControls/FilterControls.jsx'
 import { useFilters } from '../../Hooks/useFilters.js'
@@ -49,7 +49,7 @@ const AdminProducts = () => {
     setPage(1)
   }, [searchTerm, size, maxPrice, minRating, setPage])
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setLoading(true)
     try {
       const data = await apiFetch('/products', { method: 'GET' })
@@ -60,72 +60,69 @@ const AdminProducts = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  const openModal = (product = null) => {
+  const openModal = useCallback((product = null) => {
     setEditingProduct(product)
     setShowModal(true)
-  }
+  }, [])
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setEditingProduct(null)
     setShowModal(false)
-  }
+  }, [])
 
-  const openDeleteModal = (product) => {
+  const openDeleteModal = useCallback((product) => {
     setSelectedProduct(product)
     setDeleteModal(true)
-  }
+  }, [])
 
-  const closeDeleteModal = () => {
+  const closeDeleteModal = useCallback(() => {
     setSelectedProduct(null)
     setDeleteModal(false)
-  }
+  }, [])
 
-  const handleSave = async ({
-    name,
-    price,
-    description,
-    imageUrl,
-    publicId
-  }) => {
-    setIsSubmitting(true)
-    try {
-      const token = localStorage.getItem('token')
-      const payload = {
-        id: editingProduct?._id,
-        name,
-        price,
-        description,
-        imageUrl,
-        publicId
+  const handleSave = useCallback(
+    async ({ name, price, description, imageUrl, publicId }) => {
+      setIsSubmitting(true)
+      try {
+        const token = localStorage.getItem('token')
+        const payload = {
+          id: editingProduct?._id,
+          name,
+          price,
+          description,
+          imageUrl,
+          publicId
+        }
+
+        const data = await apiFetch('/products/save', {
+          method: 'POST',
+          data: payload,
+          headers: { Authorization: `Bearer ${token}` }
+        })
+
+        if (editingProduct) {
+          setProducts((prev) =>
+            prev.map((p) => (p._id === data.product._id ? data.product : p))
+          )
+          showPopup('Product edited successfully')
+        } else {
+          setProducts((prev) => [...prev, data.product])
+          showPopup('Product added successfully')
+        }
+
+        closeModal()
+      } catch (err) {
+        console.error(err.message)
+      } finally {
+        setIsSubmitting(false)
       }
+    },
+    [editingProduct, closeModal]
+  )
 
-      const data = await apiFetch('/products/save', {
-        method: 'POST',
-        data: payload,
-        headers: { Authorization: `Bearer ${token}` }
-      })
-
-      if (editingProduct) {
-        setProducts((prev) =>
-          prev.map((p) => (p._id === data.product._id ? data.product : p))
-        )
-        showPopup('Product edited successfully')
-      } else {
-        setProducts((prev) => [...prev, data.product])
-        showPopup('Product added successfully')
-      }
-
-      closeModal()
-    } catch (err) {
-      console.error(err.message)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  const confirmDelete = async () => {
+  const confirmDelete = useCallback(async () => {
     const token = localStorage.getItem('token')
     try {
       await apiFetch(`/products/delete/${selectedProduct._id}`, {
@@ -139,7 +136,12 @@ const AdminProducts = () => {
     } catch (err) {
       console.error(err.message)
     }
-  }
+  }, [selectedProduct, closeDeleteModal])
+
+  const handleClearFilters = useCallback(() => {
+    clearFilters()
+    setPage(1)
+  }, [clearFilters, setPage])
 
   return (
     <div className='admin-products'>
@@ -158,10 +160,7 @@ const AdminProducts = () => {
         setMaxPrice={setMaxPrice}
         minRating={minRating}
         setMinRating={setMinRating}
-        clearFilters={() => {
-          clearFilters()
-          setPage(1)
-        }}
+        clearFilters={handleClearFilters}
       />
 
       <button className='add-btn' onClick={() => openModal()}>

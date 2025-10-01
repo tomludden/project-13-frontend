@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import { AuthContext } from '../../components/AuthContext'
 import { useFavourites } from '../../Hooks/useFavourites'
 import ProductCard from '../../components/ProductCard/ProductCard'
@@ -9,7 +9,29 @@ const FavouritesPage = () => {
   const { user } = useContext(AuthContext)
   const { favourites, loading, loadingIds, toggleFavourite } = useFavourites()
 
-  if (!user?._id) {
+  const isLoggedIn = Boolean(user?._id)
+
+  const FavouriteList = useMemo(() => {
+    if (favourites.length === 0) {
+      return <p className='fav-page-text'>You have no favourites yet.</p>
+    }
+
+    return (
+      <div className='products'>
+        {favourites.map(({ _id, ...rest }) => (
+          <ProductCard
+            key={_id}
+            product={{ _id, ...rest }}
+            isFavourite
+            onToggleFavourite={toggleFavourite}
+            disabled={loadingIds.includes(_id)}
+          />
+        ))}
+      </div>
+    )
+  }, [favourites, toggleFavourite, loadingIds])
+
+  if (!isLoggedIn) {
     return (
       <p className='fav-page-text'>Please log in to see your favourites.</p>
     )
@@ -20,23 +42,10 @@ const FavouritesPage = () => {
   }
 
   return (
-    <div>
+    <main className='favourites-page'>
       <h2>My Favourites</h2>
-      {favourites.length === 0 && (
-        <p className='fav-page-text'>You have no favourites yet.</p>
-      )}
-      <div className='products'>
-        {favourites.map((p) => (
-          <ProductCard
-            key={p._id}
-            product={p}
-            isFavourite={true}
-            onToggleFavourite={toggleFavourite}
-            disabled={loadingIds.includes(p._id)}
-          />
-        ))}
-      </div>
-    </div>
+      {FavouriteList}
+    </main>
   )
 }
 

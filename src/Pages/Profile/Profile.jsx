@@ -1,4 +1,10 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} from 'react'
 import { AuthContext } from '../../components/AuthContext.jsx'
 import './Profile.css'
 import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
@@ -10,26 +16,28 @@ const Profile = () => {
   const { user, setUser } = useContext(AuthContext)
   const usernameRef = useRef(null)
   const navigate = useNavigate()
+
   const [formData, setFormData] = useState({
     userName: '',
     email: '',
     password: '',
     confirmPassword: ''
   })
+
   const [loading, setLoading] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [emailError, setEmailError] = useState('')
 
   useEffect(() => {
-    if (user?._id) {
-      setFormData((prev) => ({
-        ...prev,
-        userName: user.userName || '',
-        email: user.email || ''
-      }))
-      usernameRef.current?.focus()
-    }
-  }, [user])
+    if (!user?._id) return
+    setFormData({
+      userName: user.userName || '',
+      email: user.email || '',
+      password: '',
+      confirmPassword: ''
+    })
+    usernameRef.current?.focus()
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -37,18 +45,17 @@ const Profile = () => {
     if (name === 'email') setEmailError('')
   }
 
-  const validateEmail = () => {
+  const validateEmail = useCallback(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(formData.email)) {
       setEmailError('Invalid email format')
       return false
     }
     return true
-  }
+  }, [formData.email])
 
   const handleUpdate = async () => {
     if (!validateEmail()) return
-
     if (formData.password !== formData.confirmPassword) {
       showPopup('Passwords do not match', 'error')
       return
@@ -56,16 +63,20 @@ const Profile = () => {
 
     try {
       setLoading(true)
-      const token = user.token
       const res = await apiFetch(`/users/${user._id}`, {
         method: 'PUT',
         data: formData,
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${user.token}` }
       })
 
       setUser(res)
       showPopup('Profile updated successfully!', 'success')
-      setFormData((prev) => ({ ...prev, password: '', confirmPassword: '' }))
+      setFormData({
+        userName: res.userName || '',
+        email: res.email || '',
+        password: '',
+        confirmPassword: ''
+      })
     } catch (err) {
       console.error('Update error:', err)
       showPopup('Failed to update profile', 'error')
@@ -76,22 +87,20 @@ const Profile = () => {
 
   const handleDelete = async () => {
     try {
-      const token = user.token
       await apiFetch(`/users/${user._id}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${user.token}` }
       })
 
       setUser(null)
       localStorage.removeItem('user')
       sessionStorage.clear()
-
       showPopup('Account deleted successfully', 'success')
       navigate('/', { replace: true })
-      setConfirmDelete(false)
     } catch (err) {
       console.error('Delete error:', err)
       showPopup('Failed to delete account', 'error')
+    } finally {
       setConfirmDelete(false)
     }
   }

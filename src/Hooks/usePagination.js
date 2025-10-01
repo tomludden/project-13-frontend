@@ -1,22 +1,36 @@
-import { useState, useEffect } from 'react'
+import React, { useMemo, useCallback } from 'react'
+import './PaginationControls.css'
 
-export const usePagination = (data = [], itemsPerPage = 10) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const totalPages = Math.max(1, Math.ceil(data.length / itemsPerPage))
+const PaginationControls = ({ currentPage, totalPages, goPrev, goNext }) => {
+  if (totalPages <= 1) return null
 
-  useEffect(() => {
-    if (currentPage > totalPages) setCurrentPage(1)
-  }, [data, totalPages, currentPage])
+  const isFirstPage = useMemo(() => currentPage === 1, [currentPage])
+  const isLastPage = useMemo(
+    () => currentPage === totalPages,
+    [currentPage, totalPages]
+  )
 
-  const start = (currentPage - 1) * itemsPerPage
-  const paginatedData = Array.isArray(data)
-    ? data.slice(start, start + itemsPerPage)
-    : []
+  const handlePrev = useCallback(() => {
+    if (!isFirstPage) goPrev()
+  }, [isFirstPage, goPrev])
 
-  return {
-    currentPage,
-    totalPages,
-    paginatedData,
-    setPage: setCurrentPage
-  }
+  const handleNext = useCallback(() => {
+    if (!isLastPage) goNext()
+  }, [isLastPage, goNext])
+
+  return (
+    <div className='pagination'>
+      <button onClick={handlePrev} disabled={isFirstPage}>
+        Prev
+      </button>
+      <span>
+        Page {currentPage} of {totalPages}
+      </span>
+      <button onClick={handleNext} disabled={isLastPage}>
+        Next
+      </button>
+    </div>
+  )
 }
+
+export default PaginationControls

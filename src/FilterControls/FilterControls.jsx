@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import './FilterControls.css'
 
 const FilterControls = ({
@@ -9,43 +9,60 @@ const FilterControls = ({
   minRating,
   setMinRating,
   clearFilters
-}) => (
-  <div className='filter'>
-    <select
-      className='select'
-      value={size}
-      onChange={(e) => setSize(e.target.value)}
-    >
-      <option value=''>Dog Size</option>
-      <option value='small'>Small</option>
-      <option value='medium'>Medium</option>
-      <option value='large'>Large</option>
-    </select>
+}) => {
+  const handleSizeChange = useCallback(
+    (e) => setSize(e.target.value),
+    [setSize]
+  )
 
-    <input
-      className='input'
-      type='number'
-      placeholder='Max Price'
-      value={maxPrice}
-      onChange={(e) => setMaxPrice(e.target.value)}
-    />
+  const handlePriceChange = useCallback(
+    (e) => setMaxPrice(e.target.value),
+    [setMaxPrice]
+  )
 
-    <select
-      className='select'
-      value={minRating}
-      onChange={(e) => setMinRating(e.target.value)}
-    >
-      <option value=''>Rating</option>
-      <option value='1'>⭐ 1+</option>
-      <option value='2'>⭐ 2+</option>
-      <option value='3'>⭐ 3+</option>
-      <option value='4'>⭐ 4+</option>
-    </select>
+  const handleRatingChange = useCallback(
+    (e) => setMinRating(e.target.value),
+    [setMinRating]
+  )
 
-    <button className='filter-button' onClick={clearFilters}>
-      Clear Filters
-    </button>
-  </div>
-)
+  const handleClear = useCallback(() => {
+    clearFilters()
+  }, [clearFilters])
+
+  return (
+    <div className='filter'>
+      <select className='select' value={size} onChange={handleSizeChange}>
+        <option value=''>Dog Size</option>
+        <option value='small'>Small</option>
+        <option value='medium'>Medium</option>
+        <option value='large'>Large</option>
+      </select>
+
+      <input
+        className='input'
+        type='number'
+        placeholder='Max Price'
+        value={maxPrice}
+        onChange={handlePriceChange}
+      />
+
+      <select
+        className='select'
+        value={minRating}
+        onChange={handleRatingChange}
+      >
+        <option value=''>Rating</option>
+        <option value='1'>⭐ 1+</option>
+        <option value='2'>⭐ 2+</option>
+        <option value='3'>⭐ 3+</option>
+        <option value='4'>⭐ 4+</option>
+      </select>
+
+      <button className='filter-button' onClick={handleClear}>
+        Clear Filters
+      </button>
+    </div>
+  )
+}
 
 export default FilterControls

@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useMemo, useCallback } from 'react'
 import './SearchBar.css'
 
 const SearchBar = ({ value, onChange, placeholder = 'Search...' }) => {
+  const handleClear = useCallback(() => {
+    onChange({ target: { value: '' } })
+  }, [onChange])
+
+  const ClearButton = useMemo(() => {
+    if (!value) return null
+    return (
+      <span className='clear-search' onClick={handleClear}>
+        &times;
+      </span>
+    )
+  }, [value, handleClear])
+
   return (
     <div className='search-bar'>
       <input
@@ -10,14 +23,7 @@ const SearchBar = ({ value, onChange, placeholder = 'Search...' }) => {
         value={value}
         onChange={onChange}
       />
-      {value && (
-        <span
-          className='clear-search'
-          onClick={() => onChange({ target: { value: '' } })}
-        >
-          &times;
-        </span>
-      )}
+      {ClearButton}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useCallback, useMemo } from 'react'
 import { AuthContext } from '../../components/AuthContext.jsx'
 import { useProducts } from '../../Hooks/useProducts.js'
 import { useFilters } from '../../Hooks/useFilters.js'
@@ -36,13 +36,36 @@ const Shop = () => {
     setPage
   } = usePagination(filteredProducts, 8)
 
+  const handleSearchChange = useCallback(
+    (e) => setSearchTerm(e.target.value),
+    [setSearchTerm]
+  )
+
+  const handleClearFilters = useCallback(() => {
+    clearFilters()
+    setPage(1)
+  }, [clearFilters, setPage])
+
+  const handlePrevPage = useCallback(() => {
+    setPage((prev) => Math.max(prev - 1, 1))
+  }, [setPage])
+
+  const handleNextPage = useCallback(() => {
+    setPage((prev) => Math.min(prev + 1, totalPages))
+  }, [setPage, totalPages])
+
+  const isLoading = useMemo(
+    () => loading || !products.length,
+    [loading, products]
+  )
+
   return (
     <div>
       <h1>Dog Lovers Shop!</h1>
 
       <SearchBar
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={handleSearchChange}
         placeholder='Search products...'
       />
 
@@ -53,32 +76,34 @@ const Shop = () => {
         setMaxPrice={setMaxPrice}
         minRating={minRating}
         setMinRating={setMinRating}
-        clearFilters={() => {
-          clearFilters()
-          setPage(1)
-        }}
+        clearFilters={handleClearFilters}
       />
 
-      {loading && <DogLoader />}
+      {isLoading && <DogLoader />}
       {error && <p>Error: {error}</p>}
 
       <div className='products'>
-        {currentItems.map((product) => (
-          <ProductCard
-            key={product._id}
-            product={product}
-            isFavourite={favourites.some((f) => f._id === product._id)}
-            onToggleFavourite={() => toggleFavourite(product)}
-            disabled={loadingIds.includes(product._id)}
-          />
-        ))}
+        {currentItems.map((product) => {
+          const isFavourite = favourites.some((f) => f._id === product._id)
+          const isDisabled = loadingIds.includes(product._id)
+
+          return (
+            <ProductCard
+              key={product._id}
+              product={product}
+              isFavourite={isFavourite}
+              onToggleFavourite={() => toggleFavourite(product)}
+              disabled={isDisabled}
+            />
+          )
+        })}
       </div>
 
       <PaginationControls
         currentPage={currentPage}
         totalPages={totalPages}
-        goPrev={() => setPage(currentPage - 1)}
-        goNext={() => setPage(currentPage + 1)}
+        goPrev={handlePrevPage}
+        goNext={handleNextPage}
       />
     </div>
   )

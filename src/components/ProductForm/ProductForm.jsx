@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import './ProductForm.css'
 
 const PLACEHOLDER = './assets/images/placeholder.png'
@@ -53,7 +53,7 @@ export default function ProductForm({
     setPublicId(initialData.imagePublicId || '')
   }, [initialData])
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = useCallback(async (e) => {
     const file = e.target.files?.[0]
     if (!file) return
 
@@ -87,12 +87,24 @@ export default function ProductForm({
     } finally {
       setUploading(false)
     }
-  }
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     onSubmit({ name, price, imageUrl, publicId })
   }
+
+  const previewSrc = useMemo(() => preview || PLACEHOLDER, [preview])
+
+  const submitLabel = useMemo(() => {
+    if (uploading) return 'Uploading...'
+    if (isSubmitting) return 'Saving...'
+    return initialData._id ? 'Save' : 'Add'
+  }, [uploading, isSubmitting, initialData._id])
+
+  const MemoizedDropZone = useMemo(() => {
+    return <DropZone handleFileChange={handleFileChange} />
+  }, [handleFileChange])
 
   return (
     <form className='edit-form' onSubmit={handleSubmit}>
@@ -113,11 +125,11 @@ export default function ProductForm({
         required
       />
 
-      <DropZone handleFileChange={handleFileChange} />
+      {MemoizedDropZone}
 
       <div className='preview-image'>
         <img
-          src={preview || PLACEHOLDER}
+          src={previewSrc}
           alt='Preview'
           onError={(e) => (e.target.src = PLACEHOLDER)}
         />
@@ -125,13 +137,7 @@ export default function ProductForm({
 
       <div className='modal-buttons'>
         <button type='submit' disabled={isSubmitting || uploading}>
-          {uploading
-            ? 'Uploading...'
-            : isSubmitting
-            ? 'Saving...'
-            : initialData._id
-            ? 'Save'
-            : 'Add'}
+          {submitLabel}
         </button>
         <button type='button' onClick={onCancel}>
           Cancel

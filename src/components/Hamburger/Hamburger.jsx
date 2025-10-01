@@ -1,4 +1,10 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} from 'react'
 import { NavLink } from 'react-router-dom'
 import { AuthContext } from '../AuthContext.jsx'
 import { FaBars } from 'react-icons/fa'
@@ -9,6 +15,9 @@ const Hamburger = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
   const buttonRef = useRef(null)
+
+  const isLoggedIn = Boolean(user)
+  const isAdmin = user?.role === 'admin'
 
   useEffect(() => {
     document.body.classList.toggle('menu-open', menuOpen)
@@ -32,11 +41,11 @@ const Hamburger = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [menuOpen])
 
-  const handleLinkClick = () => setMenuOpen(false)
-  const handleLogout = () => {
+  const handleLinkClick = useCallback(() => setMenuOpen(false), [])
+  const handleLogout = useCallback(() => {
     logout()
     handleLinkClick()
-  }
+  }, [logout, handleLinkClick])
 
   return (
     <>
@@ -50,82 +59,97 @@ const Hamburger = () => {
 
       <ul ref={menuRef} className={`hamburger-menu ${menuOpen ? 'open' : ''}`}>
         <li className='close-btn'>
-          <button
-            className='close-btn-hamburger'
-            onClick={() => setMenuOpen(false)}
-          >
+          <button className='close-btn-hamburger' onClick={handleLinkClick}>
             ✕
           </button>
         </li>
 
-        <li>
-          <NavLink to='/' onClick={handleLinkClick}>
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/guess-the-dog' onClick={handleLinkClick}>
-            Dog Game
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/suitable-dog' onClick={handleLinkClick}>
-            My Perfect Dog
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/fun-dog-facts' onClick={handleLinkClick}>
-            Fun Dog Facts
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/shop' onClick={handleLinkClick}>
-            Shop
-          </NavLink>
-        </li>
+        <StaticLinks onClick={handleLinkClick} />
 
-        {user ? (
-          <>
-            <li>
-              <NavLink to='/favourites' onClick={handleLinkClick}>
-                Favourites
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to='/profile' onClick={handleLinkClick}>
-                Profile
-              </NavLink>
-            </li>
-            <li>
-              {user?.role === 'admin' && (
-                <NavLink to='/admin' onClick={handleLinkClick}>
-                  Admin
-                </NavLink>
-              )}
-            </li>
-            <li>
-              <button className='logout-btn' onClick={handleLogout}>
-                Logout
-              </button>
-            </li>
-          </>
+        {isLoggedIn ? (
+          <UserLinks
+            isAdmin={isAdmin}
+            onClick={handleLinkClick}
+            onLogout={handleLogout}
+          />
         ) : (
-          <>
-            <li>
-              <NavLink to='/login' onClick={handleLinkClick}>
-                <button className='header-btn'>Login</button>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to='/register' onClick={handleLinkClick}>
-                <button className='header-btn'>Register</button>
-              </NavLink>
-            </li>
-          </>
+          <AuthLinks onClick={handleLinkClick} />
         )}
       </ul>
     </>
   )
 }
+
+const StaticLinks = ({ onClick }) => (
+  <>
+    <li>
+      <NavLink to='/' onClick={onClick}>
+        Home
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to='/guess-the-dog' onClick={onClick}>
+        Dog Game
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to='/suitable-dog' onClick={onClick}>
+        My Perfect Dog
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to='/fun-dog-facts' onClick={onClick}>
+        Fun Dog Facts
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to='/shop' onClick={onClick}>
+        Shop
+      </NavLink>
+    </li>
+  </>
+)
+
+const UserLinks = ({ isAdmin, onClick, onLogout }) => (
+  <>
+    <li>
+      <NavLink to='/favourites' onClick={onClick}>
+        Favourites
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to='/profile' onClick={onClick}>
+        Profile
+      </NavLink>
+    </li>
+    {isAdmin && (
+      <li>
+        <NavLink to='/admin' onClick={onClick}>
+          Admin
+        </NavLink>
+      </li>
+    )}
+    <li>
+      <button className='logout-btn' onClick={onLogout}>
+        Logout
+      </button>
+    </li>
+  </>
+)
+
+const AuthLinks = ({ onClick }) => (
+  <>
+    <li>
+      <NavLink to='/login' onClick={onClick}>
+        <button className='header-btn'>Login</button>
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to='/register' onClick={onClick}>
+        <button className='header-btn'>Register</button>
+      </NavLink>
+    </li>
+  </>
+)
 
 export default Hamburger

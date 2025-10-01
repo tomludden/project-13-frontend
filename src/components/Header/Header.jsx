@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useCallback } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import './Header.css'
 import { AuthContext } from '../../components/AuthContext.jsx'
@@ -9,10 +9,13 @@ const Header = React.memo(() => {
   const { user, logout } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     logout()
     navigate('/')
-  }
+  }, [logout, navigate])
+
+  const isAdmin = user?.role === 'admin'
+  const isLoggedIn = Boolean(user)
 
   return (
     <>
@@ -35,24 +38,19 @@ const Header = React.memo(() => {
               <NavLink to='/shop'>Shop</NavLink>
             </li>
 
-            {user && (
-              <li>
-                <NavLink to='/favourites'>Favourites</NavLink>
-              </li>
-            )}
-
-            {user && (
+            {isLoggedIn && (
               <>
+                <li>
+                  <NavLink to='/favourites'>Favourites</NavLink>
+                </li>
                 <li>
                   <NavLink to='/profile'>Profile</NavLink>
                 </li>
-
-                {user.role === 'admin' && (
+                {isAdmin && (
                   <li>
                     <NavLink to='/admin'>Admin</NavLink>
                   </li>
                 )}
-
                 <li>
                   <button className='logout-btn' onClick={handleLogout}>
                     Logout
@@ -62,7 +60,7 @@ const Header = React.memo(() => {
             )}
           </ul>
 
-          {!user && (
+          {!isLoggedIn && (
             <div className='auth-buttons'>
               <NavLink to='/login' className='header-btn'>
                 Login
@@ -76,18 +74,16 @@ const Header = React.memo(() => {
       </header>
 
       <div className='mobile-header'>
-        <div className='mobile-icons'>
-          {user && (
+        {isLoggedIn && (
+          <div className='mobile-icons'>
             <NavLink to='/favourites' className='mobile-icon'>
               <FaHeart size={24} />
             </NavLink>
-          )}
-          {user && (
             <NavLink to='/profile' className='mobile-icon'>
               <FaUser size={24} />
             </NavLink>
-          )}
-        </div>
+          </div>
+        )}
         <Hamburger />
       </div>
     </>

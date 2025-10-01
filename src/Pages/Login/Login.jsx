@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../components/AuthContext'
 import { showPopup } from '../../components/ShowPopup/ShowPopup'
@@ -14,51 +14,60 @@ const LoginPage = () => {
   const { login } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const handleLogin = async (ev) => {
-    ev.preventDefault()
-    if (!userName || !password) {
-      showPopup('Username and password are required', 'error')
-      return
-    }
+  const handleUserNameChange = useCallback(
+    (e) => setUserName(e.target.value),
+    []
+  )
+  const handlePasswordChange = useCallback(
+    (e) => setPassword(e.target.value),
+    []
+  )
 
-    setLoading(true)
-    console.log('Attempting login with:', { userName })
+  const payload = useMemo(() => ({ userName, password }), [userName, password])
 
-    try {
-      const data = await apiFetch('/users/login', {
-        method: 'POST',
-        data: { userName, password }
-      })
-
-      if (!data.user || !data.token) {
-        showPopup('Login failed: incomplete response from server', 'error')
-        console.error('Invalid login response:', data)
+  const handleLogin = useCallback(
+    async (ev) => {
+      ev.preventDefault()
+      if (!userName || !password) {
+        showPopup('Username and password are required', 'error')
         return
       }
 
-      localStorage.setItem('token', data.token)
+      setLoading(true)
 
-      const loggedInUser = {
-        _id: data.user._id,
-        userName: data.user.userName,
-        email: data.user.email,
-        role: data.user.role || 'user',
-        favourites: data.user.favourites || [],
-        token: data.token
+      try {
+        const data = await apiFetch('/users/login', {
+          method: 'POST',
+          data: payload
+        })
+
+        if (!data.user || !data.token) {
+          showPopup('Login failed: incomplete response from server', 'error')
+          return
+        }
+
+        localStorage.setItem('token', data.token)
+
+        const loggedInUser = {
+          _id: data.user._id,
+          userName: data.user.userName,
+          email: data.user.email,
+          role: data.user.role || 'user',
+          favourites: data.user.favourites || [],
+          token: data.token
+        }
+
+        login(loggedInUser)
+        showPopup('Logged in successfully', 'success')
+        navigate('/')
+      } catch (err) {
+        showPopup(err.message || 'Login failed. Please try again.', 'error')
+      } finally {
+        setLoading(false)
       }
-
-      console.log('Logging in user:', loggedInUser)
-      login(loggedInUser)
-
-      showPopup('Logged in successfully', 'success')
-      navigate('/')
-    } catch (err) {
-      console.error('Login error:', err)
-      showPopup(err.message || 'Login failed. Please try again.', 'error')
-    } finally {
-      setLoading(false)
-    }
-  }
+    },
+    [userName, password, payload, login, navigate]
+  )
 
   return (
     <div className='login-container'>
@@ -68,7 +77,7 @@ const LoginPage = () => {
           className='login-input'
           type='text'
           value={userName}
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={handleUserNameChange}
           placeholder='Username'
           disabled={loading}
         />
@@ -76,7 +85,7 @@ const LoginPage = () => {
         <PasswordInput
           name='password'
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
           placeholder='Password'
           disabled={loading}
         />
