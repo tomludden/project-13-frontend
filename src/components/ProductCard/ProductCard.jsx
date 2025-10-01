@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useMemo, useCallback } from 'react'
+import React, { useContext, useRef } from 'react'
 import mojs from '@mojs/core'
 import { AuthContext } from '/src/components/AuthContext'
 import { showPopup } from '../ShowPopup/ShowPopup.js'
@@ -9,7 +9,20 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
   const { user } = useContext(AuthContext)
   const buttonRef = useRef(null)
 
-  const animateHeart = useCallback(() => {
+  const handleFavouriteClick = () => {
+    if (!user?._id || !user?.token) {
+      showPopup('You must be logged in to add favourites', 'error')
+      return
+    }
+
+    if (!isFavourite) {
+      animateHeart()
+    }
+
+    onToggleFavourite(product)
+  }
+
+  const animateHeart = () => {
     if (!buttonRef.current) return
 
     const scaleCurve = mojs.easing.path(
@@ -57,28 +70,7 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
     const timeline = new mojs.Timeline()
     timeline.add(burst1, burst2, scaleTween)
     timeline.play()
-  }, [])
-
-  const handleFavouriteClick = useCallback(() => {
-    if (!user?._id || !user?.token) {
-      showPopup('You must be logged in to add favourites', 'error')
-      return
-    }
-
-    if (!isFavourite) {
-      animateHeart()
-    }
-
-    onToggleFavourite(product)
-  }, [user, isFavourite, product, onToggleFavourite, animateHeart])
-
-  const HeartIcon = useMemo(() => {
-    return isFavourite ? (
-      <AiFillHeart size={24} />
-    ) : (
-      <AiOutlineHeart size={24} />
-    )
-  }, [isFavourite])
+  }
 
   return (
     <div className='product-card'>
@@ -100,7 +92,13 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
         onClick={handleFavouriteClick}
         className={`heart-btn ${isFavourite ? 'active' : ''}`}
       >
-        <span className='heart-icon'>{HeartIcon}</span>
+        <span className='heart-icon'>
+          {isFavourite ? (
+            <AiFillHeart size={24} />
+          ) : (
+            <AiOutlineHeart size={24} />
+          )}
+        </span>
       </button>
     </div>
   )

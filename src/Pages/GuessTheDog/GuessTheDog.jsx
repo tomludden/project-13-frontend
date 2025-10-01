@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useReducer,
-  useCallback,
-  useMemo,
-  useState
-} from 'react'
+import React, { useEffect, useReducer, useCallback, useMemo } from 'react'
 import './GuessTheDog.css'
 import { DogImages } from '../../components/DogImages.js'
 import { GameTimer } from '../../components/GameTimer.js'
@@ -14,8 +8,6 @@ const STORAGE_KEY = 'guessTheDogProgress'
 
 const GuessTheDog = () => {
   const [state, dispatch] = useReducer(gameReducer, initialState)
-  const [hasSavedGame, setHasSavedGame] = useState(false)
-
   const { dogImages, correctBreed, score, lives, gameOver, timer, started } =
     state
 
@@ -27,7 +19,7 @@ const GuessTheDog = () => {
     if (saved) {
       try {
         const parsed = JSON.parse(saved)
-        setHasSavedGame(true)
+        dispatch({ type: 'LOAD_STATE', payload: parsed })
       } catch {
         localStorage.removeItem(STORAGE_KEY)
       }
@@ -59,22 +51,9 @@ const GuessTheDog = () => {
   )
 
   const startGame = useCallback(() => dispatch({ type: 'START_GAME' }), [])
-  const resumeGame = useCallback(() => {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved)
-        dispatch({ type: 'LOAD_STATE', payload: parsed })
-      } catch {
-        localStorage.removeItem(STORAGE_KEY)
-      }
-    }
-  }, [])
-
   const restartGame = useCallback(() => {
     dispatch({ type: 'RESET_GAME' })
     localStorage.removeItem(STORAGE_KEY)
-    setHasSavedGame(false)
   }, [])
 
   const ScoreLives = useMemo(
@@ -133,11 +112,6 @@ const GuessTheDog = () => {
           <button className='start-btn' onClick={startGame}>
             Start Game
           </button>
-          {hasSavedGame && (
-            <button className='resume-btn' onClick={resumeGame}>
-              Resume Game
-            </button>
-          )}
         </>
       )}
 
