@@ -36,7 +36,7 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
       y: 0,
       count: 12,
       children: {
-        shape: 'heart',
+        shape: 'circle',
         radius: 35,
         fill: ['red'],
         strokeWidth: 0,
@@ -51,7 +51,7 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
       y: 0,
       count: 10,
       children: {
-        shape: 'heart',
+        shape: 'circle',
         radius: 35,
         fill: ['red'],
         strokeWidth: 0,
