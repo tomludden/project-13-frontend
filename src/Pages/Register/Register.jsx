@@ -53,6 +53,7 @@ const RegisterPage = () => {
 
   return (
     <div className='register-container'>
+      <h1>Register</h1>
       <form onSubmit={handleRegister} id='form'>
         <input
           type='text'
