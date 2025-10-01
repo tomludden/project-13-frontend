@@ -1,14 +1,11 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import './PaginationControls.css'
 
 const PaginationControls = ({ currentPage, totalPages, goPrev, goNext }) => {
   if (totalPages <= 1) return null
 
-  const isFirstPage = useMemo(() => currentPage === 1, [currentPage])
-  const isLastPage = useMemo(
-    () => currentPage === totalPages,
-    [currentPage, totalPages]
-  )
+  const isFirstPage = currentPage === 1
+  const isLastPage = currentPage === totalPages
 
   const handlePrev = useCallback(() => {
     if (!isFirstPage) goPrev()
