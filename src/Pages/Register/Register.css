@@ -1,3 +1,19 @@
+.register-container {
+  max-width: 300px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: var(--alt-card-color);
+  border: 1px solid var(--button-border-color);
+  border-radius: 12px;
+}
+
+.register-container h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: var(--text-color, #333);
+}
+
 #form {
   display: flex;
   flex-direction: column;

@@ -52,33 +52,35 @@ const RegisterPage = () => {
   }
 
   return (
-    <form onSubmit={handleRegister} id='form'>
-      <input
-        type='text'
-        placeholder='Username'
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-        required
-      />
-      <input
-        type='email'
-        placeholder='Email'
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
+    <div className='register-container'>
+      <form onSubmit={handleRegister} id='form'>
+        <input
+          type='text'
+          placeholder='Username'
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          required
+        />
+        <input
+          type='email'
+          placeholder='Email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-      <PasswordInput
-        name='password'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder='Password'
-      />
+        <PasswordInput
+          name='password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder='Password'
+        />
 
-      <button type='submit' id='registerbtn'>
-        Register
-      </button>
-    </form>
+        <button type='submit' id='registerbtn'>
+          Register
+        </button>
+      </form>
+    </div>
   )
 }
 
