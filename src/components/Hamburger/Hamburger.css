@@ -57,7 +57,6 @@
   }
   .hamburger-menu.open a:active {
     color: var(--accent-color);
-    background-color: var(--button -color);
   }
   .hamburger-menu.open a:hover {
     color: var(--accent-color);

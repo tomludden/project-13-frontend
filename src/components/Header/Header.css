@@ -31,11 +31,12 @@ header {
 
 .nav-list li a:hover {
   color: var(--accent-color);
+  border-bottom: 1px solid black;
 }
 
-.nav-list a:active {
+.nav-list li a:active {
   color: var(--accent-color);
-  background-color: var(--button -color);
+  border-bottom: 1px solid black;
 }
 
 .auth-buttons {

@@ -28,6 +28,7 @@
   background-color: var(--fill-button-color);
   color: var(--fill-button-text);
   font-size: 14px;
+  height: 38px;
   border: none;
   border-radius: var(--button-border-radius);
   cursor: pointer;
@@ -37,4 +38,10 @@
 .filter button:hover {
   background-color: var(--fill-button-hover-color);
   transform: scale(1.05);
+}
+
+@media (max-width: 671px) {
+  .filter button {
+    height: 35px;
+  }
 }
