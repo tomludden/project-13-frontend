@@ -16,7 +16,7 @@
     z-index: 3000;
     position: fixed;
     top: 20px;
-    right: 30px;
+    right: 15px;
   }
 
   .hamburger-btn span {
@@ -133,10 +133,5 @@
       color: var(--accent-color);
       border-bottom: 1px solid black;
     }
-  }
-}
-@media (max-width: 400px) {
-  .hamburger-btn {
-    right: 15px;
   }
 }

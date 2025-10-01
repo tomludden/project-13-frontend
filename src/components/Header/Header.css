@@ -23,7 +23,6 @@ header {
 }
 
 .nav-list li a {
-  text-decoration: none;
   color: var(--text-color, #333);
   font-weight: 500;
   padding: 5px 10px;
@@ -32,6 +31,11 @@ header {
 
 .nav-list li a:hover {
   color: var(--accent-color);
+}
+
+.nav-list a:active {
+  color: var(--accent-color);
+  background-color: var(--button -color);
 }
 
 .auth-buttons {
