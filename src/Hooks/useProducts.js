@@ -29,7 +29,12 @@ export const useProducts = () => {
           method: 'GET'
         })
         const items = Array.isArray(data) ? data : data.products || []
-        setProducts((prev) => [...prev, ...items])
+
+        setProducts((prev) => {
+          const existingIds = new Set(prev.map((p) => p._id))
+          const newItems = items.filter((p) => !existingIds.has(p._id))
+          return [...prev, ...newItems]
+        })
       } catch (err) {
         console.error('Background fetch failed:', err.message)
       } finally {
