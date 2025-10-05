@@ -1,43 +1,53 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { apiFetch } from '../components/apiFetch'
 
 export const useProducts = () => {
   const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [loadingInitial, setLoadingInitial] = useState(true)
+  const [loadingRest, setLoadingRest] = useState(false)
   const [error, setError] = useState(null)
 
-  const normalizePrice = useCallback((p) => {
-    if (p.price != null) return { ...p, price: Number(p.price) }
-    const numericPrice = parseFloat(
-      `${p.priceWhole || 0}.${p.priceFraction || '00'}`
-    )
-    return { ...p, price: numericPrice }
+  useEffect(() => {
+    const fetchInitial = async () => {
+      setError(null)
+      try {
+        const data = await apiFetch('/products?page=1&limit=8', {
+          method: 'GET'
+        })
+        const items = Array.isArray(data) ? data : data.products || []
+        setProducts(items)
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setLoadingInitial(false)
+      }
+    }
+
+    const fetchRest = async () => {
+      try {
+        const data = await apiFetch('/products?page=2&limit=1000', {
+          method: 'GET'
+        })
+        const items = Array.isArray(data) ? data : data.products || []
+        setProducts((prev) => [...prev, ...items])
+      } catch (err) {
+        console.error('Background fetch failed:', err.message)
+      } finally {
+        setLoadingRest(false)
+      }
+    }
+
+    fetchInitial().then(() => {
+      setLoadingRest(true)
+      fetchRest()
+    })
   }, [])
 
-  const fetchProducts = useCallback(async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const data = await apiFetch('/products', { method: 'GET' })
-      const items = Array.isArray(data) ? data : data?.products
-
-      if (Array.isArray(items)) {
-        const normalized = items.map(normalizePrice)
-        setProducts(normalized)
-      } else {
-        setProducts([])
-      }
-    } catch (err) {
-      setError(err.message)
-      setProducts([])
-    } finally {
-      setLoading(false)
-    }
-  }, [normalizePrice])
-
-  useEffect(() => {
-    fetchProducts()
-  }, [fetchProducts])
-
-  return { products, loading, error }
+  return {
+    products,
+    loading: loadingInitial || loadingRest,
+    loadingInitial,
+    loadingRest,
+    error
+  }
 }

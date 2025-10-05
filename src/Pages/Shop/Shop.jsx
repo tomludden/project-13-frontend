@@ -13,7 +13,8 @@ import './Shop.css'
 
 const Shop = () => {
   const { user } = useContext(AuthContext)
-  const { products, loading, error } = useProducts()
+  const { products, loadingInitial, loadingRest, error } = useProducts()
+
   const { favourites, toggleFavourite, loadingIds } = useFavourites(user)
 
   const {
@@ -79,7 +80,7 @@ const Shop = () => {
         clearFilters={handleClearFilters}
       />
 
-      {isLoading && <DogLoader />}
+      {loadingInitial && <DogLoader />}
       {error && <p>Error: {error}</p>}
 
       <div className='products'>
