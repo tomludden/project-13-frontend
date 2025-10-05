@@ -56,8 +56,8 @@ const Shop = () => {
   }, [setPage, totalPages])
 
   const isLoading = useMemo(
-    () => loading || !products.length,
-    [loading, products]
+    () => loadingInitial || (!products.length && !error),
+    [loadingInitial, products.length, error]
   )
 
   return (
