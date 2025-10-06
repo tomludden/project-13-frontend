@@ -50,6 +50,7 @@ export const useProducts = () => {
 
   return {
     products,
+    setProducts,
     loading: loadingInitial || loadingRest,
     loadingInitial,
     loadingRest,

@@ -3,7 +3,8 @@ import { useFilters } from './useFilters'
 import { usePagination } from './usePagination'
 
 export const useSharedProducts = (pageSize = 8) => {
-  const { products, loadingInitial, loadingRest, error } = useProducts()
+  const { products, setProducts, loadingInitial, loadingRest, error } =
+    useProducts()
 
   const {
     searchTerm,
@@ -25,6 +26,7 @@ export const useSharedProducts = (pageSize = 8) => {
 
   return {
     products,
+    setProducts,
     filteredProducts,
     paginatedData,
     loadingInitial,
