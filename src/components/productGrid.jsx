@@ -12,6 +12,14 @@ const ProductGrid = ({
 }) => (
   <>
     <div className='product-list'>
+      <ProductCard
+        key={product._id}
+        product={product}
+        isFavourite={favourites.some((f) => f._id === product._id)}
+        onToggleFavourite={() => toggleFavourite(product)}
+        disabled={loadingIds.includes(product._id)}
+      />
+
       {products.length > 0 ? (
         products.map((product) => (
           <div key={product._id} className='product-card'>

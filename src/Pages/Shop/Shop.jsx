@@ -59,6 +59,9 @@ const Shop = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         setPage={setPage}
+        favourites={favourites}
+        toggleFavourite={toggleFavourite}
+        loadingIds={loadingIds}
       />
     </div>
   )

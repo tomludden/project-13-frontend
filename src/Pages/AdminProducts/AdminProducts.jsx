@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { useShopAndAdminSharedLogic } from '../../Hooks/useSharedProducts.js'
+import { useSharedProducts } from '../../Hooks/useSharedProducts'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import FilterControls from '../../FilterControls/FilterControls'
 import ProductGrid from '../../components/productGrid'
@@ -25,7 +25,7 @@ const AdminProducts = () => {
     currentPage,
     totalPages,
     setPage
-  } = useShopAndAdminSharedLogic()
+  } = useSharedProducts()
 
   const [editingProduct, setEditingProduct] = useState(null)
   const [showModal, setShowModal] = useState(false)
