@@ -8,30 +8,37 @@ const ProductGrid = ({
   setPage,
   onEdit,
   onDelete,
-  isAdmin = false
+  isAdmin = false,
+  favourites = [],
+  toggleFavourite,
+  loadingIds = []
 }) => (
   <>
     <div className='product-list'>
-      <ProductCard
-        key={product._id}
-        product={product}
-        isFavourite={favourites.some((f) => f._id === product._id)}
-        onToggleFavourite={() => toggleFavourite(product)}
-        disabled={loadingIds.includes(product._id)}
-      />
-
       {products.length > 0 ? (
-        products.map((product) => (
-          <div key={product._id} className='product-card'>
-            <ProductCard product={product} />
-            {isAdmin && (
-              <div className='card-buttons'>
-                <button onClick={() => onEdit(product)}>Edit</button>
-                <button onClick={() => onDelete(product)}>Delete</button>
-              </div>
-            )}
-          </div>
-        ))
+        products.map((product) => {
+          const isFavourite = favourites.some((f) => f._id === product._id)
+          const isDisabled = loadingIds.includes(product._id)
+
+          return (
+            <div key={product._id} className='product-card'>
+              <ProductCard
+                product={product}
+                isFavourite={isFavourite}
+                onToggleFavourite={
+                  toggleFavourite ? () => toggleFavourite(product) : undefined
+                }
+                disabled={isDisabled}
+              />
+              {isAdmin && (
+                <div className='card-buttons'>
+                  <button onClick={() => onEdit(product)}>Edit</button>
+                  <button onClick={() => onDelete(product)}>Delete</button>
+                </div>
+              )}
+            </div>
+          )
+        })
       ) : (
         <p>No products found.</p>
       )}
