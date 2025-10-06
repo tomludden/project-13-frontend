@@ -1,4 +1,3 @@
-// components/ProductGrid.jsx
 import ProductCard from './ProductCard/ProductCard'
 import PaginationControls from './PaginationControls/PaginationControls'
 

@@ -1,4 +1,3 @@
-// Hooks/useShopAndAdminSharedLogic.js
 import { useProducts } from './useProducts'
 import { useFilters } from './useFilters'
 import { usePagination } from './usePagination'

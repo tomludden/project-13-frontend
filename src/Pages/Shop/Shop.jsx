@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { AuthContext } from '../components/AuthContext'
-import { useFavourites } from '../Hooks/useFavourites'
+import { AuthContext } from '../../components/AuthContext'
+import { useFavourites } from '../../Hooks/useFavourites'
 import { useShopAndAdminSharedLogic } from '../Hooks/useShopAndAdminSharedLogic'
 import ProductGrid from '../../components/productGrid'
 
