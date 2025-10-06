@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { useShopAndAdminSharedLogic } from '../../Hooks/useShopAndAdminSharedLogic'
+import { useShopAndAdminSharedLogic } from '../../Hooks/useSharedProducts.js'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import FilterControls from '../../FilterControls/FilterControls'
 import ProductGrid from '../../components/productGrid'
