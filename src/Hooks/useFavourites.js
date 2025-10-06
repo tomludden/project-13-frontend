@@ -68,8 +68,24 @@ export const useFavourites = () => {
   )
 
   useEffect(() => {
-    fetchFavourites()
-  }, [fetchFavourites])
+    if (!user?._id) return
+    const fetch = async () => {
+      try {
+        const data = await apiFetch(`/users/${user._id}/favourites`, {
+          method: 'GET',
+          headers: { Authorization: `Bearer ${user.token}` }
+        })
+        const favProducts = Array.isArray(data.favourites)
+          ? data.favourites
+          : []
+        setFavourites(favProducts)
+        updateUserFavourites(favProducts)
+      } catch (err) {
+        console.error('fetchFavourites error:', err)
+      }
+    }
+    fetch()
+  }, [user._id, user.token])
 
   return { favourites, loadingIds, fetchFavourites, toggleFavourite }
 }

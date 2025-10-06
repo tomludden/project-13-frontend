@@ -1,25 +1,26 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
+import { useProducts } from '../../Hooks/useProducts.js'
+import { useFilters } from '../../Hooks/useFilters.js'
+import { usePagination } from '../../Hooks/usePagination.js'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import FilterControls from '../../FilterControls/FilterControls.jsx'
-import { useFilters } from '../../Hooks/useFilters.js'
 import PaginationControls from '../../components/PaginationControls/PaginationControls'
-import { usePagination } from '../../Hooks/usePagination.js'
 import ProductForm from '../../components/ProductForm/ProductForm'
 import DogLoader from '../../components/DogLoader/DogLoader'
-import './AdminProducts.css'
 import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
 import { apiFetch } from '../../components/apiFetch'
+import './AdminProducts.css'
 
 const PLACEHOLDER = './assets/images/placeholder.png'
 
 const AdminProducts = () => {
-  const [products, setProducts] = useState([])
+  const { products, loadingInitial, error } = useProducts()
+
   const [editingProduct, setEditingProduct] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [loading, setLoading] = useState(true)
 
   const {
     searchTerm,
@@ -41,26 +42,15 @@ const AdminProducts = () => {
     setPage
   } = usePagination(filteredProducts, 8)
 
-  useEffect(() => {
-    fetchProducts()
-  }, [])
+  const handleSearchChange = useCallback(
+    (e) => setSearchTerm(e.target.value),
+    [setSearchTerm]
+  )
 
-  useEffect(() => {
+  const handleClearFilters = useCallback(() => {
+    clearFilters()
     setPage(1)
-  }, [searchTerm, size, maxPrice, minRating, setPage])
-
-  const fetchProducts = useCallback(async () => {
-    setLoading(true)
-    try {
-      const data = await apiFetch('/products', { method: 'GET' })
-      const items = Array.isArray(data) ? data : data.products
-      setProducts(items || [])
-    } catch (err) {
-      console.error(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }, [])
+  }, [clearFilters, setPage])
 
   const openModal = useCallback((product = null) => {
     setEditingProduct(product)
@@ -103,12 +93,8 @@ const AdminProducts = () => {
         })
 
         if (editingProduct) {
-          setProducts((prev) =>
-            prev.map((p) => (p._id === data.product._id ? data.product : p))
-          )
           showPopup('Product edited successfully')
         } else {
-          setProducts((prev) => [...prev, data.product])
           showPopup('Product added successfully')
         }
 
@@ -130,18 +116,12 @@ const AdminProducts = () => {
         headers: { Authorization: `Bearer ${token}` }
       })
 
-      setProducts((prev) => prev.filter((p) => p._id !== selectedProduct._id))
-      closeDeleteModal()
       showPopup('Product deleted successfully')
+      closeDeleteModal()
     } catch (err) {
       console.error(err.message)
     }
   }, [selectedProduct, closeDeleteModal])
-
-  const handleClearFilters = useCallback(() => {
-    clearFilters()
-    setPage(1)
-  }, [clearFilters, setPage])
 
   return (
     <div className='admin-products'>
@@ -149,7 +129,7 @@ const AdminProducts = () => {
 
       <SearchBar
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={handleSearchChange}
         placeholder='Search products...'
       />
 
@@ -167,48 +147,45 @@ const AdminProducts = () => {
         +
       </button>
 
-      {loading ? (
-        <DogLoader />
-      ) : (
-        <>
-          <div className='product-list'>
-            {visibleProducts.length > 0 ? (
-              visibleProducts.map((p) => (
-                <div key={p._id} className='product-card'>
-                  <a
-                    href={p.url || '#'}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='product-link'
-                  >
-                    <img
-                      src={p.imageUrl || PLACEHOLDER}
-                      alt={p.name}
-                      loading='lazy'
-                    />
-                    <h4>{p.name || 'Unnamed'}</h4>
-                  </a>
-                  <p>€{Number(p.price).toFixed(2)}</p>
-                  {p.rating && <p>Rating: {p.rating} ⭐</p>}
-                  <div className='card-buttons'>
-                    <button onClick={() => openModal(p)}>Edit</button>
-                    <button onClick={() => openDeleteModal(p)}>Delete</button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>No products found.</p>
-            )}
-          </div>
+      {loadingInitial && <DogLoader />}
+      {error && <p>Error: {error}</p>}
 
-          <PaginationControls
-            currentPage={currentPage}
-            totalPages={totalPages}
-            goPrev={() => setPage(currentPage - 1)}
-            goNext={() => setPage(currentPage + 1)}
-          />
-        </>
-      )}
+      <div className='product-list'>
+        {visibleProducts.length > 0 ? (
+          visibleProducts.map((p) => (
+            <div key={p._id} className='product-card'>
+              <a
+                href={p.url || '#'}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='product-link'
+              >
+                <img
+                  src={p.imageUrl || PLACEHOLDER}
+                  alt={p.name}
+                  loading='lazy'
+                />
+                <h4>{p.name || 'Unnamed'}</h4>
+              </a>
+              <p>€{Number(p.price).toFixed(2)}</p>
+              {p.rating && <p>Rating: {p.rating} ⭐</p>}
+              <div className='card-buttons'>
+                <button onClick={() => openModal(p)}>Edit</button>
+                <button onClick={() => openDeleteModal(p)}>Delete</button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No products found.</p>
+        )}
+      </div>
+
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        goPrev={() => setPage(currentPage - 1)}
+        goNext={() => setPage(currentPage + 1)}
+      />
 
       {showModal && (
         <div className='modal-overlay' onClick={closeModal}>
