@@ -11,6 +11,8 @@ import { showPopup } from '../../components/ShowPopup/ShowPopup'
 
 const AdminProducts = () => {
   const {
+    products,
+    setProducts,
     paginatedData,
     loadingInitial,
     error,
@@ -57,18 +59,29 @@ const AdminProducts = () => {
     async (formData) => {
       const token = localStorage.getItem('token')
       try {
-        await apiFetch('/products/save', {
+        const response = await apiFetch('/products/save', {
           method: 'POST',
           data: { ...formData, id: editingProduct?._id },
           headers: { Authorization: `Bearer ${token}` }
         })
+
+        const updatedProduct = response.data || formData
+
+        setProducts((prev) =>
+          editingProduct
+            ? prev.map((p) =>
+                p._id === updatedProduct._id ? updatedProduct : p
+              )
+            : [...prev, updatedProduct]
+        )
+
         showPopup(editingProduct ? 'Product edited' : 'Product added')
         closeModal()
       } catch (err) {
         console.error(err.message)
       }
     },
-    [editingProduct, closeModal]
+    [editingProduct, closeModal, setProducts]
   )
 
   const confirmDelete = useCallback(async () => {
@@ -78,12 +91,15 @@ const AdminProducts = () => {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       })
+
+      setProducts((prev) => prev.filter((p) => p._id !== selectedProduct._id))
+
       showPopup('Product deleted')
       closeDeleteModal()
     } catch (err) {
       console.error(err.message)
     }
-  }, [selectedProduct, closeDeleteModal])
+  }, [selectedProduct, closeDeleteModal, setProducts])
 
   return (
     <div className='admin-products'>
