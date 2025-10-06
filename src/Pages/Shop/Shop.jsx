@@ -1,11 +1,11 @@
 import { useContext } from 'react'
-import { AuthContext } from '../components/AuthContext'
-import { useFavourites } from '../Hooks/useFavourites'
-import { useSharedProducts } from '../Hooks/useSharedProducts'
-import SearchBar from '../components/SearchBar/SearchBar'
-import FilterControls from '../FilterControls/FilterControls'
-import ProductGrid from '../components/ProductGrid'
-import DogLoader from '../components/DogLoader/DogLoader'
+import { AuthContext } from '../../components/AuthContext'
+import { useFavourites } from '../../Hooks/useFavourites'
+import { useSharedProducts } from '../../Hooks/useSharedProducts'
+import SearchBar from '../../components/SearchBar/SearchBar'
+import FilterControls from '../../FilterControls/FilterControls'
+import ProductGrid from '../../components/productGrid'
+import DogLoader from '../../components/DogLoader/DogLoader'
 
 const Shop = () => {
   const { user } = useContext(AuthContext)

@@ -1,12 +1,12 @@
 import { useState, useCallback } from 'react'
-import { useShopAndAdminSharedLogic } from '../Hooks/useShopAndAdminSharedLogic'
-import SearchBar from '../components/SearchBar/SearchBar'
-import FilterControls from '../FilterControls/FilterControls'
-import ProductGrid from '../components/ProductGrid'
-import DogLoader from '../components/DogLoader/DogLoader'
-import ProductForm from '../components/ProductForm/ProductForm'
-import { apiFetch } from '../components/apiFetch'
-import { showPopup } from '../components/ShowPopup/ShowPopup'
+import { useShopAndAdminSharedLogic } from '../../Hooks/useShopAndAdminSharedLogic'
+import SearchBar from '../../components/SearchBar/SearchBar'
+import FilterControls from '../../FilterControls/FilterControls'
+import ProductGrid from '../../components/productGrid'
+import DogLoader from '../../components/DogLoader/DogLoader'
+import ProductForm from '../../components/ProductForm/ProductForm'
+import { apiFetch } from '../../components/apiFetch'
+import { showPopup } from '../../components/ShowPopup/ShowPopup'
 
 const AdminProducts = () => {
   const {
