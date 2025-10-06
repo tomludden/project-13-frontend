@@ -28,9 +28,9 @@
   text-align: center;
   transition: transform 0.2s;
   display: flex;
-  gap: 10px;
+  gap: 20px;
   flex-direction: column;
-  justify-content: space-between;
+  /*  justify-content: space-between; */
   height: 600px;
   margin-bottom: 15px;
 }

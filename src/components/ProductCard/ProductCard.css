@@ -11,6 +11,11 @@
 .product-card:hover {
   transform: scale(1.02);
 }
+
+.fill-heart,
+.line-heart {
+  font-size: 30px;
+}
 .heart-btn {
   position: absolute;
   bottom: 10px;

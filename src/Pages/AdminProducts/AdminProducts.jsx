@@ -1,21 +1,27 @@
-import './AdminProducts.css'
-import { useState, useCallback } from 'react'
-import { useSharedProducts } from '../../Hooks/useSharedProducts'
+import { useState, useEffect, useCallback } from 'react'
 import SearchBar from '../../components/SearchBar/SearchBar'
-import FilterControls from '../../FilterControls/FilterControls'
-import ProductGrid from '../../components/productGrid'
-import DogLoader from '../../components/DogLoader/DogLoader'
+import FilterControls from '../../FilterControls/FilterControls.jsx'
+import { useFilters } from '../../Hooks/useFilters.js'
+import PaginationControls from '../../components/PaginationControls/PaginationControls'
+import { usePagination } from '../../Hooks/usePagination.js'
 import ProductForm from '../../components/ProductForm/ProductForm'
+import DogLoader from '../../components/DogLoader/DogLoader'
+import './AdminProducts.css'
+import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
 import { apiFetch } from '../../components/apiFetch'
-import { showPopup } from '../../components/ShowPopup/ShowPopup'
+
+const PLACEHOLDER = './assets/images/placeholder.png'
 
 const AdminProducts = () => {
+  const [products, setProducts] = useState([])
+  const [editingProduct, setEditingProduct] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [loading, setLoading] = useState(true)
+
   const {
-    products,
-    setProducts,
-    paginatedData,
-    loadingInitial,
-    error,
     searchTerm,
     setSearchTerm,
     size,
@@ -24,16 +30,37 @@ const AdminProducts = () => {
     setMaxPrice,
     minRating,
     setMinRating,
-    clearFilters,
-    currentPage,
-    totalPages,
-    setPage
-  } = useSharedProducts()
+    filteredProducts,
+    clearFilters
+  } = useFilters(products)
 
-  const [editingProduct, setEditingProduct] = useState(null)
-  const [showModal, setShowModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState(null)
+  const {
+    paginatedData: visibleProducts,
+    totalPages,
+    currentPage,
+    setPage
+  } = usePagination(filteredProducts, 8)
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
+
+  useEffect(() => {
+    setPage(1)
+  }, [searchTerm, size, maxPrice, minRating, setPage])
+
+  const fetchProducts = useCallback(async () => {
+    setLoading(true)
+    try {
+      const data = await apiFetch('/products', { method: 'GET' })
+      const items = Array.isArray(data) ? data : data.products
+      setProducts(items || [])
+    } catch (err) {
+      console.error(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
 
   const openModal = useCallback((product = null) => {
     setEditingProduct(product)
@@ -56,32 +83,43 @@ const AdminProducts = () => {
   }, [])
 
   const handleSave = useCallback(
-    async (formData) => {
-      const token = localStorage.getItem('token')
+    async ({ name, price, description, imageUrl, publicId }) => {
+      setIsSubmitting(true)
       try {
-        const response = await apiFetch('/products/save', {
+        const token = localStorage.getItem('token')
+        const payload = {
+          id: editingProduct?._id,
+          name,
+          price,
+          description,
+          imageUrl,
+          publicId
+        }
+
+        const data = await apiFetch('/products/save', {
           method: 'POST',
-          data: { ...formData, id: editingProduct?._id },
+          data: payload,
           headers: { Authorization: `Bearer ${token}` }
         })
 
-        const updatedProduct = response.data || formData
+        if (editingProduct) {
+          setProducts((prev) =>
+            prev.map((p) => (p._id === data.product._id ? data.product : p))
+          )
+          showPopup('Product edited successfully')
+        } else {
+          setProducts((prev) => [...prev, data.product])
+          showPopup('Product added successfully')
+        }
 
-        setProducts((prev) =>
-          editingProduct
-            ? prev.map((p) =>
-                p._id === updatedProduct._id ? updatedProduct : p
-              )
-            : [...prev, updatedProduct]
-        )
-
-        showPopup(editingProduct ? 'Product edited' : 'Product added')
         closeModal()
       } catch (err) {
         console.error(err.message)
+      } finally {
+        setIsSubmitting(false)
       }
     },
-    [editingProduct, closeModal, setProducts]
+    [editingProduct, closeModal]
   )
 
   const confirmDelete = useCallback(async () => {
@@ -93,13 +131,17 @@ const AdminProducts = () => {
       })
 
       setProducts((prev) => prev.filter((p) => p._id !== selectedProduct._id))
-
-      showPopup('Product deleted')
       closeDeleteModal()
+      showPopup('Product deleted successfully')
     } catch (err) {
       console.error(err.message)
     }
-  }, [selectedProduct, closeDeleteModal, setProducts])
+  }, [selectedProduct, closeDeleteModal])
+
+  const handleClearFilters = useCallback(() => {
+    clearFilters()
+    setPage(1)
+  }, [clearFilters, setPage])
 
   return (
     <div className='admin-products'>
@@ -118,35 +160,64 @@ const AdminProducts = () => {
         setMaxPrice={setMaxPrice}
         minRating={minRating}
         setMinRating={setMinRating}
-        clearFilters={() => {
-          clearFilters()
-          setPage(1)
-        }}
+        clearFilters={handleClearFilters}
       />
 
       <button className='add-btn' onClick={() => openModal()}>
         +
       </button>
 
-      {loadingInitial && <DogLoader />}
-      {error && <p>Error: {error}</p>}
+      {loading ? (
+        <DogLoader />
+      ) : (
+        <>
+          <div className='product-list'>
+            {visibleProducts.length > 0 ? (
+              visibleProducts.map((p) => (
+                <div key={p._id} className='product-card'>
+                  <a
+                    href={p.url || '#'}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='product-link'
+                  >
+                    <img
+                      src={p.imageUrl || PLACEHOLDER}
+                      alt={p.name}
+                      loading='lazy'
+                    />
+                    <h4>{p.name || 'Unnamed'}</h4>
+                  </a>
+                  <p>€{Number(p.price).toFixed(2)}</p>
+                  {p.rating && <p>Rating: {p.rating} ⭐</p>}
+                  <div className='card-buttons'>
+                    <button onClick={() => openModal(p)}>Edit</button>
+                    <button onClick={() => openDeleteModal(p)}>Delete</button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No products found.</p>
+            )}
+          </div>
 
-      <ProductGrid
-        products={paginatedData}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setPage={setPage}
-        onEdit={openModal}
-        onDelete={openDeleteModal}
-        isAdmin={true}
-      />
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            goPrev={() => setPage(currentPage - 1)}
+            goNext={() => setPage(currentPage + 1)}
+          />
+        </>
+      )}
 
       {showModal && (
         <div className='modal-overlay' onClick={closeModal}>
           <div className='modal-content' onClick={(e) => e.stopPropagation()}>
             <h3>{editingProduct ? 'Edit Product' : 'Add Product'}</h3>
             <ProductForm
+              className='edit-form'
               initialData={editingProduct || {}}
+              isSubmitting={isSubmitting}
               onCancel={closeModal}
               onSubmit={handleSave}
             />
@@ -159,7 +230,8 @@ const AdminProducts = () => {
           <div className='modal-content' onClick={(e) => e.stopPropagation()}>
             <h3>Confirm Delete</h3>
             <p>
-              Delete <strong>{selectedProduct?.name}</strong>?
+              Are you sure you want to delete{' '}
+              <strong>{selectedProduct?.name}</strong>?
             </p>
             <div className='modal-buttons'>
               <button className='confirm-btn' onClick={confirmDelete}>

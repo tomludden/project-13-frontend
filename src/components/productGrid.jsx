@@ -1,4 +1,4 @@
-import ProductCard from './ProductCard/ProductCard'
+/* import ProductCard from './ProductCard/ProductCard'
 import PaginationControls from './PaginationControls/PaginationControls'
 
 const ProductGrid = ({
@@ -26,11 +26,13 @@ const ProductGrid = ({
               product={product}
               isFavourite={isFavourite}
               onToggleFavourite={
-                toggleFavourite ? () => toggleFavourite(product) : undefined
+                !isAdmin && toggleFavourite
+                  ? () => toggleFavourite(product)
+                  : undefined
               }
               disabled={isDisabled}
-              onEdit={isAdmin ? onEdit : undefined}
-              onDelete={isAdmin ? onDelete : undefined}
+              onEdit={isAdmin ? () => onEdit(product) : undefined}
+              onDelete={isAdmin ? () => onDelete(product) : undefined}
             />
           )
         })
@@ -49,3 +51,4 @@ const ProductGrid = ({
 )
 
 export default ProductGrid
+ */

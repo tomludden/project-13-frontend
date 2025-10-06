@@ -1,4 +1,4 @@
-import { useProducts } from './useProducts'
+/* import { useProducts } from './useProducts'
 import { useFilters } from './useFilters'
 import { usePagination } from './usePagination'
 
@@ -46,3 +46,4 @@ export const useSharedProducts = (pageSize = 8) => {
     setPage
   }
 }
+ */
