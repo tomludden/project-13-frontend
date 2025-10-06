@@ -1,3 +1,4 @@
+import './AdminProducts.css'
 import { useState, useCallback } from 'react'
 import { useSharedProducts } from '../../Hooks/useSharedProducts'
 import SearchBar from '../../components/SearchBar/SearchBar'
