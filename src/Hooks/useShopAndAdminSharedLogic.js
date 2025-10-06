@@ -2,7 +2,7 @@ import { useProducts } from './useProducts'
 import { useFilters } from './useFilters'
 import { usePagination } from './usePagination'
 
-export const useShopAndAdminSharedLogic = (pageSize = 8) => {
+export const useSharedProducts = (pageSize = 8) => {
   const { products, loadingInitial, loadingRest, error } = useProducts()
 
   const {
