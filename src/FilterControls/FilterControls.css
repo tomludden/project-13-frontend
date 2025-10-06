@@ -41,7 +41,11 @@
 }
 
 @media (max-width: 671px) {
+  .filter select,
+  .filter input,
   .filter button {
+    width: 100px;
     height: 35px;
+    font-size: 12px;
   }
 }
