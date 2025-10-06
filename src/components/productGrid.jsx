@@ -21,22 +21,17 @@ const ProductGrid = ({
           const isDisabled = loadingIds.includes(product._id)
 
           return (
-            <div key={product._id} className='product-card'>
-              <ProductCard
-                product={product}
-                isFavourite={isFavourite}
-                onToggleFavourite={
-                  toggleFavourite ? () => toggleFavourite(product) : undefined
-                }
-                disabled={isDisabled}
-              />
-              {isAdmin && (
-                <div className='card-buttons'>
-                  <button onClick={() => onEdit(product)}>Edit</button>
-                  <button onClick={() => onDelete(product)}>Delete</button>
-                </div>
-              )}
-            </div>
+            <ProductCard
+              key={product._id}
+              product={product}
+              isFavourite={isFavourite}
+              onToggleFavourite={
+                toggleFavourite ? () => toggleFavourite(product) : undefined
+              }
+              disabled={isDisabled}
+              onEdit={isAdmin ? onEdit : undefined}
+              onDelete={isAdmin ? onDelete : undefined}
+            />
           )
         })
       ) : (
