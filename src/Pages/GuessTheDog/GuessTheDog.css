@@ -22,8 +22,7 @@ h1 {
   border: none;
   border-radius: var(--button-border-radius);
   cursor: pointer;
-  margin-top: 20svh;
-  margin: 0px 20px;
+  margin: 50px 20px;
 }
 
 .start-btn:hover {
