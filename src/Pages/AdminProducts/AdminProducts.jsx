@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
+import { useProducts } from '../../Hooks/useProducts'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import FilterControls from '../../FilterControls/FilterControls.jsx'
 import { useFilters } from '../../Hooks/useFilters.js'
@@ -13,13 +14,13 @@ import { apiFetch } from '../../components/apiFetch'
 const PLACEHOLDER = './assets/images/placeholder.png'
 
 const AdminProducts = () => {
-  const [products, setProducts] = useState([])
+  const { products, setProducts, loading, error } = useProducts()
+
   const [editingProduct, setEditingProduct] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [loading, setLoading] = useState(true)
 
   const {
     searchTerm,
@@ -42,25 +43,8 @@ const AdminProducts = () => {
   } = usePagination(filteredProducts, 8)
 
   useEffect(() => {
-    fetchProducts()
-  }, [])
-
-  useEffect(() => {
     setPage(1)
   }, [searchTerm, size, maxPrice, minRating, setPage])
-
-  const fetchProducts = useCallback(async () => {
-    setLoading(true)
-    try {
-      const data = await apiFetch('/products', { method: 'GET' })
-      const items = Array.isArray(data) ? data : data.products
-      setProducts(items || [])
-    } catch (err) {
-      console.error(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }, [])
 
   const openModal = useCallback((product = null) => {
     setEditingProduct(product)
@@ -119,7 +103,7 @@ const AdminProducts = () => {
         setIsSubmitting(false)
       }
     },
-    [editingProduct, closeModal]
+    [editingProduct, closeModal, setProducts]
   )
 
   const confirmDelete = useCallback(async () => {
@@ -136,7 +120,7 @@ const AdminProducts = () => {
     } catch (err) {
       console.error(err.message)
     }
-  }, [selectedProduct, closeDeleteModal])
+  }, [selectedProduct, closeDeleteModal, setProducts])
 
   const handleClearFilters = useCallback(() => {
     clearFilters()
@@ -169,6 +153,8 @@ const AdminProducts = () => {
 
       {loading ? (
         <DogLoader />
+      ) : error ? (
+        <p>Error: {error}</p>
       ) : (
         <>
           <div className='product-list'>

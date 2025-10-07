@@ -13,7 +13,7 @@ import './Shop.css'
 
 const Shop = () => {
   const { user } = useContext(AuthContext)
-  const { products, loadingInitial, loadingRest, error } = useProducts()
+  const { products, loadingInitial, error } = useProducts()
 
   const { favourites, toggleFavourite, loadingIds } = useFavourites(user)
 
