@@ -33,9 +33,7 @@ const Home = () => {
     () => (
       <div className='fun-options fade-in'>
         <button onClick={() => goTo('/guess-the-dog')}>Dog Game</button>
-        <button onClick={() => goTo('/dog-questionnaire')}>
-          My Perfect Dog
-        </button>
+        <button onClick={() => goTo('/suitable-dog')}>My Perfect Dog</button>
         <button onClick={() => goTo('/fun-dog-facts')}>Fun Dog Facts</button>
       </div>
     ),
