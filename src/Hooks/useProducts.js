@@ -15,7 +15,8 @@ export const useProducts = () => {
           method: 'GET'
         })
         const items = Array.isArray(data) ? data : data.products || []
-        setProducts(items)
+        const validItems = items.filter((p) => p && p._id)
+        setProducts(validItems)
       } catch (err) {
         setError(err.message)
       } finally {
@@ -29,10 +30,11 @@ export const useProducts = () => {
           method: 'GET'
         })
         const items = Array.isArray(data) ? data : data.products || []
+        const validItems = items.filter((p) => p && p._id)
 
         setProducts((prev) => {
           const existingIds = new Set(prev.map((p) => p._id))
-          const newItems = items.filter((p) => !existingIds.has(p._id))
+          const newItems = validItems.filter((p) => !existingIds.has(p._id))
           return [...prev, ...newItems]
         })
       } catch (err) {

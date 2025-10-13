@@ -6,6 +6,7 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import './ProductCard.css'
 
 const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
+  if (!product || !product._id) return null
   const { user } = useContext(AuthContext)
   const buttonRef = useRef(null)
 

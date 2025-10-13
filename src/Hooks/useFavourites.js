@@ -10,13 +10,12 @@ export const useFavourites = () => {
   const [loadingIds, setLoadingIds] = useState([])
 
   const fetchFavourites = useCallback(async () => {
-    if (!user?._id) return
+    if (!user || !user._id || !user.token) return
     try {
       const data = await apiFetch(`/users/${user._id}/favourites`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${user.token}` }
       })
-
       const favProducts = Array.isArray(data.favourites) ? data.favourites : []
       setFavourites(favProducts)
       updateUserFavourites(favProducts)
@@ -26,22 +25,22 @@ export const useFavourites = () => {
   }, [user, updateUserFavourites])
 
   const toggleFavourite = useCallback(
-    async (product, e) => {
-      if (!user?._id) {
+    async (product) => {
+      if (!user || !user._id || !user.token) {
         showPopup('You must be logged in', 'error')
         return
       }
 
+      if (!product || !product._id) return
+
       const exists = favourites.some((f) => f._id === product._id)
 
-      setFavourites((prev) =>
-        exists ? prev.filter((f) => f._id !== product._id) : [...prev, product]
-      )
-      updateUserFavourites(
-        exists
-          ? favourites.filter((f) => f._id !== product._id)
-          : [...favourites, product]
-      )
+      const updatedFavourites = exists
+        ? favourites.filter((f) => f._id !== product._id)
+        : [...favourites, product]
+
+      setFavourites(updatedFavourites)
+      updateUserFavourites(updatedFavourites)
       setLoadingIds((prev) => [...prev, product._id])
 
       try {
@@ -68,24 +67,9 @@ export const useFavourites = () => {
   )
 
   useEffect(() => {
-    if (!user?._id) return
-    const fetch = async () => {
-      try {
-        const data = await apiFetch(`/users/${user._id}/favourites`, {
-          method: 'GET',
-          headers: { Authorization: `Bearer ${user.token}` }
-        })
-        const favProducts = Array.isArray(data.favourites)
-          ? data.favourites
-          : []
-        setFavourites(favProducts)
-        updateUserFavourites(favProducts)
-      } catch (err) {
-        console.error('fetchFavourites error:', err)
-      }
-    }
-    fetch()
-  }, [user._id, user.token])
+    if (!user || !user._id || !user.token) return
+    fetchFavourites()
+  }, [user, fetchFavourites])
 
   return { favourites, loadingIds, fetchFavourites, toggleFavourite }
 }

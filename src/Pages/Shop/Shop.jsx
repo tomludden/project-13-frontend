@@ -84,20 +84,22 @@ const Shop = () => {
       {error && <p>Error: {error}</p>}
 
       <div className='products'>
-        {currentItems.map((product) => {
-          const isFavourite = favourites.some((f) => f._id === product._id)
-          const isDisabled = loadingIds.includes(product._id)
+        {currentItems
+          .filter((product) => product && product._id)
+          .map((product) => {
+            const isFavourite = favourites.some((f) => f._id === product._id)
+            const isDisabled = loadingIds.includes(product._id)
 
-          return (
-            <ProductCard
-              key={product._id}
-              product={product}
-              isFavourite={isFavourite}
-              onToggleFavourite={() => toggleFavourite(product)}
-              disabled={isDisabled}
-            />
-          )
-        })}
+            return (
+              <ProductCard
+                key={product._id}
+                product={product}
+                isFavourite={isFavourite}
+                onToggleFavourite={() => toggleFavourite(product)}
+                disabled={isDisabled}
+              />
+            )
+          })}
       </div>
 
       <PaginationControls
