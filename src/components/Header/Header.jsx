@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import './Header.css'
 import { AuthContext } from '../../components/AuthContext.jsx'
 import Hamburger from '../Hamburger/Hamburger.jsx'
-import { FaHeart, FaUser } from 'react-icons/fa'
+import { FaHeart, FaUser, FaHome, FaShoppingCart } from 'react-icons/fa'
 
 const Header = React.memo(() => {
   const { user, logout } = useContext(AuthContext)
@@ -74,16 +74,24 @@ const Header = React.memo(() => {
       </header>
 
       <div className='mobile-header'>
-        {isLoggedIn && (
-          <div className='mobile-icons'>
-            <NavLink to='/favourites' className='mobile-icon'>
-              <FaHeart size={24} />
-            </NavLink>
-            <NavLink to='/profile' className='mobile-icon'>
-              <FaUser size={24} />
-            </NavLink>
-          </div>
-        )}
+        <div className='mobile-icons'>
+          <NavLink to='/' className='mobile-icon'>
+            <FaHome size={24} />
+          </NavLink>
+          <NavLink to='/shop' className='mobile-icon'>
+            <FaShoppingCart size={24} />
+          </NavLink>
+          {isLoggedIn && (
+            <>
+              <NavLink to='/favourites' className='mobile-icon'>
+                <FaHeart size={24} />
+              </NavLink>
+              <NavLink to='/profile' className='mobile-icon'>
+                <FaUser size={24} />
+              </NavLink>
+            </>
+          )}
+        </div>
         <Hamburger />
       </div>
     </>
