@@ -6,11 +6,12 @@ import React, {
   useCallback
 } from 'react'
 import { AuthContext } from '../../components/AuthContext.jsx'
-import './Profile.css'
 import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
+import Button from '../../components/Buttons/Button.jsx'
 import PasswordInput from '../../components/PasswordInput/PasswordInput.jsx'
 import { useNavigate } from 'react-router-dom'
 import { apiFetch } from '../../components/apiFetch.js'
+import './Profile.css'
 
 const Profile = () => {
   const { user, setUser } = useContext(AuthContext)
@@ -153,16 +154,27 @@ const Profile = () => {
         </label>
 
         <div className='profile-buttons'>
-          <button
-            className='update-btn'
+          <Button
+            variant='secondary'
+            className='profile-update-button'
             onClick={handleUpdate}
             disabled={loading}
+            loading={loading}
+            loadingText='Updating...'
           >
-            {loading ? 'Updating...' : 'Update Account'}
-          </button>
-          <button className='delete-btn' onClick={() => setConfirmDelete(true)}>
+            Update Account
+          </Button>
+
+          <Button
+            variant='primary'
+            className='profile-delete-button'
+            onClick={() => setConfirmDelete(true)}
+            disabled={loading}
+            loading={loading}
+            loadingText='Deleting...'
+          >
             Delete Account
-          </button>
+          </Button>
         </div>
       </div>
 

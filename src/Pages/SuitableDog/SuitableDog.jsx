@@ -2,6 +2,7 @@ import './SuitableDog.css'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import mergedDogsFull from '/public/mergedDogsFull.json'
 import DogLoader from '../../components/DogLoader/DogLoader'
+import Button from '../../components/Buttons/Button'
 
 const STORAGE_KEY = 'suitableDogProgress'
 
@@ -10,6 +11,7 @@ export default function SuitableDog() {
   const [current, setCurrent] = useState(0)
   const [answers, setAnswers] = useState({})
   const [finished, setFinished] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [results, setResults] = useState([])
   const [selectedDog, setSelectedDog] = useState(null)
 
@@ -193,9 +195,13 @@ export default function SuitableDog() {
         </div>
 
         <div className='repeat'>
-          <button className='repeatButton' onClick={resetQuiz}>
+          <Button
+            variant='primary'
+            className='repeat-button'
+            onClick={resetQuiz}
+          >
             Repeat
-          </button>
+          </Button>
         </div>
 
         {selectedDog && <DogPopup dog={selectedDog} onClose={closePopup} />}
@@ -215,23 +221,25 @@ export default function SuitableDog() {
 
       <div className='options'>
         {question.options.map((opt) => (
-          <button
+          <Button
+            variant='primary'
             key={`${question.id}-${opt.value}`}
             className='optionInput'
             onClick={() => handleAnswer(question.id, opt.value)}
           >
             {opt.label}
-          </button>
+          </Button>
         ))}
       </div>
 
-      <button
+      <Button
+        variant='primary'
         className='questionnaire-back-btn'
         onClick={handleBack}
         disabled={current === 0}
       >
         Back
-      </button>
+      </Button>
     </div>
   )
 }

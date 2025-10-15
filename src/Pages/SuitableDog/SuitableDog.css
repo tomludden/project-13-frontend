@@ -161,7 +161,7 @@ h2 {
 .optionInput:hover {
   border: 1.5px solid #8e44ad;
 }
-.questionnaire-back-btn {
+/* .questionnaire-back-btn {
   width: 120px;
   margin-top: 20px;
   margin-bottom: 40px;
@@ -173,7 +173,7 @@ h2 {
 }
 .questionnaire-back-btn:hover {
   border: 1.5px solid var(--button-hover-border-color);
-}
+} */
 .cardDiv {
   display: flex;
   flex-wrap: wrap;
@@ -182,42 +182,36 @@ h2 {
   padding: 10px;
   margin-top: 20px;
 }
-.repeatButton {
-  width: 120px;
-  margin-top: 20px;
-  margin-bottom: 40px;
-  padding: var(--button-padding);
-  border: 0.5px solid var(--button-border-color);
-  cursor: pointer;
-  border-radius: var(--button-border-radius);
-  background-color: var(--button-color);
-}
-.repeatButton:hover {
-  border: 1.5px solid var(--button-hover-border-color);
-  transform: scale(1.05);
-}
+
 .repeat {
   text-align: center;
 }
-.dogImgLarge {
-  border-radius: 10px;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.42);
-  border-bottom: 2px solid rgb(6, 5, 5);
-}
-.dogImgLarge button.questionnaire-button {
+
+.repeat-button {
   width: 120px;
-  padding: var(--button-padding);
-  border: 0.5px solid var(--button-border-color);
-  cursor: pointer;
-  border-radius: var(--button-border-radius);
-  background-color: var(--button-color);
-}
-.dogImgLarge .questionnaire-button:hover {
-  border: 1.5px solid var(--button-hover-border-color);
-  transform: scale(1.05);
-}
-@media (max-width: 580px) {
-  .popup-content {
-    max-width: 90%;
+  margin-top: 20px;
+  margin-bottom: 40px;
+
+  .dogImgLarge {
+    border-radius: 10px;
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.42);
+    border-bottom: 2px solid rgb(6, 5, 5);
+  }
+  .dogImgLarge button.questionnaire-button {
+    width: 120px;
+    padding: var(--button-padding);
+    border: 0.5px solid var(--button-border-color);
+    cursor: pointer;
+    border-radius: var(--button-border-radius);
+    background-color: var(--button-color);
+  }
+  .dogImgLarge .questionnaire-button:hover {
+    border: 1.5px solid var(--button-hover-border-color);
+    transform: scale(1.05);
+  }
+  @media (max-width: 580px) {
+    .popup-content {
+      max-width: 90%;
+    }
   }
 }

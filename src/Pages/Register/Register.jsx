@@ -1,5 +1,6 @@
 import React, { useState, useContext, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Button from '../../components/Buttons/Button'
 import { AuthContext } from '../../components/AuthContext'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import { showPopup } from '../../components/ShowPopup/ShowPopup'
@@ -10,7 +11,7 @@ const RegisterPage = () => {
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
+  const [loading, setLoading] = useState(false)
   const { setUser } = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -92,9 +93,16 @@ const RegisterPage = () => {
           onChange={handlePasswordChange}
           placeholder='Password'
         />
-        <button type='submit' id='registerbtn'>
+        <Button
+          className='primary-button 
+        register'
+          type='submit'
+          disabled={loading}
+          loading={loading}
+          loadingText='Registering...'
+        >
           Register
-        </button>
+        </Button>
       </form>
     </div>
   )

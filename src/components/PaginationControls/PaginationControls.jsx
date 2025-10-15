@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback } from 'react'
+import Button from '../../components/Buttons/Button.jsx'
 import './PaginationControls.css'
 
 const PaginationControls = ({ currentPage, totalPages, goPrev, goNext }) => {
@@ -20,15 +21,15 @@ const PaginationControls = ({ currentPage, totalPages, goPrev, goNext }) => {
 
   return (
     <div className='pagination'>
-      <button onClick={handlePrev} disabled={isFirstPage}>
+      <Button variant='primary' onClick={handlePrev} disabled={isFirstPage}>
         Prev
-      </button>
+      </Button>
       <span>
         Page {currentPage} of {totalPages}
       </span>
-      <button onClick={handleNext} disabled={isLastPage}>
+      <Button variant='primary' onClick={handleNext} disabled={isLastPage}>
         Next
-      </button>
+      </Button>
     </div>
   )
 }

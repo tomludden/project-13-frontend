@@ -4,13 +4,13 @@ import { AuthContext } from '../../components/AuthContext'
 import { showPopup } from '../../components/ShowPopup/ShowPopup'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import { apiFetch } from '../../components/apiFetch'
+import Button from '../../components/Buttons/Button'
 import './Login.css'
 
 const LoginPage = () => {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-
   const { login } = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -90,9 +90,16 @@ const LoginPage = () => {
           disabled={loading}
         />
 
-        <button className='login-btn' type='submit' disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
+        <Button
+          variant='primary'
+          className='login-button'
+          type='submit'
+          disabled={loading}
+          loading={loading}
+          loadingText='Logging in...'
+        >
+          Login
+        </Button>
       </form>
     </div>
   )

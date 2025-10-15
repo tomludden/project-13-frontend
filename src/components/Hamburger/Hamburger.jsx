@@ -8,6 +8,7 @@ import React, {
 import { NavLink } from 'react-router-dom'
 import { AuthContext } from '../AuthContext.jsx'
 import { FaBars } from 'react-icons/fa'
+import Button from '../Buttons/Button.jsx'
 import './Hamburger.css'
 
 const Hamburger = () => {
@@ -130,9 +131,9 @@ const UserLinks = ({ isAdmin, onClick, onLogout }) => (
       </li>
     )}
     <li>
-      <button className='logout-btn' onClick={onLogout}>
+      <Button variant='primary' className='logout-btn' onClick={onLogout}>
         Logout
-      </button>
+      </Button>
     </li>
   </>
 )

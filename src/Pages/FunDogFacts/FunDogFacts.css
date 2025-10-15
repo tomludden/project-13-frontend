@@ -18,13 +18,9 @@
 
 .new-fact-btn,
 .fact-details-btn {
-  padding: var(--button-padding);
+  width: 140px;
   margin: 0px 20px;
-  background-color: var(--fill-button-color);
-  color: var(--fill-button-text);
   border: none;
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
 }
 
 .new-fact-btn:hover,

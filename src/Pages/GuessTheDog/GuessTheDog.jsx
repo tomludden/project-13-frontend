@@ -3,6 +3,7 @@ import './GuessTheDog.css'
 import { DogImages } from '../../components/DogImages.js'
 import { GameTimer } from '../../components/GameTimer.js'
 import { gameReducer, initialState } from '../../Reducers/GameReducer.jsx'
+import Button from '../../components/Buttons/Button.jsx'
 
 const STORAGE_KEY = 'guessTheDogProgress'
 
@@ -122,9 +123,13 @@ const GuessTheDog = () => {
           {gameOver ? (
             <>
               <h2 className='game-over'>Game Over!</h2>
-              <button className='restart-btn' onClick={restartGame}>
+              <Button
+                variant='secondary'
+                className='restart-button'
+                onClick={restartGame}
+              >
                 Restart
-              </button>
+              </Button>
             </>
           ) : (
             <>

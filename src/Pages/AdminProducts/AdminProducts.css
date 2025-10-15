@@ -67,16 +67,6 @@
 
 .card-buttons button {
   flex: 1;
-  padding: var(--button-padding);
-  border: 0.5px solid var(--button-border-color);
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  background-color: var(--button-color);
-  transition: background-color 0.2s;
-}
-
-.card-buttons button:hover {
-  border: 2px solid var(--button-hover-border-color);
 }
 
 .add-btn {

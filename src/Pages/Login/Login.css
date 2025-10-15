@@ -37,18 +37,7 @@ h1 {
   cursor: pointer;
 }
 
-.login-btn {
+.login-button {
   margin-top: 20px;
-  width: 120px;
-  padding: var(--button-padding);
-  border: 1px solid var(--button-border-color);
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  background-color: var(--button-color);
-  transition: all 0.2s ease;
-}
-
-.login-btn:hover {
-  transform: scale(1.05);
-  border: 1.5px solid var(--button-hover-border-color);
+  width: 140px;
 }

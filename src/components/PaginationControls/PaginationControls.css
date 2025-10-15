@@ -14,20 +14,9 @@
 }
 
 .pagination button {
-  padding: var(--button-padding);
   width: 100px;
-  color: black;
-  font-size: 14px;
-  border: 1px solid var(--button-border-color);
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  transition: background-color 0.2s;
   margin-bottom: 80px;
   margin-top: 20px;
-}
-
-.pagination button:hover {
-  outline: 1.5px solid var(--button-hover-border-color);
 }
 
 .pagination button:disabled {

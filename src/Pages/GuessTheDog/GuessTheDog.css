@@ -100,20 +100,8 @@ h1 {
   color: darkred;
 }
 
-.restart-btn {
-  padding: var(--button-padding);
-  font-size: 1rem;
-  background-color: var(--fill-button-color);
-  color: var(--fill-button-text);
-  border: none;
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  margin-top: 1rem;
-}
-
-.restart-btn:hover {
-  transform: scale(1.1);
-  background: var(--fill-button-hover-color);
+.restart-button {
+  margin-top: 50px;
 }
 
 .timer {

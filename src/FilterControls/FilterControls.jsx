@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import Button from '../components/Buttons/Button'
 import './FilterControls.css'
 
 const FilterControls = ({
@@ -58,9 +59,13 @@ const FilterControls = ({
         <option value='4'>⭐ 4+</option>
       </select>
 
-      <button className='filter-button' onClick={handleClear}>
+      <Button
+        variant='secondary'
+        className='filter-button'
+        onClick={handleClear}
+      >
         Clear Filters
-      </button>
+      </Button>
     </div>
   )
 }

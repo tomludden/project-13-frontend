@@ -84,53 +84,37 @@
 
   body.menu-open {
     overflow-x: hidden;
+  }
 
-    .logout-btn,
-    .header-btn {
-      width: 100px;
-      padding: var(--button-padding);
-      border: 0.5px solid var(--button-border-color);
-      border-radius: var(--button-border-radius);
-      cursor: pointer;
-      background-color: var(--button-color);
-      transition: all 0.2s ease;
-    }
-    .logout-btn:hover,
-    .header-btn:hover {
-      border: 1.5px solid var(--button-hover-border-color);
-      transform: scale(1.05);
-    }
+  .hamburger-menu.open {
+    right: 0;
+  }
 
-    .hamburger-menu.open {
-      right: 0;
-    }
+  .close-btn-hamburger {
+    position: absolute;
+    margin: 20px;
+    background-color: transparent;
+    border: none;
+    top: -30px;
+    left: -20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-color, #333);
+    transition: transform 0.2s ease;
+  }
 
-    .close-btn-hamburger {
-      position: absolute;
-      margin: 20px;
-      background-color: transparent;
-      border: none;
-      top: -30px;
-      left: -20px;
-      font-size: 24px;
-      cursor: pointer;
-      color: var(--text-color, #333);
-      transition: transform 0.2s ease;
-    }
+  .close-btn-hamburger:hover {
+    transform: scale(1.1);
+    color: var(--accent-color);
+  }
 
-    .close-btn-hamburger:hover {
-      transform: scale(1.1);
-      color: var(--accent-color);
-    }
+  .hamburger-menu a {
+    color: black;
+    text-decoration: none;
+  }
 
-    .hamburger-menu a {
-      color: black;
-      text-decoration: none;
-    }
-
-    .hamburger-menu a:hover {
-      color: var(--accent-color);
-      border-bottom: 1px solid black;
-    }
+  .hamburger-menu a:hover {
+    color: var(--accent-color);
+    border-bottom: 1px solid black;
   }
 }

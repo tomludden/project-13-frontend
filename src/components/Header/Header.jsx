@@ -2,8 +2,14 @@ import React, { useContext, useCallback } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import './Header.css'
 import { AuthContext } from '../../components/AuthContext.jsx'
+import Button from '../Buttons/Button.jsx'
 import Hamburger from '../Hamburger/Hamburger.jsx'
-import { FaHeart, FaUser, FaHome, FaShoppingCart } from 'react-icons/fa'
+import {
+  HiOutlineUser,
+  HiOutlineHeart,
+  HiOutlineShoppingBag,
+  HiOutlineHome
+} from 'react-icons/hi2'
 
 const Header = React.memo(() => {
   const { user, logout } = useContext(AuthContext)
@@ -52,9 +58,13 @@ const Header = React.memo(() => {
                   </li>
                 )}
                 <li>
-                  <button className='logout-btn' onClick={handleLogout}>
+                  <Button
+                    variant='primary'
+                    className='logout-btn'
+                    onClick={handleLogout}
+                  >
                     Logout
-                  </button>
+                  </Button>
                 </li>
               </>
             )}
@@ -62,11 +72,21 @@ const Header = React.memo(() => {
 
           {!isLoggedIn && (
             <div className='auth-buttons'>
-              <NavLink to='/login' className='header-btn'>
-                Login
-              </NavLink>
-              <NavLink to='/register' className='header-btn'>
-                Register
+              <NavLink to='/login'>
+                <Button
+                  variant='primary'
+                  className='header-button'
+                  type='submit'
+                >
+                  Login
+                </Button>
+                <Button
+                  variant='primary'
+                  className='header-button'
+                  type='submit'
+                >
+                  Register
+                </Button>
               </NavLink>
             </div>
           )}
@@ -76,18 +96,18 @@ const Header = React.memo(() => {
       <div className='mobile-header'>
         <div className='mobile-icons'>
           <NavLink to='/' className='mobile-icon'>
-            <FaHome size={24} />
+            <HiOutlineHome size={24} />
           </NavLink>
           <NavLink to='/shop' className='mobile-icon'>
-            <FaShoppingCart size={24} />
+            <HiOutlineShoppingBag size={24} />
           </NavLink>
           {isLoggedIn && (
             <>
               <NavLink to='/favourites' className='mobile-icon'>
-                <FaHeart size={24} />
+                <HiOutlineHeart size={24} />
               </NavLink>
               <NavLink to='/profile' className='mobile-icon'>
-                <FaUser size={24} />
+                <HiOutlineUser size={24} />
               </NavLink>
             </>
           )}

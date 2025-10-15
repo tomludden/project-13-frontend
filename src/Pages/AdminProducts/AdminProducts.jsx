@@ -9,7 +9,8 @@ import ProductForm from '../../components/ProductForm/ProductForm'
 import DogLoader from '../../components/DogLoader/DogLoader'
 import './AdminProducts.css'
 import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
-import { apiFetch } from '../../components/apiFetch'
+import { apiFetch } from '../../components/apiFetch.js'
+import Button from '../../components/Buttons/Button.jsx'
 
 const PLACEHOLDER = './assets/images/placeholder.png'
 
@@ -177,8 +178,16 @@ const AdminProducts = () => {
                   <p>€{Number(p.price).toFixed(2)}</p>
                   {p.rating && <p>Rating: {p.rating} ⭐</p>}
                   <div className='card-buttons'>
-                    <button onClick={() => openModal(p)}>Edit</button>
-                    <button onClick={() => openDeleteModal(p)}>Delete</button>
+                    <Button variant='primary' onClick={() => openModal(p)}>
+                      Edit
+                    </Button>
+
+                    <Button
+                      variant='primary'
+                      onClick={() => openDeleteModal(p)}
+                    >
+                      Delete
+                    </Button>
                   </div>
                 </div>
               ))
@@ -220,12 +229,20 @@ const AdminProducts = () => {
               <strong>{selectedProduct?.name}</strong>?
             </p>
             <div className='modal-buttons'>
-              <button className='confirm-btn' onClick={confirmDelete}>
+              <Button
+                variant='secondary'
+                className='confirm-btn'
+                onClick={confirmDelete}
+              >
                 Delete
-              </button>
-              <button className='cancel-btn' onClick={closeDeleteModal}>
+              </Button>
+              <Button
+                variant='primary'
+                className='cancel-btn'
+                onClick={closeDeleteModal}
+              >
                 Cancel
-              </button>
+              </Button>
             </div>
           </div>
         </div>

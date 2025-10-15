@@ -24,20 +24,9 @@
 }
 
 .filter button {
-  padding: var(--button-padding);
-  background-color: var(--fill-button-color);
-  color: var(--fill-button-text);
-  font-size: 14px;
+  width: 120px;
   height: 38px;
   border: none;
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.filter button:hover {
-  background-color: var(--fill-button-hover-color);
-  transform: scale(1.05);
 }
 
 @media (max-width: 671px) {

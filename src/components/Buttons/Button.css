@@ -1,0 +1,35 @@
+.site-button {
+  width: 100px;
+  font-weight: 300;
+  padding: var(--button-padding);
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.site-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.site-button-primary {
+  background: var(--button-color);
+  border: 0.5px solid var(--button-border-color);
+  color: var(--text-color);
+}
+
+.site-button-primary:hover {
+  border-color: var(--button-hover-border-color);
+  border: 2px solid var(--button-hover-border-color);
+  transform: scale(1.05);
+}
+
+.site-button-secondary {
+  background: var(--fill-button-color);
+  color: var(--fill-button-text);
+  border: none;
+}
+
+.site-button-secondary:hover {
+  background: var(--fill-button-hover-color);
+}

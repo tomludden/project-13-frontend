@@ -4,6 +4,7 @@ import './FunDogFacts.css'
 import { DogFacts } from '../../components/DogFacts'
 import { DogImage } from '../../components/DogImage'
 import DogLoader from '../../components/DogLoader/DogLoader'
+import Button from '../../components/Buttons/Button'
 
 const FunDogFacts = () => {
   const { fact, error, loading: factLoading, fetchFact } = DogFacts()
@@ -76,12 +77,17 @@ const FunDogFacts = () => {
     <div className='dog-fact-container'>
       <h2>🐾 Did you know?</h2>
       {FactDisplay}
-      <button onClick={fetchFact} className='new-fact-btn'>
+      <Button variant='secondary' onClick={fetchFact} className='new-fact-btn'>
         New Fact
-      </button>
-      <button onClick={openPopup} className='fact-details-btn'>
+      </Button>
+
+      <Button
+        variant='secondary'
+        onClick={openPopup}
+        className='fact-details-btn'
+      >
         Fact Details
-      </button>
+      </Button>
       {showDetails && PopupContent}
     </div>
   )
