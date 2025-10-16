@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import mergedDogsFull from '/public/mergedDogsFull.json'
 import DogLoader from '../../components/DogLoader/DogLoader'
 import Button from '../../components/Buttons/Button'
+import Modal from '../../components/Modal/Modal'
 
 const STORAGE_KEY = 'suitableDogProgress'
 
@@ -14,6 +15,7 @@ export default function SuitableDog() {
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState([])
   const [selectedDog, setSelectedDog] = useState(null)
+  const [showModal, setShowModal] = useState(false)
 
   const questions = useMemo(
     () => [
@@ -246,9 +248,9 @@ export default function SuitableDog() {
 
 function DogPopup({ dog, onClose }) {
   return (
-    <div className='popup' role='dialog' aria-modal='true' onClick={onClose}>
+    <div className='modal-overlay' onClick={onClose}>
       <div className='popup-content' onClick={(e) => e.stopPropagation()}>
-        <button className='close-btn' onClick={onClose}>
+        <button className='modal-close' onClick={onClose}>
           &times;
         </button>
         <h2>{dog.name}</h2>

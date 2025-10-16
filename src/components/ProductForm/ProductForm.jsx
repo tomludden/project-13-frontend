@@ -107,42 +107,45 @@ export default function ProductForm({
   }, [handleFileChange])
 
   return (
-    <form className='edit-form' onSubmit={handleSubmit}>
-      <input
-        type='text'
-        placeholder='Name'
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-
-      <input
-        type='number'
-        step='0.01'
-        placeholder='Price'
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        required
-      />
-
-      {MemoizedDropZone}
-
-      <div className='preview-image'>
-        <img
-          src={previewSrc}
-          alt='Preview'
-          onError={(e) => (e.target.src = PLACEHOLDER)}
+    <div className='modal-content'>
+      <form className='edit-form' onSubmit={handleSubmit}>
+        <h3>{initialData._id ? 'Edit' : 'Add'} Product</h3>
+        <input
+          type='text'
+          placeholder='Name'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
         />
-      </div>
 
-      <div className='modal-buttons'>
-        <button type='submit' disabled={isSubmitting || uploading}>
-          {submitLabel}
-        </button>
-        <button type='button' onClick={onCancel}>
-          Cancel
-        </button>
-      </div>
-    </form>
+        <input
+          type='number'
+          step='0.01'
+          placeholder='Price'
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+        />
+
+        {MemoizedDropZone}
+
+        <div className='preview-image'>
+          <img
+            src={previewSrc}
+            alt='Preview'
+            onError={(e) => (e.target.src = PLACEHOLDER)}
+          />
+        </div>
+
+        <div className='modal-buttons'>
+          <button type='submit' disabled={isSubmitting || uploading}>
+            {submitLabel}
+          </button>
+          <button type='button' onClick={onCancel}>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   )
 }

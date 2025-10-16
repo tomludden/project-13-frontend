@@ -11,12 +11,12 @@ import './AdminProducts.css'
 import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
 import { apiFetch } from '../../components/apiFetch.js'
 import Button from '../../components/Buttons/Button.jsx'
+import Modal from '../../components/Modal/Modal.jsx'
 
 const PLACEHOLDER = './assets/images/placeholder.png'
 
 const AdminProducts = () => {
   const { products, setProducts, loading, error } = useProducts()
-
   const [editingProduct, setEditingProduct] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
@@ -184,7 +184,9 @@ const AdminProducts = () => {
 
                     <Button
                       variant='primary'
-                      onClick={() => openDeleteModal(p)}
+                      onClick={() => {
+                        openDeleteModal(p)
+                      }}
                     >
                       Delete
                     </Button>
@@ -206,23 +208,20 @@ const AdminProducts = () => {
       )}
 
       {showModal && (
-        <div className='modal-overlay' onClick={closeModal}>
-          <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-            <h3>{editingProduct ? 'Edit Product' : 'Add Product'}</h3>
-            <ProductForm
-              className='edit-form'
-              initialData={editingProduct || {}}
-              isSubmitting={isSubmitting}
-              onCancel={closeModal}
-              onSubmit={handleSave}
-            />
-          </div>
-        </div>
+        <Modal isOpen={showModal} onClose={closeModal}>
+          <ProductForm
+            className='edit-form'
+            initialData={editingProduct || {}}
+            isSubmitting={isSubmitting}
+            onCancel={closeModal}
+            onSubmit={handleSave}
+          />
+        </Modal>
       )}
 
       {deleteModal && (
-        <div className='modal-overlay' onClick={closeDeleteModal}>
-          <div className='modal-content' onClick={(e) => e.stopPropagation()}>
+        <Modal isOpen={deleteModal} onClose={closeDeleteModal}>
+          <div className='modal-content'>
             <h3>Confirm Delete</h3>
             <p>
               Are you sure you want to delete{' '}
@@ -245,7 +244,7 @@ const AdminProducts = () => {
               </Button>
             </div>
           </div>
-        </div>
+        </Modal>
       )}
     </div>
   )

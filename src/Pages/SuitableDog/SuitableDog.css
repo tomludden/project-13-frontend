@@ -98,19 +98,6 @@ h2 {
   }
 }
 
-.close-btn {
-  position: absolute;
-  top: 5px;
-  left: 15px;
-  background-color: transparent;
-  border: none;
-  font-size: 45px;
-  cursor: pointer;
-}
-.close-btn:hover {
-  transform: scale(1.2);
-  color: var(--accent-color);
-}
 .dogImg {
   width: 260px;
   border-radius: 10px;
