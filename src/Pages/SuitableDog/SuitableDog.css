@@ -74,17 +74,15 @@ h2 {
   padding: 10px;
 }
 
-.close-btn:hover {
-  color: var(--accent-color);
-}
-
 .dogImgLarge {
   width: 100%;
   height: auto;
   max-height: 270px;
   object-fit: cover;
   margin: 15px 0;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.42);
+  border-bottom: 2px solid rgb(6, 5, 5);
 }
 
 .popup-content {
@@ -106,11 +104,11 @@ h2 {
   left: 15px;
   background-color: transparent;
   border: none;
-  font-size: 30px;
+  font-size: 45px;
   cursor: pointer;
 }
 .close-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.2);
   color: var(--accent-color);
 }
 .dogImg {
@@ -161,19 +159,7 @@ h2 {
 .optionInput:hover {
   border: 1.5px solid #8e44ad;
 }
-/* .questionnaire-back-btn {
-  width: 120px;
-  margin-top: 20px;
-  margin-bottom: 40px;
-  padding: var(--button-padding);
-  border: 0.5px solid var(--button-border-color);
-  cursor: pointer;
-  border-radius: var(--button-border-radius);
-  background-color: var(--button-color);
-}
-.questionnaire-back-btn:hover {
-  border: 1.5px solid var(--button-hover-border-color);
-} */
+
 .cardDiv {
   display: flex;
   flex-wrap: wrap;
@@ -192,23 +178,6 @@ h2 {
   margin-top: 20px;
   margin-bottom: 40px;
 
-  .dogImgLarge {
-    border-radius: 10px;
-    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.42);
-    border-bottom: 2px solid rgb(6, 5, 5);
-  }
-  .dogImgLarge button.questionnaire-button {
-    width: 120px;
-    padding: var(--button-padding);
-    border: 0.5px solid var(--button-border-color);
-    cursor: pointer;
-    border-radius: var(--button-border-radius);
-    background-color: var(--button-color);
-  }
-  .dogImgLarge .questionnaire-button:hover {
-    border: 1.5px solid var(--button-hover-border-color);
-    transform: scale(1.05);
-  }
   @media (max-width: 580px) {
     .popup-content {
       max-width: 90%;

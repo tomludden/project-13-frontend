@@ -9,6 +9,7 @@ import { AuthContext } from '../../components/AuthContext.jsx'
 import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
 import Button from '../../components/Buttons/Button.jsx'
 import PasswordInput from '../../components/PasswordInput/PasswordInput.jsx'
+import FormInput from '../../components/FormInput/FormInput.jsx'
 import { useNavigate } from 'react-router-dom'
 import { apiFetch } from '../../components/apiFetch.js'
 import './Profile.css'
@@ -112,25 +113,23 @@ const Profile = () => {
       <div className='profile-form'>
         <label>
           Username
-          <input
-            ref={usernameRef}
-            type='text'
-            name='userName'
+          <FormInput
+            name='name'
             value={formData.userName}
             onChange={handleChange}
+            placeholder='Name'
           />
         </label>
 
         <label>
           Email
-          <input
-            type='email'
+          <FormInput
             name='email'
             value={formData.email}
             onChange={handleChange}
-            onBlur={validateEmail}
+            type='email'
+            placeholder='Email'
           />
-          {emailError && <span className='error-text'>{emailError}</span>}
         </label>
 
         <label>

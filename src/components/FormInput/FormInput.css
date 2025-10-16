@@ -1,0 +1,15 @@
+.form-input {
+  width: 200px;
+  padding: var(--button-padding);
+  margin: 15px 0;
+  border-radius: var(--button-border-radius);
+  border: 1px solid var(--input-border-color);
+  font-size: 14px;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.form-input:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}

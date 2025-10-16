@@ -5,6 +5,7 @@ import { showPopup } from '../../components/ShowPopup/ShowPopup'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import { apiFetch } from '../../components/apiFetch'
 import Button from '../../components/Buttons/Button'
+import FormInput from '../../components/FormInput/FormInput'
 import './Login.css'
 
 const LoginPage = () => {
@@ -73,21 +74,21 @@ const LoginPage = () => {
     <div className='login-container'>
       <h1>Login</h1>
       <form className='loginForm' onSubmit={handleLogin}>
-        <input
-          className='login-input'
-          type='text'
+        <FormInput
+          name='userName'
           value={userName}
           onChange={handleUserNameChange}
           placeholder='Username'
-          disabled={loading}
+          required
         />
 
         <PasswordInput
           name='password'
           value={password}
           onChange={handlePasswordChange}
+          type='password'
           placeholder='Password'
-          disabled={loading}
+          required
         />
 
         <Button

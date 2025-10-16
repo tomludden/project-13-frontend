@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Buttons/Button'
 import { AuthContext } from '../../components/AuthContext'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
+import FormInput from '../../components/FormInput/FormInput'
 import { showPopup } from '../../components/ShowPopup/ShowPopup'
-import './Register.css'
 import { apiFetch } from '../../components/apiFetch'
+import './Register.css'
 
 const RegisterPage = () => {
   const [userName, setUserName] = useState('')
@@ -72,21 +73,22 @@ const RegisterPage = () => {
   return (
     <div className='register-container'>
       <h1>Register</h1>
-      <form onSubmit={handleRegister} id='form'>
-        <input
-          type='text'
-          placeholder='Username'
+      <form onSubmit={handleRegister} className='register-form'>
+        <FormInput
+          name='userName'
           value={userName}
           onChange={handleUserNameChange}
+          placeholder='Username'
           required
         />
-        <input
-          type='email'
-          placeholder='Email'
+        <FormInput
+          name='email'
           value={email}
           onChange={handleEmailChange}
+          placeholder='Email'
           required
         />
+
         <PasswordInput
           name='password'
           value={password}

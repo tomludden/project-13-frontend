@@ -28,15 +28,6 @@ h1 {
   position: relative;
 }
 
-.loginForm > input {
-  border-radius: var(--button-border-radius);
-  margin-bottom: 20px;
-  padding: var(--button-padding);
-  width: 200px;
-  border: 0.5px solid var(--button-border-color);
-  cursor: pointer;
-}
-
 .login-button {
   margin-top: 20px;
   width: 140px;

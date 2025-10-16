@@ -80,6 +80,8 @@ const Header = React.memo(() => {
                 >
                   Login
                 </Button>
+              </NavLink>
+              <NavLink to='/register'>
                 <Button
                   variant='primary'
                   className='header-button'

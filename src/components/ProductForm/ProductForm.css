@@ -13,9 +13,6 @@ h3 {
 .edit-form input {
   width: 100%;
   margin-bottom: 10px;
-  padding: var(--button-padding);
-  border-radius: var(--button-border-radius);
-  border: 1px solid var(--button-border-color);
   font-size: 0.9rem;
   cursor: pointer;
 }
