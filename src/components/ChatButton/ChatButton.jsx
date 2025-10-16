@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
-import { MessageSquare } from 'lucide-react'
+import { MessageCircle } from 'lucide-react'
+
 import './ChatButton.css'
 
 export default function ChatWidget() {
@@ -44,7 +45,14 @@ export default function ChatWidget() {
           onClick={() => setIsOpen(true)}
           aria-label='Open chat'
         >
-          <MessageSquare size={22} />
+          <div className='message-circle-wrapper'>
+            <MessageCircle size={48} className='message-circle-icon' />
+            <img
+              src='./assets/images/dog-2.svg'
+              alt='Chat icon'
+              className='chat-image'
+            />
+          </div>
         </button>
       )}
 

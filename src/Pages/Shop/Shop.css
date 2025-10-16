@@ -42,7 +42,17 @@ h2 {
 .rating {
   margin-bottom: 10px;
 }
-
+.select div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.select div label {
+  font-size: 18px;
+}
+.select div select {
+  padding: 15px;
+}
 .shop-header {
   display: none;
   align-items: center;
