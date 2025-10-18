@@ -8,7 +8,7 @@ import React, {
   useRef
 } from 'react'
 import Button from '../../components/Buttons/Button.jsx'
-import { gameReducer, initialState } from '../../Reducers/gameReducer.jsx'
+import { gameReducer, initialState } from '../../Reducers/GameReducer.jsx'
 import { useLocalStorage } from '../../Hooks/useLocalStorage.js'
 
 const STORAGE_KEY = 'dogGameState'
