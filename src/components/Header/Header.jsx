@@ -29,10 +29,15 @@ const Header = React.memo(() => {
         <nav className='navbar'>
           <ul className='nav-list'>
             <li>
-              <NavLink to='/'>Home</NavLink>
+              <NavLink
+                to='/'
+                className={({ isActive }) => (isActive ? 'active' : '')}
+              >
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to='/guess-the-dog'>Dog Game</NavLink>
+              <NavLink to='/guess-the-dog'>Guess the Dog</NavLink>
             </li>
             <li>
               <NavLink to='/suitable-dog'>My Perfect Dog</NavLink>

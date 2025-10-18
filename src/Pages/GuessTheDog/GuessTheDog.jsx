@@ -1,35 +1,69 @@
-import React, { useEffect, useReducer, useCallback, useMemo } from 'react'
 import './GuessTheDog.css'
-import { DogImages } from '../../components/DogImages.js'
-import { GameTimer } from '../../components/GameTimer.js'
-import { gameReducer, initialState } from '../../Reducers/GameReducer.jsx'
+import React, {
+  useEffect,
+  useReducer,
+  useCallback,
+  useMemo,
+  useState,
+  useRef
+} from 'react'
 import Button from '../../components/Buttons/Button.jsx'
+import { gameReducer, initialState } from '../../Reducers/gameReducer.jsx'
+import { useLocalStorage } from '../../Hooks/useLocalStorage.js'
 
-const STORAGE_KEY = 'guessTheDogProgress'
+const STORAGE_KEY = 'dogGameState'
+
+const getBreedFromUrl = (url) => {
+  const match = url.match(/breeds\/([^/]+)\//)
+  return match ? match[1].replace('-', ' ') : 'Unknown'
+}
 
 const GuessTheDog = () => {
   const [state, dispatch] = useReducer(gameReducer, initialState)
+  const [savedState, setSavedState] = useLocalStorage(STORAGE_KEY, initialState)
   const { dogImages, correctBreed, score, lives, gameOver, timer, started } =
     state
+  const [loading, setLoading] = useState(false)
+  const timerRef = useRef(null)
 
-  const fetchDogs = DogImages(dispatch)
-  GameTimer({ started, gameOver, timer, dispatch, fetchDogs })
+  const fetchDogs = useCallback(async () => {
+    setLoading(true)
+    const newImages = []
+    try {
+      while (newImages.length < 3) {
+        const res = await fetch('https://dog.ceo/api/breeds/image/random')
+        const data = await res.json()
+        const breed = getBreedFromUrl(data.message)
+        if (!newImages.some((img) => getBreedFromUrl(img) === breed)) {
+          newImages.push(data.message)
+        }
+      }
+      const correctIndex = Math.floor(Math.random() * 3)
+      const correct = getBreedFromUrl(newImages[correctIndex])
+      dispatch({
+        type: 'SET_DOGS',
+        payload: { images: newImages, correctBreed: correct }
+      })
+    } catch (err) {
+      console.error('Error fetching dog images:', err)
+      dispatch({
+        type: 'SET_DOGS',
+        payload: { images: [], correctBreed: '' }
+      })
+    } finally {
+      setLoading(false)
+    }
+  }, [dispatch])
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved)
-        dispatch({ type: 'LOAD_STATE', payload: parsed })
-      } catch {
-        localStorage.removeItem(STORAGE_KEY)
-      }
+    if (savedState && savedState.started) {
+      dispatch({ type: 'LOAD_STATE', payload: savedState })
     }
   }, [])
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
-  }, [state])
+    setSavedState(state)
+  }, [state, setSavedState])
 
   useEffect(() => {
     if (started && !gameOver) fetchDogs()
@@ -38,8 +72,7 @@ const GuessTheDog = () => {
   const handleGuess = useCallback(
     (imgUrl) => {
       if (gameOver) return
-      const breed =
-        imgUrl.match(/breeds\/([^/]+)\//)?.[1]?.replace('-', ' ') ?? ''
+      const breed = getBreedFromUrl(imgUrl)
       if (breed === correctBreed) {
         dispatch({ type: 'GUESS_CORRECT' })
         fetchDogs()
@@ -57,6 +90,22 @@ const GuessTheDog = () => {
     localStorage.removeItem(STORAGE_KEY)
   }, [])
 
+  useEffect(() => {
+    if (!started || gameOver) return
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      dispatch({ type: 'TICK' })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+  }, [started, gameOver, dispatch])
+
+  useEffect(() => {
+    if (timer <= 0 && started && !gameOver) {
+      dispatch({ type: 'GUESS_WRONG' })
+      fetchDogs()
+    }
+  }, [timer, started, gameOver, dispatch, fetchDogs])
+
   const ScoreLives = useMemo(
     () => (
       <div className='score-lives'>
@@ -64,7 +113,7 @@ const GuessTheDog = () => {
           Score: <span className='score-num'>{score}</span>
         </p>
         <p className='lives'>
-          <span className='heart'>♡</span> <span className='live'>Lives: </span>{' '}
+          <span className='heart'>♡</span> <span className='live'>Lives:</span>{' '}
           {lives}
         </p>
       </div>
@@ -75,10 +124,9 @@ const GuessTheDog = () => {
   const TimerDisplay = useMemo(
     () =>
       !gameOver && (
-        <p className='timer'>
-          ⏳ <span className='time'>Time left: </span>
-          {timer}s
-        </p>
+        <div className='game-timer'>
+          <p>Time Remaining: {timer}s</p>
+        </div>
       ),
     [gameOver, timer]
   )
@@ -86,18 +134,22 @@ const GuessTheDog = () => {
   const DogGrid = useMemo(
     () => (
       <div className='dog-grid'>
-        {dogImages.map((img, idx) => (
-          <img
-            key={idx}
-            src={img}
-            alt='dog'
-            className='dog-image'
-            onClick={() => handleGuess(img)}
-          />
-        ))}
+        {loading ? (
+          <p>Loading dog images...</p>
+        ) : (
+          dogImages.map((img, idx) => (
+            <img
+              key={idx}
+              src={img}
+              alt={`Dog ${idx + 1}`}
+              className='dog-image'
+              onClick={() => handleGuess(img)}
+            />
+          ))
+        )}
       </div>
     ),
-    [dogImages, handleGuess]
+    [dogImages, handleGuess, loading]
   )
 
   return (
@@ -123,11 +175,7 @@ const GuessTheDog = () => {
           {gameOver ? (
             <>
               <h2 className='game-over'>Game Over!</h2>
-              <Button
-                variant='secondary'
-                className='restart-button'
-                onClick={restartGame}
-              >
+              <Button className='restart-btn' onClick={restartGame}>
                 Restart
               </Button>
             </>

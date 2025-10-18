@@ -1,4 +1,3 @@
-import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Header from './components/Header/Header.jsx'

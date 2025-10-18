@@ -1,96 +1,109 @@
-import React, { useEffect, useRef, useCallback, useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import './FunDogFacts.css'
-import { DogFacts } from '../../components/DogFacts'
-import { DogImage } from '../../components/DogImage'
-import DogLoader from '../../components/DogLoader/DogLoader'
-import Button from '../../components/Buttons/Button'
+import React, { useEffect, useState, useCallback } from 'react'
+import Button from '../../components/Buttons/Button.jsx'
+import Modal from '../../components/Modal/Modal'
+import { useModal } from '../../Hooks/useModal.js'
 
-const FunDogFacts = () => {
-  const { fact, error, loading: factLoading, fetchFact } = DogFacts()
-  const {
-    dogImage,
-    fetchDogImage,
-    setDogImage,
-    loading: imageLoading
-  } = DogImage()
+export default function FunDogFacts() {
+  const [fact, setFact] = useState('')
+  const [image, setImage] = useState('')
+  const [loading, setLoading] = useState(true)
+  const { isOpen, openModal, closeModal } = useModal()
 
-  const [searchParams, setSearchParams] = useSearchParams()
-  const showDetails = searchParams.get('showDetails') === 'true'
-  const popupRef = useRef(null)
+  const API_BASE =
+    import.meta.env.MODE === 'development'
+      ? 'http://localhost:3001'
+      : 'https://dog-facts-api.onrender.com'
 
-  const openPopup = useCallback(
-    () => setSearchParams({ showDetails: 'true' }),
-    [setSearchParams]
-  )
-  const closePopup = useCallback(() => {
-    setSearchParams({})
-    setDogImage('')
-  }, [setSearchParams, setDogImage])
+  const fetchFactAndImage = useCallback(async () => {
+    setLoading(true)
+    try {
+      const [factRes, imageRes] = await Promise.all([
+        fetch(`${API_BASE}/api/dog-fact`),
+        fetch('https://dog.ceo/api/breeds/image/random')
+      ])
+      const factData = await factRes.json()
+      const imageData = await imageRes.json()
+      setFact(factData.fact || 'No fact found.')
+      setImage(imageData.message || '')
+    } catch (error) {
+      console.error('Error fetching data:', error)
+      setFact('Could not fetch dog fact right now.')
+      setImage('')
+    } finally {
+      setLoading(false)
+    }
+  }, [API_BASE])
+
+  const fetchFactOnly = useCallback(async () => {
+    setLoading(true)
+    try {
+      const res = await fetch(`${API_BASE}/api/dog-fact`)
+      const data = await res.json()
+      setFact(data.fact || 'No fact found.')
+    } catch (error) {
+      console.error('Error fetching fact:', error)
+      setFact('Could not fetch dog fact right now.')
+    } finally {
+      setLoading(false)
+    }
+  }, [API_BASE])
+
+  const fetchRandomImage = useCallback(async () => {
+    try {
+      const res = await fetch('https://dog.ceo/api/breeds/image/random')
+      const data = await res.json()
+      setImage(data.message || '')
+    } catch (error) {
+      console.error('Error fetching random image:', error)
+      setImage('')
+    }
+  }, [])
 
   useEffect(() => {
-    if (showDetails) fetchDogImage()
-  }, [showDetails, fetchDogImage])
+    fetchFactAndImage()
+  }, [fetchFactAndImage])
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        closePopup()
-      }
-    }
-
-    if (showDetails) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [showDetails, closePopup])
-
-  const FactDisplay = useMemo(
-    () => (factLoading ? <DogLoader /> : <p className='dog-fact'>{fact}</p>),
-    [factLoading, fact]
-  )
-
-  const PopupContent = useMemo(
-    () => (
-      <div className='popup'>
-        <div className='popup-content' ref={popupRef}>
-          <span className='close-btn-popup' onClick={closePopup}>
-            &times;
-          </span>
-          <h3>Fun Dog Fact</h3>
-          {imageLoading ? (
-            <DogLoader />
-          ) : dogImage ? (
-            <img src={dogImage} alt='Random Dog' className='dog-image' />
-          ) : null}
-          <p>{fact}</p>
-        </div>
-      </div>
-    ),
-    [imageLoading, dogImage, fact, closePopup]
-  )
+  const openPopup = async () => {
+    await fetchRandomImage()
+    openModal()
+  }
 
   return (
     <div className='dog-fact-container'>
-      <h2>🐾 Did you know?</h2>
-      {FactDisplay}
-      <Button variant='secondary' onClick={fetchFact} className='new-fact-btn'>
-        New Fact
-      </Button>
+      <h2>Did you know?</h2>
 
-      <Button
-        variant='secondary'
-        onClick={openPopup}
-        className='fact-details-btn'
-      >
-        Fact Details
-      </Button>
-      {showDetails && PopupContent}
+      <div className='dog-fact'>
+        {loading ? <p>Loading dog fact...</p> : <p>{fact}</p>}
+
+        <div className='button-group'>
+          <Button
+            variant='secondary'
+            onClick={fetchFactOnly}
+            className='new-fact-btn'
+          >
+            New Fact
+          </Button>
+          <Button
+            variant='secondary'
+            onClick={openPopup}
+            className='fact-details-btn'
+          >
+            Fact Details
+          </Button>
+        </div>
+      </div>
+
+      <Modal isOpen={isOpen} onClose={closeModal}>
+        <div className='popup-content' onClick={(e) => e.stopPropagation()}>
+          <span className='fact-close-btn' onClick={closeModal}>
+            &times;
+          </span>
+          <h3>Fun Dog Fact</h3>
+          <p>{fact}</p>
+          {image && <img src={image} alt='Dog' className='dog-img' />}
+        </div>
+      </Modal>
     </div>
   )
 }
-
-export default FunDogFacts

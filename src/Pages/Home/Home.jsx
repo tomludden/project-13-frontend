@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Button from '../../components/Buttons/Button'
 import './Home.css'
 
 const Home = () => {
@@ -32,9 +33,9 @@ const Home = () => {
   const funButtons = useMemo(
     () => (
       <div className='fun-options fade-in'>
-        <button onClick={() => goTo('/guess-the-dog')}>Dog Game</button>
-        <button onClick={() => goTo('/suitable-dog')}>My Perfect Dog</button>
-        <button onClick={() => goTo('/fun-dog-facts')}>Fun Dog Facts</button>
+        <Button onClick={() => goTo('/guess-the-dog')}>Dog Game</Button>
+        <Button onClick={() => goTo('/suitable-dog')}>My Perfect Dog</Button>
+        <Button onClick={() => goTo('/fun-dog-facts')}>Fun Dog Facts</Button>
       </div>
     ),
     [goTo]

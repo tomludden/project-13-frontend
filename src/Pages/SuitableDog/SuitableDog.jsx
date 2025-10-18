@@ -1,21 +1,21 @@
 import './SuitableDog.css'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import mergedDogsFull from '/public/mergedDogsFull.json'
 import DogLoader from '../../components/DogLoader/DogLoader'
 import Button from '../../components/Buttons/Button'
 import Modal from '../../components/Modal/Modal'
+import { useModal } from '../../Hooks/useModal.js'
 
 const STORAGE_KEY = 'suitableDogProgress'
 
 export default function SuitableDog() {
-  const [dogs] = useState(() => mergedDogsFull.filter((dog) => dog.id !== null))
+  const [dogs, setDogs] = useState(null)
   const [current, setCurrent] = useState(0)
   const [answers, setAnswers] = useState({})
   const [finished, setFinished] = useState(false)
-  const [loading, setLoading] = useState(false)
   const [results, setResults] = useState([])
   const [selectedDog, setSelectedDog] = useState(null)
-  const [showModal, setShowModal] = useState(false)
+  const { isOpen, openModal, closeModal } = useModal()
+  const [error, setError] = useState(null)
 
   const questions = useMemo(
     () => [
@@ -106,8 +106,26 @@ export default function SuitableDog() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
   }, [answers, current, finished, results])
 
+  useEffect(() => {
+    async function fetchDogs() {
+      try {
+        const res = await fetch(
+          'https://dog-character-api.onrender.com/api/dogs'
+        )
+        if (!res.ok) throw new Error(`Error: ${res.status}`)
+        const data = await res.json()
+        const filteredDogs = data.filter((dog) => dog.id !== null)
+        setDogs(filteredDogs)
+      } catch (err) {
+        setError(err.message)
+      }
+    }
+    fetchDogs()
+  }, [])
+
   const matchDogs = useCallback(
     (answers) => {
+      if (!dogs) return []
       return dogs
         .map((dog) => {
           let totalScore = 0
@@ -117,11 +135,10 @@ export default function SuitableDog() {
           for (let q of questions) {
             const userVal = answers[q.id]
             const dogVal = dog[q.id]
-
             if (userVal !== undefined && dogVal != null) {
               count += 1
               const diff = Math.abs(userVal - dogVal)
-              let match = Math.max(0, 100 - diff * 20)
+              const match = Math.max(0, 100 - diff * 20)
               totalScore += match
               breakdown.push({ trait: q.text, match })
             }
@@ -140,7 +157,6 @@ export default function SuitableDog() {
     (qId, value) => {
       const newAnswers = { ...answers, [qId]: value }
       setAnswers(newAnswers)
-
       if (current < questions.length - 1) {
         setCurrent(current + 1)
       } else {
@@ -164,10 +180,18 @@ export default function SuitableDog() {
     localStorage.removeItem(STORAGE_KEY)
   }, [])
 
-  const openPopup = useCallback((dog) => setSelectedDog(dog), [])
-  const closePopup = useCallback(() => setSelectedDog(null), [])
+  const openPopup = (dog) => {
+    setSelectedDog(dog)
+    openModal()
+  }
 
-  if (!dogs.length) return <DogLoader />
+  const closePopup = () => {
+    setSelectedDog(null)
+    closeModal()
+  }
+
+  if (error) return <p>Error loading dogs: {error}</p>
+  if (!dogs) return <DogLoader />
 
   if (finished) {
     return (
@@ -206,7 +230,43 @@ export default function SuitableDog() {
           </Button>
         </div>
 
-        {selectedDog && <DogPopup dog={selectedDog} onClose={closePopup} />}
+        <Modal isOpen={isOpen} onClose={closePopup}>
+          {selectedDog && (
+            <div className='popup-content' onClick={(e) => e.stopPropagation()}>
+              <button className='modal-close' onClick={closePopup}>
+                &times;
+              </button>
+              <h2>{selectedDog.name}</h2>
+              {selectedDog.image_link && (
+                <img
+                  src={selectedDog.image_link}
+                  alt={selectedDog.name}
+                  className='dogImgLarge'
+                />
+              )}
+              {selectedDog.weight && (
+                <p>
+                  <strong>Weight:</strong> {selectedDog.weight} kg
+                </p>
+              )}
+              {selectedDog.height && (
+                <p>
+                  <strong>Height:</strong> {selectedDog.height} cm
+                </p>
+              )}
+              {selectedDog.temperament && (
+                <p>
+                  <strong>Temperament:</strong> {selectedDog.temperament}
+                </p>
+              )}
+              {selectedDog.life_span && (
+                <p>
+                  <strong>Life Span:</strong> {selectedDog.life_span} years
+                </p>
+              )}
+            </div>
+          )}
+        </Modal>
       </div>
     )
   }
@@ -242,42 +302,6 @@ export default function SuitableDog() {
       >
         Back
       </Button>
-    </div>
-  )
-}
-
-function DogPopup({ dog, onClose }) {
-  return (
-    <div className='modal-overlay' onClick={onClose}>
-      <div className='popup-content' onClick={(e) => e.stopPropagation()}>
-        <button className='modal-close' onClick={onClose}>
-          &times;
-        </button>
-        <h2>{dog.name}</h2>
-        {dog.image_link && (
-          <img src={dog.image_link} alt={dog.name} className='dogImgLarge' />
-        )}
-        {dog.weight && (
-          <p>
-            <strong>Weight:</strong> {dog.weight} kg
-          </p>
-        )}
-        {dog.height && (
-          <p>
-            <strong>Height:</strong> {dog.height} cm
-          </p>
-        )}
-        {dog.temperament && (
-          <p>
-            <strong>Temperament:</strong> {dog.temperament}
-          </p>
-        )}
-        {dog.life_span && (
-          <p>
-            <strong>Life Span:</strong> {dog.life_span} years
-          </p>
-        )}
-      </div>
     </div>
   )
 }

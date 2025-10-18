@@ -68,18 +68,8 @@
 }
 
 .fun-options button {
-  padding: var(--button-padding);
-  border: 1px solid var(--button-border-color);
-  border-radius: var(--button-border-radius);
-  background: var(--button-color);
-  color: var(--text-color);
   margin-top: 10px;
-  cursor: pointer;
-}
-
-.fun-options button:hover {
-  transform: scale(1.05);
-  border: 2px solid var(--button-hover-border-color);
+  width: 140px;
 }
 
 @keyframes fadeInUp {

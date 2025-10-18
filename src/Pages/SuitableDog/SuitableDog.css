@@ -91,6 +91,22 @@ h2 {
   animation: popupFadeIn 0.3s forwards;
 }
 
+.modal-close {
+  position: absolute;
+  top: 2px;
+  left: 12px;
+  font-size: 40px;
+  cursor: pointer;
+  color: #000;
+  background: none;
+  border: none;
+}
+
+.modal-close:hover {
+  transform: scale(1.2);
+  color: var(--accent-color);
+}
+
 @keyframes popupFadeIn {
   to {
     transform: scale(1);

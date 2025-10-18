@@ -16,6 +16,10 @@
   color: #333;
 }
 
+p {
+  margin-bottom: 25px;
+}
+
 .new-fact-btn,
 .fact-details-btn {
   width: 140px;
@@ -28,22 +32,22 @@
   transform: scale(1.1);
 }
 
-.dog-image {
+.dog-img {
   margin: auto;
   max-width: 100%;
   margin-top: 15px;
   border-radius: 12px;
 }
 
-.close-btn-popup {
+.fact-close-btn {
   position: absolute;
-  top: 15px;
+  top: 5px;
   left: 15px;
-  font-size: 30px;
+  font-size: 40px;
   cursor: pointer;
 }
 
-.close-btn-popup:hover {
+.fact-close-btn:hover {
   transform: scale(1.2);
   color: var(--accent-color);
 }

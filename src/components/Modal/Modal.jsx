@@ -1,4 +1,3 @@
-import React from 'react'
 import './Modal.css'
 
 export default function Modal({ isOpen, onClose, children }) {
@@ -6,7 +5,9 @@ export default function Modal({ isOpen, onClose, children }) {
 
   return (
     <div className='modal-overlay' onClick={onClose}>
-      {children}
+      <div className='modal-inner' onClick={(e) => e.stopPropagation()}>
+        {children}
+      </div>
     </div>
   )
 }

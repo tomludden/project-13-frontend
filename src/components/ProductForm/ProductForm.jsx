@@ -34,8 +34,8 @@ function DropZone({ handleFileChange }) {
 export default function ProductForm({
   initialData = {},
   onSubmit,
-  onCancel,
-  isSubmitting
+  isSubmitting,
+  onCancel
 }) {
   const [name, setName] = useState(initialData.name || '')
   const [price, setPrice] = useState(initialData.price || '')
@@ -102,14 +102,16 @@ export default function ProductForm({
     return initialData._id ? 'Save' : 'Add'
   }, [uploading, isSubmitting, initialData._id])
 
-  const MemoizedDropZone = useMemo(() => {
-    return <DropZone handleFileChange={handleFileChange} />
-  }, [handleFileChange])
+  const MemoizedDropZone = useMemo(
+    () => <DropZone handleFileChange={handleFileChange} />,
+    [handleFileChange]
+  )
 
   return (
-    <div className='modal-content'>
+    <div className='modal-content' onClick={(e) => e.stopPropagation()}>
       <form className='edit-form' onSubmit={handleSubmit}>
         <h3>{initialData._id ? 'Edit' : 'Add'} Product</h3>
+
         <input
           type='text'
           placeholder='Name'

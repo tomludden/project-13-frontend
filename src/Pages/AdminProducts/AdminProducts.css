@@ -28,7 +28,7 @@
   text-align: center;
   transition: transform 0.2s;
   display: flex;
-  gap: 20px;
+  gap: 15px;
   flex-direction: column;
   height: 600px;
   margin-bottom: 15px;

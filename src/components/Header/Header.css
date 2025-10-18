@@ -34,7 +34,7 @@ header {
   border-bottom: 1px solid black;
 }
 
-.nav-list li a:active {
+.nav-list li a.active {
   color: var(--accent-color);
   border-bottom: 1px solid black;
 }
