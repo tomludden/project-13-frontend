@@ -108,6 +108,7 @@ node createAdmin.js
 
 ## Project Structure
 
+```
 ├── public/ # Static assets
 ├── src/
 │ ├── api/
@@ -138,6 +139,7 @@ node createAdmin.js
 ├── .env # Environment variables
 ├── package.json # Project metadata and dependencies
 └── README.md # Project documentation
+```
 
 ### Technologies Used
 
