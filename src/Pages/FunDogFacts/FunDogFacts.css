@@ -1,6 +1,6 @@
 .dog-fact-container {
   background-color: var(--alt-card-color);
-  padding: 1.5rem;
+  padding: 15px;
   width: 90%;
   border-radius: 10px;
   border: 1px solid var(--button-border-color);
@@ -54,18 +54,20 @@ p {
   color: var(--accent-color);
 }
 
-@media (max-width: 425px) {
+@media (max-width: 459px) {
   .dog-fact-container {
     margin-top: 50px;
   }
   .new-fact-btn,
   .fact-details-btn {
-    scale: 0.8;
+    width: 120px;
   }
   .fact-details-btn {
-    margin-left: 0;
+    margin-left: 10px;
+    margin-right: 0px;
   }
   .new-fact-btn {
-    margin-right: 0;
+    margin-right: 10px;
+    margin-left: 0px;
   }
 }

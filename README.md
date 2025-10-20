@@ -5,7 +5,7 @@ A fun React app that includes a **Guess the Dog Game** & a page to learn **Fun D
 # Guess the Dog Breed Game
 
 A simple fun game where users guess the correct breed of a dog from three random images. Players earn points for correct guesses & lose lives for wrong answers.
-There is a json file named **mergedDogdFull.json** that contains collected information on over 200 dog breeds collected from different sources.
+There is an API I have created named **Dog Character API** that contains collected information on over 200 dog breeds collected from different sources.
 
 # APIs Used
 
@@ -13,7 +13,7 @@ There is a json file named **mergedDogdFull.json** that contains collected infor
   https://dog.ceo/api/breeds/image/random
 
 - **Dog Facts API:**  
-  https://dogapi.dog/api/v2/facts
+  https://dog-facts-api.onrender.com/
 
 ## Features
 
@@ -30,7 +30,7 @@ There is a json file named **mergedDogdFull.json** that contains collected infor
 - [React](https://reactjs.org/)
 - [React Router](https://reactrouter.com/)
 - [Dog CEO API](https://dog.ceo/dog-api/)
-- [Dog Facts API](https://dogapi.dog/)
+- [Dog Facts API](https://dog-facts-api.onrender.com/)
 
 # Shop
 
@@ -59,6 +59,9 @@ A full-stack admin dashboard for managing products with image uploads, scraping,
 - Scrape products from the internet and clean favourites
 - Daily cron job for scraping and cleanup
 - Modular backend with secure routes and validation
+- Responsive design for desktop and mobile devices
+- Clean and modular frontend code
+- Custom hooks for buttons, fetches, modals, and more
 
 ---
 
@@ -86,13 +89,13 @@ node createAdmin.js
 
 ### Daily Scheduled Task
 
-- **Time**: Every day at **2:00 AM**
+- **Time**: Every day at **2:00 AM & 4:00 AM**
 - **Tool**: `node-cron`
 - **File**: `cron.js`
 
 #### What It Does:
 
-1. **Scrapes products** from Guaw.com using Cheerio + Axios
+1. **Scrapes products** from Amazon.ie using Cheerio + Axios
 2. **Uploads images** to Cloudinary
 3. **Upserts products** into MongoDB
 4. **Cleans favourites** by removing references to deleted products
@@ -145,12 +148,21 @@ node createAdmin.js
 - Axios
 - React icons
 - Lucide React
+- React Router
 
 **Backend**
 
 - Node.js
 - Express
 - Mongoose (MongoDB)
+- Cron
+- Puppeteer
+- Cheerio
+- Axios
+- Multer
+- Cloudinary
+- bcrypt
+- dotenv
 
 **Authentication**
 

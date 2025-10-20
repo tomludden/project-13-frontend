@@ -69,16 +69,15 @@ h1 {
   height: 300px;
   object-fit: cover;
   cursor: pointer;
-  border: var (--button-border-radius);
-  border: var (--button-border-color) 3px solid transparent;
+  border-radius: 10px;
   transition: transform 0.2s;
   box-shadow: 10px 10px 42px -9px rgba(0, 0, 0, 0.75);
 }
 
 .dog-image:hover {
   transform: scale(1.05);
-  border: var (--button-border-color) 2px solid;
 }
+
 .lives {
   font-size: 1.2rem;
   color: crimson;
@@ -97,7 +96,7 @@ h1 {
 
 .game-over {
   font-size: 2rem;
-  color: darkred;
+  color: var(--accent-color);
 }
 
 .restart-btn {

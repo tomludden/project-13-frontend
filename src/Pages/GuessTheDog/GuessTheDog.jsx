@@ -10,6 +10,7 @@ import React, {
 import Button from '../../components/Buttons/Button.jsx'
 import { gameReducer, initialState } from '../../Reducers/GameReducer.jsx'
 import { useLocalStorage } from '../../Hooks/useLocalStorage.js'
+import DogLoader from '../../components/DogLoader/DogLoader.jsx'
 
 const STORAGE_KEY = 'dogGameState'
 
@@ -135,7 +136,7 @@ const GuessTheDog = () => {
     () => (
       <div className='dog-grid'>
         {loading ? (
-          <p>Loading dog images...</p>
+          <DogLoader />
         ) : (
           dogImages.map((img, idx) => (
             <img

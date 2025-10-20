@@ -76,7 +76,7 @@ export default function FunDogFacts() {
       <div className='dog-fact'>
         {loading ? <p>Loading dog fact...</p> : <p>{fact}</p>}
 
-        <div className='button-group'>
+        <div className='btn-group'>
           <Button
             variant='secondary'
             onClick={fetchFactOnly}
