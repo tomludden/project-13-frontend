@@ -106,7 +106,7 @@ node createAdmin.js
 - Error messages with stack trace
 -
 
-### Project Structure
+## Project Structure
 
 ├── public/ # Static assets
 ├── src/
