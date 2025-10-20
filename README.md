@@ -7,6 +7,10 @@ A fun React app that includes a **Guess the Dog Game** & a page to learn **Fun D
 A simple fun game where users guess the correct breed of a dog from three random images. Players earn points for correct guesses & lose lives for wrong answers.
 There is an API I have created named **Dog Character API** that contains collected information on over 200 dog breeds collected from different sources.
 
+# Dog Facts
+
+A page that displays fun facts about dogs. The page uses the **Dog Facts API** made by me for this project to fetch random dog facts and display them.
+
 # APIs Used
 
 - **Dog Image API:**  
@@ -62,6 +66,7 @@ A full-stack admin dashboard for managing products with image uploads, scraping,
 - Responsive design for desktop and mobile devices
 - Clean and modular frontend code
 - Custom hooks for buttons, fetches, modals, and more
+- Pages to show favourites, profile, and admin dashboard.
 
 ---
 
