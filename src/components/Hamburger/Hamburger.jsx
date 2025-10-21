@@ -142,12 +142,16 @@ const AuthLinks = ({ onClick }) => (
   <>
     <li>
       <NavLink to='/login' onClick={onClick}>
-        <button className='header-btn'>Login</button>
+        <Button variant='primary' className='header-button' type='submit'>
+          Login
+        </Button>
       </NavLink>
     </li>
     <li>
       <NavLink to='/register' onClick={onClick}>
-        <button className='header-btn'>Register</button>
+        <Button variant='primary' className='header-button' type='submit'>
+          Register
+        </Button>
       </NavLink>
     </li>
   </>
