@@ -100,9 +100,7 @@ const Header = React.memo(() => {
         </nav>
       </header>
 
-      <div className='mobile-header'>
-        <Hamburger />
-      </div>
+      <Hamburger />
     </>
   )
 })
