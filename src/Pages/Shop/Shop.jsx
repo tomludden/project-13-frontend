@@ -61,7 +61,7 @@ const Shop = () => {
   )
 
   return (
-    <div>
+    <div className='shop'>
       <h1>Dog Lovers Shop!</h1>
 
       <SearchBar
@@ -83,7 +83,7 @@ const Shop = () => {
       {loadingInitial && <DogLoader />}
       {error && <p>Error: {error}</p>}
 
-      <div className='products'>
+      <div className='shop-products'>
         {currentItems
           .filter((product) => product && product._id)
           .map((product) => {

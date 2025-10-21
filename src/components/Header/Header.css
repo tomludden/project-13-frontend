@@ -24,6 +24,7 @@ header {
 
 .nav-list li a {
   color: var(--text-color, #333);
+  font-size: 16px;
   font-weight: 500;
   padding: 5px 10px;
   transition: color 0.2s ease;
@@ -66,34 +67,8 @@ header {
 .mobile-icons {
   display: none;
 }
-@media (max-width: 967px) {
-  .nav-list a {
-    font-size: 14px;
-  }
-}
-@media (max-width: 900px) {
-  .mobile-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 10px 15px;
-    position: relative;
-  }
-
-  .mobile-icons {
-    display: flex;
-    gap: 10px;
-    margin-right: 40px;
-    margin-top: 12px;
-  }
-
-  .mobile-icon {
-    color: var(--text-color);
-    transition: color 0.2s ease;
-  }
-
-  .mobile-icon:hover {
-    color: var(--accent-color);
-    transform: scale(1.1);
+@media (max-width: 1016px) {
+  .nav-list li a {
+    font-size: 14.5px;
   }
 }

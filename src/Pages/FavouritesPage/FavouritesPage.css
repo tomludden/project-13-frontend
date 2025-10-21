@@ -1,9 +1,16 @@
-h2 {
+.favourites-page h2 {
   font-size: 30px;
   font-weight: 400;
+  margin-top: 40px;
 }
-.products {
-  margin-bottom: 50px;
+.favourites-products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
+  width: 100%;
+  padding: 0px 25.5px;
 }
 
 .fav-page-text {

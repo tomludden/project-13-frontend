@@ -2,10 +2,10 @@
   text-align: center;
   padding: 15px;
 }
-h1 {
+.game h1 {
   font-size: 45px;
   text-align: center;
-  margin-top: 15px;
+  margin-top: 40px;
   font-weight: 400;
 }
 .game-text {

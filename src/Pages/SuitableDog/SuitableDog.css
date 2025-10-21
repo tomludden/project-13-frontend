@@ -6,8 +6,13 @@
   width: 100%;
   gap: 20px;
 }
-h1 {
+.top-dogs h1,
+.questionnaire h1 {
   font-size: 30px;
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  font-weight: 400;
 }
 
 h2 {
@@ -35,6 +40,7 @@ h2 {
 .resultsText {
   text-align: center;
   margin-top: 25px;
+  padding: 0px 20px;
 }
 
 .popup {

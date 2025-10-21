@@ -5,7 +5,7 @@ import Button from '../../components/Buttons/Button'
 import Modal from '../../components/Modal/Modal'
 import { useModal } from '../../Hooks/useModal.js'
 
-const STORAGE_KEY = 'suitableDogProgress'
+const STORAGE_KEY = 'suitableDogState'
 
 export default function SuitableDog() {
   const [dogs, setDogs] = useState(null)
@@ -195,8 +195,8 @@ export default function SuitableDog() {
 
   if (finished) {
     return (
-      <div>
-        <h2>Top 10 Matching Dogs</h2>
+      <div className='top-dogs'>
+        <h1>Top 10 Matching Dogs</h1>
         <p className='resultsText'>
           Click on the cards to learn more about each dog!
         </p>

@@ -25,6 +25,7 @@ const GuessTheDog = () => {
   const { dogImages, correctBreed, score, lives, gameOver, timer, started } =
     state
   const [loading, setLoading] = useState(false)
+  const [firstLoad, setFirstLoad] = useState(true)
   const timerRef = useRef(null)
 
   const fetchDogs = useCallback(async () => {
@@ -46,13 +47,13 @@ const GuessTheDog = () => {
         payload: { images: newImages, correctBreed: correct }
       })
     } catch (err) {
-      console.error('Error fetching dog images:', err)
       dispatch({
         type: 'SET_DOGS',
         payload: { images: [], correctBreed: '' }
       })
     } finally {
       setLoading(false)
+      setFirstLoad(false)
     }
   }, [dispatch])
 
@@ -89,6 +90,7 @@ const GuessTheDog = () => {
   const restartGame = useCallback(() => {
     dispatch({ type: 'RESET_GAME' })
     localStorage.removeItem(STORAGE_KEY)
+    setFirstLoad(true)
   }, [])
 
   useEffect(() => {
@@ -132,26 +134,25 @@ const GuessTheDog = () => {
     [gameOver, timer]
   )
 
-  const DogGrid = useMemo(
-    () => (
+  const DogGrid = useMemo(() => {
+    if (firstLoad && loading) {
+      return <DogLoader />
+    }
+
+    return (
       <div className='dog-grid'>
-        {loading ? (
-          <DogLoader />
-        ) : (
-          dogImages.map((img, idx) => (
-            <img
-              key={idx}
-              src={img}
-              alt={`Dog ${idx + 1}`}
-              className='dog-image'
-              onClick={() => handleGuess(img)}
-            />
-          ))
-        )}
+        {dogImages.map((img, idx) => (
+          <img
+            key={idx}
+            src={img}
+            alt={`Dog ${idx + 1}`}
+            className='dog-image'
+            onClick={() => handleGuess(img)}
+          />
+        ))}
       </div>
-    ),
-    [dogImages, handleGuess, loading]
-  )
+    )
+  }, [dogImages, handleGuess, loading, firstLoad])
 
   return (
     <div className='game'>

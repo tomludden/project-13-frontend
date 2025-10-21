@@ -1,18 +1,16 @@
-h1 {
+.shop h1 {
   margin-bottom: 20px;
+  margin-top: 50px;
+  font-size: 30px;
+  font-weight: 400;
+  text-align: center;
 }
 
-h2 {
-  margin-top: 25px;
-  margin-bottom: 25px;
-}
-
-.products {
+.shop-products {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 40px;
-  margin-top: 50px;
   width: 100%;
   padding: 0px 25.5px;
 }

@@ -15,6 +15,7 @@ import FavouritesPage from './Pages/FavouritesPage/FavouritesPage.jsx'
 import Profile from './Pages/Profile/Profile.jsx'
 import AdminProducts from './Pages/AdminProducts/AdminProducts.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
+import Footer from './components/Footer/Footer.jsx'
 
 const App = () => {
   const [loading, setLoading] = useState(true)
@@ -59,6 +60,7 @@ const App = () => {
           </Routes>
 
           <ChatWidget />
+          <Footer />
         </>
       )}
     </div>

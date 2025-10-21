@@ -101,24 +101,6 @@ const Header = React.memo(() => {
       </header>
 
       <div className='mobile-header'>
-        <div className='mobile-icons'>
-          <NavLink to='/' className='mobile-icon'>
-            <HiOutlineHome size={24} />
-          </NavLink>
-          <NavLink to='/shop' className='mobile-icon'>
-            <HiOutlineShoppingBag size={24} />
-          </NavLink>
-          {isLoggedIn && (
-            <>
-              <NavLink to='/favourites' className='mobile-icon'>
-                <HiOutlineHeart size={24} />
-              </NavLink>
-              <NavLink to='/profile' className='mobile-icon'>
-                <HiOutlineUser size={24} />
-              </NavLink>
-            </>
-          )}
-        </div>
         <Hamburger />
       </div>
     </>

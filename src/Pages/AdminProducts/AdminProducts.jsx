@@ -130,7 +130,7 @@ const AdminProducts = () => {
 
   return (
     <div className='admin-products'>
-      <h2>Admin Dashboard</h2>
+      <h1>Admin Dashboard</h1>
 
       <SearchBar
         value={searchTerm}

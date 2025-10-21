@@ -32,7 +32,7 @@ const FavouritesPage = () => {
       {favourites.length === 0 ? (
         <p className='fav-page-text'>You have no favourites yet.</p>
       ) : (
-        <div className='products'>
+        <div className='favourites-products'>
           {favourites.map(({ _id, ...rest }) => (
             <ProductCard
               key={_id}
