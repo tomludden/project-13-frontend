@@ -70,7 +70,7 @@
   flex: 1;
 }
 
-.add-btn {
+.admin-add-btn {
   position: fixed;
   top: 208px;
   right: 20px;
@@ -90,7 +90,7 @@
   z-index: 1000;
 }
 
-.add-btn:hover {
+.admin-add-btn:hover {
   border: 2px solid var(--fill-button-hover-color);
   transform: scale(1.1);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);

@@ -1,3 +1,4 @@
+import './Login.css'
 import React, { useState, useContext, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../components/AuthContext'
@@ -6,7 +7,6 @@ import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import { apiFetch } from '../../components/apiFetch'
 import Button from '../../components/Buttons/Button'
 import FormInput from '../../components/FormInput/FormInput'
-import './Login.css'
 
 const LoginPage = () => {
   const [userName, setUserName] = useState('')

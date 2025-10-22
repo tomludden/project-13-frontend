@@ -10,9 +10,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 40px;
+  gap: 10px;
   width: 100%;
-  padding: 0px 25.5px;
+  padding: 0px 15px;
 }
 .products div {
   width: 280px;

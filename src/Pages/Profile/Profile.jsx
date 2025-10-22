@@ -1,3 +1,4 @@
+import './Profile.css'
 import React, {
   useContext,
   useState,
@@ -11,8 +12,7 @@ import Button from '../../components/Buttons/Button.jsx'
 import PasswordInput from '../../components/PasswordInput/PasswordInput.jsx'
 import FormInput from '../../components/FormInput/FormInput.jsx'
 import { useNavigate } from 'react-router-dom'
-import { apiFetch } from '../../components/apiFetch.js'
-import './Profile.css'
+import { apiFetch } from '../../components/apiFetch'
 
 const Profile = () => {
   const { user, setUser } = useContext(AuthContext)

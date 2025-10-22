@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../components/AuthContext'
 import { useFavourites } from '../../Hooks/useFavourites'
 import ProductCard from '../../components/ProductCard/ProductCard'
@@ -10,6 +10,18 @@ const FavouritesPage = () => {
   const { favourites, loading, loadingIds, toggleFavourite } = useFavourites()
 
   const isLoggedIn = Boolean(user?._id)
+  const [showEmptyMessage, setShowEmptyMessage] = useState(false)
+
+  useEffect(() => {
+    if (!loading && favourites.length === 0) {
+      const timer = setTimeout(() => {
+        setShowEmptyMessage(true)
+      }, 5000)
+      return () => clearTimeout(timer)
+    } else {
+      setShowEmptyMessage(false)
+    }
+  }, [loading, favourites])
 
   if (!isLoggedIn) {
     return (
@@ -29,7 +41,7 @@ const FavouritesPage = () => {
   return (
     <main className='favourites-page'>
       <h2>My Favourites</h2>
-      {favourites.length === 0 ? (
+      {favourites.length === 0 && showEmptyMessage ? (
         <p className='fav-page-text'>You have no favourites yet.</p>
       ) : (
         <div className='favourites-products'>

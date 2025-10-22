@@ -5,8 +5,8 @@ import { AuthContext } from '../../components/AuthContext'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import FormInput from '../../components/FormInput/FormInput'
 import { showPopup } from '../../components/ShowPopup/ShowPopup'
-import { apiFetch } from '../../components/apiFetch'
 import './Register.css'
+import { apiFetch } from '../../components/apiFetch'
 
 const RegisterPage = () => {
   const [userName, setUserName] = useState('')

@@ -1,5 +1,5 @@
-import { Route, Routes } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react'
 import Header from './components/Header/Header.jsx'
 import Home from './Pages/Home/Home.jsx'
 import GuessTheDog from './Pages/GuessTheDog/GuessTheDog.jsx'
@@ -16,20 +16,33 @@ import Profile from './Pages/Profile/Profile.jsx'
 import AdminProducts from './Pages/AdminProducts/AdminProducts.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Footer from './components/Footer/Footer.jsx'
+import Modal from './components/Modal/Modal.jsx'
+import ProductForm from './components/ProductForm/ProductForm.jsx'
 
 const App = () => {
   const [loading, setLoading] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+  const [editingProduct, setEditingProduct] = useState(null)
+  const location = useLocation()
 
   useEffect(() => {
     if (document.readyState === 'complete') {
       setLoading(false)
       return
     }
-
     const handleLoad = () => setLoading(false)
     window.addEventListener('load', handleLoad)
-
     return () => window.removeEventListener('load', handleLoad)
+  }, [])
+
+  const openModal = useCallback((product = null) => {
+    setEditingProduct(product)
+    setShowModal(true)
+  }, [])
+
+  const closeModal = useCallback(() => {
+    setEditingProduct(null)
+    setShowModal(false)
   }, [])
 
   return (
@@ -53,14 +66,22 @@ const App = () => {
               path='/admin'
               element={
                 <ProtectedRoute requireAdmin={true}>
-                  <AdminProducts />
+                  <AdminProducts openModal={openModal} />
                 </ProtectedRoute>
               }
             />
           </Routes>
-
           <ChatWidget />
-          <Footer />
+          <Footer openModal={openModal} />
+          {showModal && (
+            <Modal isOpen={showModal} onClose={closeModal}>
+              <ProductForm
+                initialData={editingProduct || {}}
+                onCancel={closeModal}
+                onSubmit={closeModal}
+              />
+            </Modal>
+          )}
         </>
       )}
     </div>
