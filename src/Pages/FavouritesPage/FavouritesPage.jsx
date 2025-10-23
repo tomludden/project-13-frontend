@@ -8,20 +8,26 @@ import './FavouritesPage.css'
 const FavouritesPage = () => {
   const { user } = useContext(AuthContext)
   const { favourites, loading, loadingIds, toggleFavourite } = useFavourites()
+  const [showEmptyMessage, setShowEmptyMessage] = useState(false)
+  const [isReady, setIsReady] = useState(false)
 
   const isLoggedIn = Boolean(user?._id)
-  const [showEmptyMessage, setShowEmptyMessage] = useState(false)
 
   useEffect(() => {
-    if (!loading && favourites.length === 0) {
-      const timer = setTimeout(() => {
-        setShowEmptyMessage(true)
-      }, 5000)
+    if (!loading) {
+      const timer = setTimeout(() => setIsReady(true), 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [loading])
+
+  useEffect(() => {
+    if (isReady && favourites.length === 0) {
+      const timer = setTimeout(() => setShowEmptyMessage(true), 5000)
       return () => clearTimeout(timer)
     } else {
       setShowEmptyMessage(false)
     }
-  }, [loading, favourites])
+  }, [isReady, favourites])
 
   if (!isLoggedIn) {
     return (
@@ -29,7 +35,7 @@ const FavouritesPage = () => {
     )
   }
 
-  if (loading) {
+  if (loading || !isReady) {
     return (
       <main className='favourites-page'>
         <h2>My Favourites</h2>
