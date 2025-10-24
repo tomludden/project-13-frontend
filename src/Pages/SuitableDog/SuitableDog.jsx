@@ -232,7 +232,10 @@ export default function SuitableDog() {
 
         <Modal isOpen={isOpen} onClose={closePopup}>
           {selectedDog && (
-            <div className='popup-content' onClick={(e) => e.stopPropagation()}>
+            <div
+              className='suitable-dog-popup-content'
+              onClick={(e) => e.stopPropagation()}
+            >
               <button className='modal-close' onClick={closePopup}>
                 &times;
               </button>

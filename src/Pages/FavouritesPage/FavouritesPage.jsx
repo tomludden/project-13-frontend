@@ -1,6 +1,8 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, useCallback } from 'react'
 import { AuthContext } from '../../components/AuthContext'
 import { useFavourites } from '../../Hooks/useFavourites'
+import { usePagination } from '../../Hooks/usePagination'
+import PaginationControls from '../../components/PaginationControls/PaginationControls'
 import ProductCard from '../../components/ProductCard/ProductCard'
 import DogLoader from '../../components/DogLoader/DogLoader'
 import './FavouritesPage.css'
@@ -12,6 +14,13 @@ const FavouritesPage = () => {
   const [isReady, setIsReady] = useState(false)
 
   const isLoggedIn = Boolean(user?._id)
+
+  const {
+    currentPage,
+    totalPages,
+    paginatedData: currentFavourites,
+    setPage
+  } = usePagination(favourites, 8)
 
   useEffect(() => {
     if (!loading) {
@@ -28,6 +37,14 @@ const FavouritesPage = () => {
       setShowEmptyMessage(false)
     }
   }, [isReady, favourites])
+
+  const handlePrevPage = useCallback(() => {
+    setPage((prev) => Math.max(prev - 1, 1))
+  }, [setPage])
+
+  const handleNextPage = useCallback(() => {
+    setPage((prev) => Math.min(prev + 1, totalPages))
+  }, [setPage, totalPages])
 
   if (!isLoggedIn) {
     return (
@@ -50,17 +67,26 @@ const FavouritesPage = () => {
       {favourites.length === 0 && showEmptyMessage ? (
         <p className='fav-page-text'>You have no favourites yet.</p>
       ) : (
-        <div className='favourites-products'>
-          {favourites.map(({ _id, ...rest }) => (
-            <ProductCard
-              key={_id}
-              product={{ _id, ...rest }}
-              isFavourite
-              onToggleFavourite={toggleFavourite}
-              disabled={loadingIds.includes(_id)}
-            />
-          ))}
-        </div>
+        <>
+          <div className='favourites-products'>
+            {currentFavourites.map(({ _id, ...rest }) => (
+              <ProductCard
+                key={_id}
+                product={{ _id, ...rest }}
+                isFavourite
+                onToggleFavourite={toggleFavourite}
+                disabled={loadingIds.includes(_id)}
+              />
+            ))}
+          </div>
+
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            goPrev={handlePrevPage}
+            goNext={handleNextPage}
+          />
+        </>
       )}
     </main>
   )
