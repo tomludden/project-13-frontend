@@ -12,7 +12,6 @@ import { AuthContext } from '../AuthContext.jsx'
 const Footer = ({ openModal }) => {
   const { user } = useContext(AuthContext)
   const location = useLocation()
-
   const isLoggedIn = Boolean(user)
   const isAdmin = user?.role === 'admin'
   const isOnAdminPage = location.pathname.startsWith('/admin')

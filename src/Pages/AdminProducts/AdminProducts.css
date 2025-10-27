@@ -73,7 +73,7 @@
 .admin-add-btn {
   position: fixed;
   top: 208px;
-  right: 20px;
+  right: 10px;
   background: #fff;
   color: #8e44ad;
   font-size: 40px;
@@ -105,8 +105,8 @@
   animation: fadeIn 0.3s ease;
 }
 
-@media (max-width: 485px) {
-  .add-btn {
-    right: 10px;
+@media (max-width: 900px) {
+  .admin-add-btn {
+    display: none;
   }
 }

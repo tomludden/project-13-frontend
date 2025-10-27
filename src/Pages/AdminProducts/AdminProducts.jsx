@@ -78,6 +78,9 @@ const AdminProducts = ({ openModal }) => {
   return (
     <div className='admin-products'>
       <h1>Admin Dashboard</h1>
+      <button className='admin-add-btn' onClick={() => openModal()}>
+        +
+      </button>
 
       <SearchBar
         value={searchTerm}
