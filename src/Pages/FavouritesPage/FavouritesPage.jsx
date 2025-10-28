@@ -63,7 +63,7 @@ const FavouritesPage = () => {
 
   return (
     <main className='favourites-page'>
-      <h2>My Favourites</h2>
+      <h1>My Favourites</h1>
       {favourites.length === 0 && showEmptyMessage ? (
         <p className='fav-page-text'>You have no favourites yet.</p>
       ) : (

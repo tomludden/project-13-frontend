@@ -1,6 +1,5 @@
 .home h1 {
   margin-top: 40px;
-  font-weight: 400;
   font-size: 30px;
   text-align: center;
 }
@@ -42,7 +41,6 @@
 .home-buttons > .home-btn {
   padding: var(--button-padding);
   font-size: 25px;
-  font-weight: 300;
   background: var(--fill-button-color);
   color: var(--fill-button-text);
   border: none;

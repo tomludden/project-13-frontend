@@ -2,7 +2,6 @@
   margin-bottom: 20px;
   margin-top: 50px;
   font-size: 30px;
-  font-weight: 400;
   text-align: center;
 }
 
@@ -13,6 +12,7 @@
   gap: 10px;
   width: 100%;
   padding: 0px 15px;
+  margin-bottom: 30px;
 }
 .products div {
   width: 280px;
@@ -91,17 +91,7 @@
       margin: 0px;
     }
   }
-  @media (max-width: 541px) {
-    .pagination button {
-      width: 80px;
-      padding: 6px 10px;
-    }
 
-    .pagination span {
-      width: 80px;
-      font-size: 14px;
-    }
-  }
   @media (max-width: 506px) {
     .filter {
       flex-wrap: wrap;

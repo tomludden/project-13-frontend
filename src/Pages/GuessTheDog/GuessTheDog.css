@@ -6,7 +6,6 @@
   font-size: 45px;
   text-align: center;
   margin-top: 40px;
-  font-weight: 400;
 }
 .game-text {
   font-size: 24px;
@@ -16,7 +15,6 @@
 .start-btn {
   padding: var(--button-padding);
   font-size: 30px;
-  font-weight: 300;
   background-color: var(--fill-button-color);
   color: var(--button-color);
   border: none;
