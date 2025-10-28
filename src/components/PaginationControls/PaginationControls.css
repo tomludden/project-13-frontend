@@ -23,3 +23,9 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+@media (max-width: 473px) {
+  .pagination span {
+    font-size: 15px;
+  }
+}
