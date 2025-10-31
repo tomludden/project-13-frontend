@@ -1,11 +1,12 @@
 .cardDiv {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
-  width: 100%;
+  justify-content: center;
   gap: 20px;
+  padding: 10px;
+  margin-top: 20px;
 }
+
 .top-dogs h1,
 .questionnaire h1 {
   font-size: 30px;
@@ -31,11 +32,7 @@ h2 {
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.42);
   border-bottom: 1.5px solid rgb(6, 5, 5);
 }
-.dogCard:hover {
-  background-color: #e0e0e0;
-  width: 300px;
-  border-radius: 10px;
-}
+
 .resultsText {
   text-align: center;
   margin-top: 25px;
@@ -67,7 +64,11 @@ h2 {
   position: relative;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   text-align: center;
+  transform: scale(0.8);
+  opacity: 0;
+  animation: popupFadeIn 0.3s forwards;
 }
+
 .popup-content h2 {
   text-align: center;
   font-size: 28px;
@@ -89,12 +90,6 @@ h2 {
   border-radius: 10px;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.42);
   border-bottom: 2px solid rgb(6, 5, 5);
-}
-
-.suitable-dog-popup-content {
-  transform: scale(0.8);
-  opacity: 0;
-  animation: popupFadeIn 0.3s forwards;
 }
 
 .modal-close {
@@ -169,12 +164,7 @@ h2 {
   border: 1.5px solid #8e44ad;
 }
 
-.cardDiv {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 10px;
+.questionnaire-back-btn {
   margin-top: 20px;
 }
 
@@ -186,15 +176,15 @@ h2 {
   width: 120px;
   margin-top: 20px;
   margin-bottom: 40px;
+}
 
-  @media (max-width: 580px) {
-    .suitable-dog-popup-content {
-      max-width: 90%;
-      max-height: 75%;
-    }
-    .suitable-dog-popup-content p {
-      padding: 0px;
-      margin-bottom: 0px;
-    }
+@media (max-width: 580px) {
+  .suitable-dog-popup-content {
+    max-width: 90%;
+    max-height: 75%;
+  }
+  .suitable-dog-popup-content p {
+    padding: 0px;
+    margin-bottom: 0px;
   }
 }

@@ -1,4 +1,3 @@
-import './AdminProducts.css'
 import { useState, useCallback, useEffect } from 'react'
 import { useProducts } from '../../Hooks/useProducts'
 import SearchBar from '../../components/SearchBar/SearchBar'
@@ -6,7 +5,9 @@ import FilterControls from '../../FilterControls/FilterControls.jsx'
 import { useFilters } from '../../Hooks/useFilters.js'
 import PaginationControls from '../../components/PaginationControls/PaginationControls'
 import { usePagination } from '../../Hooks/usePagination.js'
+import ProductForm from '../../components/ProductForm/ProductForm'
 import DogLoader from '../../components/DogLoader/DogLoader'
+import './AdminProducts.css'
 import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
 import { apiFetch } from '../../components/apiFetch'
 import Button from '../../components/Buttons/Button.jsx'
@@ -14,8 +15,10 @@ import Modal from '../../components/Modal/Modal.jsx'
 
 const PLACEHOLDER = './assets/images/placeholder.png'
 
-const AdminProducts = ({ openModal }) => {
+const AdminProducts = () => {
   const { products, setProducts, loading, error } = useProducts()
+  const [editingProduct, setEditingProduct] = useState(null)
+  const [showModal, setShowModal] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -44,6 +47,16 @@ const AdminProducts = ({ openModal }) => {
     setPage(1)
   }, [searchTerm, size, maxPrice, minRating, setPage])
 
+  const openModal = useCallback((product = null) => {
+    setEditingProduct(product)
+    setShowModal(true)
+  }, [])
+
+  const closeModal = useCallback(() => {
+    setEditingProduct(null)
+    setShowModal(false)
+  }, [])
+
   const openDeleteModal = useCallback((product) => {
     setSelectedProduct(product)
     setDeleteModal(true)
@@ -53,6 +66,46 @@ const AdminProducts = ({ openModal }) => {
     setSelectedProduct(null)
     setDeleteModal(false)
   }, [])
+
+  const handleSave = useCallback(
+    async ({ name, price, description, imageUrl, publicId }) => {
+      setIsSubmitting(true)
+      try {
+        const token = localStorage.getItem('token')
+        const payload = {
+          id: editingProduct?._id,
+          name,
+          price,
+          description,
+          imageUrl,
+          publicId
+        }
+
+        const data = await apiFetch('/products/save', {
+          method: 'POST',
+          data: payload,
+          headers: { Authorization: `Bearer ${token}` }
+        })
+
+        if (editingProduct) {
+          setProducts((prev) =>
+            prev.map((p) => (p._id === data.product._id ? data.product : p))
+          )
+          showPopup('Product edited successfully')
+        } else {
+          setProducts((prev) => [...prev, data.product])
+          showPopup('Product added successfully')
+        }
+
+        closeModal()
+      } catch (err) {
+        console.error(err.message)
+      } finally {
+        setIsSubmitting(false)
+      }
+    },
+    [editingProduct, closeModal, setProducts]
+  )
 
   const confirmDelete = useCallback(async () => {
     const token = localStorage.getItem('token')
@@ -78,9 +131,6 @@ const AdminProducts = ({ openModal }) => {
   return (
     <div className='admin-products'>
       <h1>Admin Dashboard</h1>
-      <button className='admin-add-btn' onClick={() => openModal()}>
-        +
-      </button>
 
       <SearchBar
         value={searchTerm}
@@ -97,6 +147,10 @@ const AdminProducts = ({ openModal }) => {
         setMinRating={setMinRating}
         clearFilters={handleClearFilters}
       />
+
+      <button className='admin-add-btn' onClick={() => openModal()}>
+        +
+      </button>
 
       {loading ? (
         <DogLoader />
@@ -151,6 +205,18 @@ const AdminProducts = ({ openModal }) => {
             goNext={() => setPage(currentPage + 1)}
           />
         </>
+      )}
+
+      {showModal && (
+        <Modal isOpen={showModal} onClose={closeModal}>
+          <ProductForm
+            className='edit-form'
+            initialData={editingProduct || {}}
+            isSubmitting={isSubmitting}
+            onCancel={closeModal}
+            onSubmit={handleSave}
+          />
+        </Modal>
       )}
 
       {deleteModal && (

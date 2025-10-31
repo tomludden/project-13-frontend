@@ -1,4 +1,4 @@
-import { useContext, useCallback, useMemo } from 'react'
+import { useContext, useCallback } from 'react'
 import { AuthContext } from '../../components/AuthContext.jsx'
 import { useProducts } from '../../Hooks/useProducts.js'
 import { useFilters } from '../../Hooks/useFilters.js'
@@ -14,7 +14,6 @@ import './Shop.css'
 const Shop = () => {
   const { user } = useContext(AuthContext)
   const { products, loadingInitial, error } = useProducts()
-
   const { favourites, toggleFavourite, loadingIds } = useFavourites(user)
 
   const {
@@ -54,11 +53,6 @@ const Shop = () => {
   const handleNextPage = useCallback(() => {
     setPage((prev) => Math.min(prev + 1, totalPages))
   }, [setPage, totalPages])
-
-  const isLoading = useMemo(
-    () => loadingInitial || (!products.length && !error),
-    [loadingInitial, products.length, error]
-  )
 
   return (
     <div className='shop'>

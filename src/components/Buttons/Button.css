@@ -4,7 +4,7 @@
   padding: var(--button-padding);
   border-radius: var(--button-border-radius);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 }
 
 .site-button:disabled {
@@ -28,8 +28,11 @@
   background: var(--fill-button-color);
   color: var(--fill-button-text);
   border: none;
+  cursor: pointer;
+  transition: all 0.1s ease;
 }
 
 .site-button-secondary:hover {
   background: var(--fill-button-hover-color);
+  transform: scale(1.05);
 }

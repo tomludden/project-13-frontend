@@ -3,29 +3,19 @@
   padding: 15px;
 }
 .game h1 {
-  font-size: 45px;
+  font-size: 30px;
   text-align: center;
   margin-top: 40px;
 }
 .game-text {
-  font-size: 24px;
+  font-size: 20px;
   margin-top: 40px;
   text-align: center;
 }
 .start-btn {
-  padding: var(--button-padding);
+  width: 200px;
   font-size: 30px;
-  background-color: var(--fill-button-color);
-  color: var(--button-color);
-  border: none;
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
   margin: 50px 20px;
-}
-
-.start-btn:hover {
-  background-color: var(--fill-button-hover-color);
-  transform: scale(1.1);
 }
 
 .score {

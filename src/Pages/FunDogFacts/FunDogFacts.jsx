@@ -10,10 +10,7 @@ export default function FunDogFacts() {
   const [loading, setLoading] = useState(true)
   const { isOpen, openModal, closeModal } = useModal()
 
-  const API_BASE =
-    import.meta.env.MODE === 'development'
-      ? 'http://localhost:3001'
-      : 'https://dog-facts-api.onrender.com'
+  const API_BASE = 'https://dog-facts-api.onrender.com'
 
   const fetchFactAndImage = useCallback(async () => {
     setLoading(true)

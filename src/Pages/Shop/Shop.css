@@ -32,11 +32,7 @@
   object-fit: fill;
   cursor: pointer;
 }
-.products div h4 {
-  text-align: center;
-  cursor: pointer;
-  color: var(--accent-color);
-}
+
 .rating {
   margin-bottom: 10px;
 }
@@ -51,24 +47,10 @@
 .select div select {
   padding: 15px;
 }
-.shop-header {
-  display: none;
-  align-items: center;
-  gap: 20px;
-  padding: 10px 20px;
-  height: 10svh;
-  background-color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
 
 @media (max-width: 900px) {
   header {
     display: none;
-  }
-
-  .shop-header {
-    display: flex;
-    justify-content: flex-end;
   }
 }
 

@@ -19,12 +19,20 @@ const Home = () => {
   const mainButtons = useMemo(
     () => (
       <>
-        <button className='home-btn' onClick={() => goTo('/shop')}>
+        <Button
+          variant='secondary'
+          className='home-btn'
+          onClick={() => goTo('/shop')}
+        >
           Shop
-        </button>
-        <button className='home-btn' onClick={toggleFunOptions}>
+        </Button>
+        <Button
+          variant='secondary'
+          className='home-btn'
+          onClick={toggleFunOptions}
+        >
           Fun Stuff
-        </button>
+        </Button>
       </>
     ),
     [goTo, toggleFunOptions]

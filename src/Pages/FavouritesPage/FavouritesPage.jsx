@@ -24,14 +24,14 @@ const FavouritesPage = () => {
 
   useEffect(() => {
     if (!loading) {
-      const timer = setTimeout(() => setIsReady(true), 1000)
+      const timer = setTimeout(() => setIsReady(true), 500)
       return () => clearTimeout(timer)
     }
   }, [loading])
 
   useEffect(() => {
     if (isReady && favourites.length === 0) {
-      const timer = setTimeout(() => setShowEmptyMessage(true), 5000)
+      const timer = setTimeout(() => setShowEmptyMessage(true), 10000)
       return () => clearTimeout(timer)
     } else {
       setShowEmptyMessage(false)

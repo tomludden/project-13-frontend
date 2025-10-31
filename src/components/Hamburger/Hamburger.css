@@ -65,11 +65,6 @@
     margin: 13.2px 0;
   }
 
-  .close-btn-hamburger:hover {
-    transform: scale(1.1);
-    color: var(--accent-color);
-  }
-
   .nav-list a {
     color: black;
   }
@@ -84,10 +79,6 @@
 
   body.menu-open {
     overflow-x: hidden;
-  }
-
-  .hamburger-menu.open {
-    right: 0;
   }
 
   .close-btn-hamburger {

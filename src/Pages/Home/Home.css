@@ -38,18 +38,13 @@
   }
 }
 
-.home-buttons > .home-btn {
-  padding: var(--button-padding);
+.home-btn {
   font-size: 25px;
-  background: var(--fill-button-color);
-  color: var(--fill-button-text);
-  border: none;
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
+  width: 150px;
   transition: transform 0.2s;
 }
 
-.home-buttons > .home-btn:hover {
+.home-btn:hover {
   transform: scale(1.05);
   background-color: var(--fill-button-hover-color);
 }

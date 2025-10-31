@@ -135,7 +135,6 @@ const Profile = () => {
         <label>
           New Password
           <PasswordInput
-            name='password'
             value={formData.password}
             onChange={handleChange}
             placeholder='New Password'
@@ -145,7 +144,6 @@ const Profile = () => {
         <label>
           Confirm New Password
           <PasswordInput
-            name='confirmPassword'
             value={formData.confirmPassword}
             onChange={handleChange}
             placeholder='Confirm Password'

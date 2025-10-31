@@ -21,6 +21,7 @@ const PasswordInput = ({ value, onChange, placeholder = 'Password', name }) => {
   return (
     <div className='password-input-wrapper'>
       <input
+        className='password-input'
         type={showPassword ? 'text' : 'password'}
         name={name}
         value={value}
@@ -29,8 +30,8 @@ const PasswordInput = ({ value, onChange, placeholder = 'Password', name }) => {
         required
       />
       <button
+        className='toggle-password-icon'
         type='button'
-        className='toggle-password'
         onClick={handleTogglePassword}
       >
         <img src={toggleIconSrc} alt={toggleAltText} className='toggle-icon' />

@@ -35,13 +35,13 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
       radius: { 0: 65 },
       angle: { 0: 45 },
       y: 0,
-      count: 12,
+      count: 15,
       children: {
         shape: 'circle',
-        radius: 35,
-        fill: ['red'],
-        strokeWidth: 0,
-        duration: 300
+        radius: 32,
+        fill: ['var(--accent-color)'],
+        strokeWidth: 4,
+        duration: 500
       }
     })
 
@@ -50,18 +50,18 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
       radius: { 0: 65 },
       angle: { 0: -45 },
       y: 0,
-      count: 10,
+      count: 20,
       children: {
         shape: 'circle',
-        radius: 35,
-        fill: ['red'],
-        strokeWidth: 0,
-        duration: 300
+        radius: 32,
+        fill: ['var(--alt-card-color)'],
+        strokeWidth: 7,
+        duration: 600
       }
     })
 
     const scaleTween = new mojs.Tween({
-      duration: 900,
+      duration: 1200,
       onUpdate: (progress) => {
         const scaleProgress = scaleCurve(progress)
         buttonRef.current.style.transform = `scale3d(${scaleProgress}, ${scaleProgress}, 1)`
@@ -82,7 +82,7 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
         className='product-link'
       >
         {product.imageUrl && <img src={product.imageUrl} alt={product.name} />}
-        <h4>{product.name || 'Unnamed'}</h4>
+        <h2>{product.name || 'Unnamed'}</h2>
       </a>
 
       <p>Price: €{product.price?.toFixed(2) || '0.00'}</p>

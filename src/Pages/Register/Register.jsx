@@ -97,7 +97,7 @@ const RegisterPage = () => {
         />
         <Button
           className='primary-button 
-        register'
+        register-btn'
           type='submit'
           disabled={loading}
           loading={loading}

@@ -164,9 +164,9 @@ const GuessTheDog = () => {
             Take the challenge and see how many you can get correct, be careful
             there is a time limit....Good Luck!!
           </p>
-          <button className='start-btn' onClick={startGame}>
+          <Button variant='secondary' className='start-btn' onClick={startGame}>
             Start Game
-          </button>
+          </Button>
         </>
       )}
 
