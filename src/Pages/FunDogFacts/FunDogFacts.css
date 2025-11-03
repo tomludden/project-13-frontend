@@ -12,7 +12,9 @@
   margin: auto;
   margin-top: 100px;
 }
-
+.dog-fact-header {
+  color: var(--text-color);
+}
 .dog-fact {
   font-size: 1.2rem;
   margin: 1rem 0;
@@ -21,6 +23,7 @@
 }
 
 p {
+  color: var(--text-color);
   margin-bottom: 25px;
 }
 

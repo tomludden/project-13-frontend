@@ -55,6 +55,7 @@
 }
 
 .product-card p {
+  color: var(--alt-text-color);
   margin-bottom: 10px;
 }
 

@@ -177,7 +177,9 @@ const Profile = () => {
       {confirmDelete && (
         <div className='modal-overlay' onClick={() => setConfirmDelete(false)}>
           <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-            <p>Are you sure you want to delete your account?</p>
+            <p className='delete-modal-text'>
+              Are you sure you want to delete your account?
+            </p>
             <div className='modal-buttons'>
               <button onClick={() => setConfirmDelete(false)}>No</button>
               <button onClick={handleDelete}>Yes</button>

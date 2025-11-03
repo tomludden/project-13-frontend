@@ -29,7 +29,7 @@ h2 {
   width: 300px;
   height: 300px;
   border-radius: 10px;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.42);
+  box-shadow: 0px 2px 6px 0px var(--box-shadow);
   border-bottom: 1.5px solid rgb(6, 5, 5);
 }
 
@@ -54,7 +54,7 @@ h2 {
 
 .suitable-dog-popup-content {
   margin: auto;
-  background: #fff;
+  background: var(--popup-color);
   padding: 25px 30px;
   border-radius: 12px;
   max-width: 500px;
@@ -69,7 +69,8 @@ h2 {
   animation: popupFadeIn 0.3s forwards;
 }
 
-.popup-content h2 {
+.suitable-dog-popup-content h2 {
+  color: var(--alt-text-color);
   text-align: center;
   font-size: 28px;
   margin-top: 10px;
@@ -77,6 +78,7 @@ h2 {
 }
 
 .suitable-dog-popup-content p {
+  color: var(--text-color);
   padding: 10px;
   margin-bottom: 15px;
 }

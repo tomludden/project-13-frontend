@@ -37,7 +37,7 @@
 }
 
 .live {
-  color: black;
+  color: var(--text-color);
 }
 .breed {
   color: #8e44ad;

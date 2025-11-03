@@ -8,6 +8,9 @@
 
 @media (max-width: 900px) {
   .hamburger-btn {
+    color: var(--alt-card-color);
+    transition: filter 0.3s ease;
+    filter: invert(0.7);
     background: transparent;
     border: none;
     display: flex;

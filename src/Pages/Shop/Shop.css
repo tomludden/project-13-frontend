@@ -32,7 +32,9 @@
   object-fit: fill;
   cursor: pointer;
 }
-
+.products div p {
+  color: var(--alt-text-color);
+}
 .rating {
   margin-bottom: 10px;
 }

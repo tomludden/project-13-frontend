@@ -18,6 +18,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Modal from './components/Modal/Modal.jsx'
 import ProductForm from './components/ProductForm/ProductForm.jsx'
+import ThemeToggle from './components/ThemeToggle/ThemeToggle.jsx'
 
 const App = () => {
   const [loading, setLoading] = useState(true)
@@ -71,6 +72,7 @@ const App = () => {
               }
             />
           </Routes>
+          <ThemeToggle />
           <ChatWidget />
           <Footer openModal={openModal} />
           {showModal && (

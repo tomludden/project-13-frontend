@@ -26,7 +26,9 @@ h1 {
   padding-top: 50px;
   min-width: 150px;
 }
-
+.form input {
+  background: var(--button-color);
+}
 .login-button {
   margin-top: 30px;
   width: 140px;

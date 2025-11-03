@@ -24,11 +24,12 @@ const PasswordInput = ({ value, onChange, placeholder = 'Password', name }) => {
         className='password-input'
         type={showPassword ? 'text' : 'password'}
         name={name}
-        value={value}
+        defaultValue={value}
         onChange={onChange}
         placeholder={placeholder}
         required
       />
+
       <button
         className='toggle-password-icon'
         type='button'

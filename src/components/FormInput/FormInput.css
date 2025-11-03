@@ -1,4 +1,6 @@
 .form-input {
+  background: var(--input-color);
+  color: var(--text-color);
   width: 200px;
   padding: var(--button-padding);
   margin: 15px 0;

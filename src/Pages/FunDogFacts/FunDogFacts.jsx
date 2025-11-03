@@ -69,7 +69,7 @@ export default function FunDogFacts() {
 
   return (
     <div className='dog-fact-container'>
-      <h2>Did you know?</h2>
+      <h2 className='dog-fact-header'>Did you know?</h2>
 
       <div className='dog-fact'>
         {loading ? (
@@ -78,7 +78,7 @@ export default function FunDogFacts() {
             <Spinner size={32} />
           </div>
         ) : (
-          <p>{fact}</p>
+          <p className='fact-text'>{fact}</p>
         )}
       </div>
 
