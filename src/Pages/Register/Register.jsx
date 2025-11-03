@@ -1,3 +1,4 @@
+import './Register.css'
 import React, { useState, useContext, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Buttons/Button'
@@ -5,7 +6,6 @@ import { AuthContext } from '../../components/AuthContext'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import FormInput from '../../components/FormInput/FormInput'
 import { showPopup } from '../../components/ShowPopup/ShowPopup'
-import './Register.css'
 import { apiFetch } from '../../components/apiFetch'
 
 const RegisterPage = () => {
@@ -99,9 +99,9 @@ const RegisterPage = () => {
           className='primary-button 
         register-btn'
           type='submit'
-          disabled={loading}
           loading={loading}
-          loadingText='Registering...'
+          loadingText='Registering'
+          showSpinner={true}
         >
           Register
         </Button>

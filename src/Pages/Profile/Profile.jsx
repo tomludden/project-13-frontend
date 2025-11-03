@@ -155,9 +155,8 @@ const Profile = () => {
             variant='secondary'
             className='profile-update-button'
             onClick={handleUpdate}
-            disabled={loading}
             loading={loading}
-            loadingText='Updating...'
+            loadingText='Updating'
           >
             Update Account
           </Button>

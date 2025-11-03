@@ -22,6 +22,7 @@ const AdminProducts = () => {
   const [deleteModal, setDeleteModal] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const {
     searchTerm,
@@ -108,6 +109,7 @@ const AdminProducts = () => {
   )
 
   const confirmDelete = useCallback(async () => {
+    setIsDeleting(true)
     const token = localStorage.getItem('token')
     try {
       await apiFetch(`/products/delete/${selectedProduct._id}`, {
@@ -120,6 +122,8 @@ const AdminProducts = () => {
       showPopup('Product deleted successfully')
     } catch (err) {
       console.error(err.message)
+    } finally {
+      setIsDeleting(false)
     }
   }, [selectedProduct, closeDeleteModal, setProducts])
 
@@ -232,9 +236,13 @@ const AdminProducts = () => {
                 variant='secondary'
                 className='confirm-btn'
                 onClick={confirmDelete}
+                loading={isDeleting}
+                loadingText='Deleting'
+                showSpinner={true}
               >
                 Delete
               </Button>
+
               <Button
                 variant='primary'
                 className='cancel-btn'

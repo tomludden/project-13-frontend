@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import './ProductForm.css'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
+import Button from '../Buttons/Button'
 
 const PLACEHOLDER = './assets/images/placeholder.png'
 
@@ -96,12 +97,6 @@ export default function ProductForm({
 
   const previewSrc = useMemo(() => preview || PLACEHOLDER, [preview])
 
-  const submitLabel = useMemo(() => {
-    if (uploading) return 'Uploading...'
-    if (isSubmitting) return 'Saving...'
-    return initialData._id ? 'Save' : 'Add'
-  }, [uploading, isSubmitting, initialData._id])
-
   const MemoizedDropZone = useMemo(
     () => <DropZone handleFileChange={handleFileChange} />,
     [handleFileChange]
@@ -140,9 +135,16 @@ export default function ProductForm({
         </div>
 
         <div className='modal-buttons'>
-          <button type='submit' disabled={isSubmitting || uploading}>
-            {submitLabel}
-          </button>
+          <Button
+            type='submit'
+            variant='primary'
+            loading={isSubmitting || uploading}
+            showSpinner={true}
+            loadingText={uploading ? <>Uploading </> : <>Saving </>}
+          >
+            {initialData?._id ? 'Save' : 'Add'}
+          </Button>
+
           <button type='button' onClick={onCancel}>
             Cancel
           </button>

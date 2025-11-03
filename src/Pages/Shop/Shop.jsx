@@ -1,3 +1,4 @@
+import './Shop.css'
 import { useContext, useCallback } from 'react'
 import { AuthContext } from '../../components/AuthContext.jsx'
 import { useProducts } from '../../Hooks/useProducts.js'
@@ -9,7 +10,6 @@ import PaginationControls from '../../components/PaginationControls/PaginationCo
 import ProductCard from '../../components/ProductCard/ProductCard.jsx'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import DogLoader from '../../components/DogLoader/DogLoader.jsx'
-import './Shop.css'
 
 const Shop = () => {
   const { user } = useContext(AuthContext)

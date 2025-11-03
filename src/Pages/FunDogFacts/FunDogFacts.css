@@ -1,4 +1,8 @@
 .dog-fact-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: var(--alt-card-color);
   padding: 15px;
   width: 90%;

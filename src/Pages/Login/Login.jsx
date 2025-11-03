@@ -95,9 +95,9 @@ const LoginPage = () => {
           variant='primary'
           className='login-button'
           type='submit'
-          disabled={loading}
           loading={loading}
-          loadingText='Logging in...'
+          loadingText='Logging in'
+          showSpinner={true}
         >
           Login
         </Button>

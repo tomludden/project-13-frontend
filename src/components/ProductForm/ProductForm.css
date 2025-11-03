@@ -65,9 +65,9 @@ h3 {
 }
 
 .preview-image img {
-  width: 200px;
-  height: 200px;
-  object-fit: contain;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
   margin: auto;
   border-radius: 10px;
   border: 1px solid #ccc;
@@ -143,7 +143,7 @@ h3 {
   padding: var(--button-padding);
   border-radius: var(--button-border-radius);
   cursor: pointer;
-  width: 40%;
+  width: 140px;
 }
 
 .modal-buttons button:first-child {

@@ -1,5 +1,6 @@
-import React from 'react'
 import './Button.css'
+import React, { useEffect, useState } from 'react'
+import Spinner from '../Spinner/Spinner'
 
 const Button = ({
   children,
@@ -8,7 +9,8 @@ const Button = ({
   variant = 'primary',
   disabled = false,
   loading = false,
-  loadingText = 'Loading...',
+  showSpinner = false,
+  loadingText = 'Loading',
   className = '',
   ...props
 }) => {
@@ -20,7 +22,14 @@ const Button = ({
       className={`site-button site-button-${variant} ${className}`}
       {...props}
     >
-      {loading ? loadingText : children}
+      {loading ? (
+        <span className='button-loading'>
+          {showSpinner && <Spinner size={22} />}
+          {loadingText}
+        </span>
+      ) : (
+        children
+      )}
     </button>
   )
 }

@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import Button from '../../components/Buttons/Button.jsx'
 import Modal from '../../components/Modal/Modal'
 import { useModal } from '../../Hooks/useModal.js'
+import Spinner from '../../components/Spinner/Spinner.jsx'
 
 export default function FunDogFacts() {
   const [fact, setFact] = useState('')
@@ -71,24 +72,31 @@ export default function FunDogFacts() {
       <h2>Did you know?</h2>
 
       <div className='dog-fact'>
-        {loading ? <p>Loading dog fact...</p> : <p>{fact}</p>}
+        {loading ? (
+          <div className='loading-dog-fact'>
+            <p>Loading dog fact</p>
+            <Spinner size={32} />
+          </div>
+        ) : (
+          <p>{fact}</p>
+        )}
+      </div>
 
-        <div className='btn-group'>
-          <Button
-            variant='secondary'
-            onClick={fetchFactOnly}
-            className='new-fact-btn'
-          >
-            New Fact
-          </Button>
-          <Button
-            variant='secondary'
-            onClick={openPopup}
-            className='fact-details-btn'
-          >
-            Fact Details
-          </Button>
-        </div>
+      <div className='btn-group'>
+        <Button
+          variant='secondary'
+          onClick={fetchFactOnly}
+          className='new-fact-btn'
+        >
+          New Fact
+        </Button>
+        <Button
+          variant='secondary'
+          onClick={openPopup}
+          className='fact-details-btn'
+        >
+          Fact Details
+        </Button>
       </div>
 
       <Modal isOpen={isOpen} onClose={closeModal}>

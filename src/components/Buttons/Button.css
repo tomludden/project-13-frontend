@@ -36,3 +36,10 @@
   background: var(--fill-button-hover-color);
   transform: scale(1.05);
 }
+
+.button-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}

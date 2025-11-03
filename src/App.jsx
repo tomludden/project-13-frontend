@@ -35,12 +35,6 @@ const App = () => {
     return () => window.removeEventListener('load', handleLoad)
   }, [])
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    setShowModal(false)
-    setEditingProduct(null)
-  }, [location])
-
   const openModal = useCallback((product = null) => {
     setEditingProduct(product)
     setShowModal(true)
