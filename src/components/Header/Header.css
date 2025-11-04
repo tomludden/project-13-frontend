@@ -25,7 +25,6 @@ header {
 .nav-list li a {
   color: var(--text-color, #333);
   font-size: 16px;
-  font-weight: 500;
   padding: 5px 10px;
   transition: color 0.2s ease;
 }
@@ -91,10 +90,5 @@ header {
   }
   .mobile-icons a {
     margin: 0px 10px;
-  }
-}
-@media (max-width: 600px) {
-  .nav-list li a {
-    font-size: 14px;
   }
 }

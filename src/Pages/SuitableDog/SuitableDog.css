@@ -78,7 +78,7 @@ h2 {
 }
 
 .suitable-dog-popup-content h2 {
-  color: var(--alt-text-color);
+  color: var(--accent-color);
   text-align: center;
   font-size: 28px;
   margin-top: 10px;

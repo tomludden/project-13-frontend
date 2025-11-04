@@ -51,12 +51,6 @@
   padding: 15px;
 }
 
-@media (max-width: 900px) {
-  header {
-    display: none;
-  }
-}
-
 @media (max-width: 671px) {
   .filter input,
   .filter select {
