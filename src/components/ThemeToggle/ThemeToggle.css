@@ -6,6 +6,7 @@
   border-radius: 50%;
   box-shadow: 0 0 4px var(--fill-button-color);
   opacity: 90%;
+  z-index: 11;
 }
 
 .toggle.active {

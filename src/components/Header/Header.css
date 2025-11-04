@@ -1,7 +1,7 @@
 header {
   height: 10svh;
   width: 100%;
-  z-index: 500;
+  z-index: 10;
   background-color: var(--background-color);
   border-bottom: 1px solid var(--button-color);
 }
@@ -74,6 +74,27 @@ header {
 }
 @media (max-width: 900px) {
   header {
+    position: fixed;
+    top: 0;
+    height: 7svh;
     border-bottom: 0px;
+    background: var(--background-color);
+  }
+  .navbar {
+    display: none;
+  }
+  .mobile-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .mobile-icons a {
+    margin: 0px 10px;
+  }
+}
+@media (max-width: 600px) {
+  .nav-list li a {
+    font-size: 14px;
   }
 }
