@@ -25,6 +25,7 @@
 }
 
 .home-buttons.fade-in {
+  margin-bottom: 80px;
   animation: fadeIn 0.8s ease forwards;
 }
 

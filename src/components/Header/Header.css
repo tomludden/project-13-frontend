@@ -72,3 +72,8 @@ header {
     font-size: 14.5px;
   }
 }
+@media (max-width: 900px) {
+  header {
+    border-bottom: 0px;
+  }
+}
