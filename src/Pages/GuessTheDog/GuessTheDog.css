@@ -13,6 +13,7 @@
 }
 
 .game-text {
+  color: var(--text-color);
   font-size: 20px;
   margin-top: 40px;
   text-align: center;
@@ -24,6 +25,7 @@
 }
 
 .score {
+  color: var(--text-color);
   margin-top: 1rem;
   font-size: 1.2rem;
   margin-bottom: 1rem;
@@ -77,6 +79,9 @@
   margin-bottom: 1rem;
 }
 
+.game-timer p {
+  color: var(--text-color);
+}
 .timer-icon {
   width: 20px;
   height: 30px;
@@ -100,7 +105,7 @@
   margin-bottom: 60px;
 }
 
-.timer {
+.game-timer {
   font-size: 1.2rem;
   color: #ff4d4d;
   font-weight: bold;
@@ -139,7 +144,7 @@
         }
         @media (max-width: 450px) {
           .dog-grid {
-            margin-top: 10px;
+            margin-top: 30px;
             gap: 10px;
           }
           .score-lives {
