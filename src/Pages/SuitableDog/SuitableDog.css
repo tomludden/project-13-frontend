@@ -9,6 +9,7 @@
 
 .top-dogs h1,
 .questionnaire h1 {
+  color: var(--text-color);
   font-size: 30px;
   margin-top: 40px;
   padding: 20px;

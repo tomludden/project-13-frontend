@@ -183,7 +183,7 @@ const GuessTheDog = () => {
             </>
           ) : (
             <>
-              <h2>
+              <h2 className='question-text'>
                 Which one is the: <span className='breed'>{correctBreed}</span>?
               </h2>
               {DogGrid}

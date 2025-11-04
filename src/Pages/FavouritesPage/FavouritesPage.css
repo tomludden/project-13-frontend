@@ -1,4 +1,5 @@
 .favourites-page h1 {
+  color: var(--text-color);
   font-size: 30px;
   margin-top: 40px;
   text-align: center;

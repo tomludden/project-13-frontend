@@ -3,10 +3,15 @@
   padding: 15px;
 }
 .game h1 {
+  color: var(--text-color);
   font-size: 30px;
   text-align: center;
   margin-top: 40px;
 }
+.question-text {
+  color: var(--text-color);
+}
+
 .game-text {
   font-size: 20px;
   margin-top: 40px;
@@ -29,11 +34,11 @@
 }
 
 .heart {
-  color: black;
+  color: var(--text-color);
 }
 
 .time {
-  color: black;
+  color: var(--text-color);
 }
 
 .live {

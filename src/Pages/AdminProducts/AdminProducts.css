@@ -3,6 +3,7 @@
 }
 
 .admin-products h1 {
+  color: var(--text-color);
   margin-top: 40px;
   font-size: 30px;
   text-align: center;
