@@ -5,6 +5,7 @@
   align-items: center;
 }
 .pagination span {
+  color: var(--text-color);
   margin-bottom: 80px;
   margin-top: 20px;
   margin-left: 15px;
