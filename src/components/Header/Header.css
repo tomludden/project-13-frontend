@@ -3,7 +3,7 @@ header {
   width: 100%;
   z-index: 500;
   background-color: var(--header-color);
-  box-shadow: 1px 1px 7px var(--box-shadow;
+  box-shadow: 1px 1px 7px var(--box-shadow);
 }
 
 .navbar {
