@@ -49,6 +49,7 @@ body.light-theme {
   --fill-button-hover-color: #793a94;
   --alt-card-color: #e3dee4;
   --box-shadow: #c7c3ca;
+  --popup-color: #ffffff;
   --icon-color: #ffffff;
   background: var(--background-color) 
   
