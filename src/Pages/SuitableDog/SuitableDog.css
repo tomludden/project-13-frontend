@@ -11,7 +11,7 @@
 .questionnaire h1 {
   color: var(--text-color);
   font-size: 30px;
-  margin-top: 40px;
+  margin-top: 15svh;
   padding: 20px;
   text-align: center;
 }
@@ -42,8 +42,9 @@ h2 {
 }
 
 .resultsText {
+  color: var(--text-color);
   text-align: center;
-  margin-top: 25px;
+  margin-top: 10px;
   padding: 0px 20px;
 }
 

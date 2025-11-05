@@ -10,7 +10,7 @@
   border: 1px solid var(--button-border-color);
   text-align: center;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 15svh;
 }
 .dog-fact-header {
   color: var(--text-color);
@@ -108,9 +108,6 @@
 }
 
 @media (max-width: 459px) {
-  .dog-fact-container {
-    margin-top: 50px;
-  }
   .new-fact-btn,
   .fact-details-btn {
     width: 120px;

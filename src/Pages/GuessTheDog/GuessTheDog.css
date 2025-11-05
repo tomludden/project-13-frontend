@@ -6,10 +6,15 @@
   color: var(--text-color);
   font-size: 30px;
   text-align: center;
-  margin-top: 40px;
+  padding-top: 10svh;
 }
 .question-text {
   color: var(--text-color);
+}
+
+.game h2 {
+  margin-top: 15px;
+  font-size: 30px;
 }
 
 .game-text {
@@ -81,6 +86,7 @@
 
 .game-timer p {
   color: var(--text-color);
+  font-size: 16px;
 }
 .timer-icon {
   width: 20px;
@@ -93,7 +99,7 @@
 }
 
 .game-over {
-  font-size: 2rem;
+  font-size: 30px;
   color: var(--accent-color);
 }
 
@@ -158,10 +164,6 @@
             margin-bottom: 0;
           }
 
-          .game h2 {
-            font-size: 1.4rem;
-            margin-top: 15px;
-          }
           .timer,
           .score,
           .lives {
