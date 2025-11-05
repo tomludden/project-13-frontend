@@ -22,6 +22,10 @@
   color: #333;
 }
 
+.loading-dog-fact {
+  color: var(--text-color);
+}
+
 .fact-text {
   color: var(--text-color);
   margin-bottom: 25px;

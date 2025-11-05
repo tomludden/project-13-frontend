@@ -13,3 +13,7 @@
   border-color: var(--accent-color);
   outline: none;
 }
+
+.form-input::placeholder {
+  color: rgb(192, 184, 184);
+}

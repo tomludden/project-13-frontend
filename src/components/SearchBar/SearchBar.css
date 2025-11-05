@@ -16,6 +16,10 @@
   border: 1px solid var(--button-border-color);
   font-size: 1rem;
 }
+
+.search-bar input::placeholder {
+  color: rgb(192, 184, 184);
+}
 .search-bar .clear-search {
   position: absolute;
   right: 50px;
