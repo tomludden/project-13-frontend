@@ -10,11 +10,11 @@
 }
 .question-text {
   color: var(--text-color);
+  font-size: 18px;
 }
 
 .game h2 {
   margin-top: 15px;
-  font-size: 30px;
 }
 
 .game-text {
@@ -152,6 +152,21 @@
           .dog-grid {
             margin-top: 30px;
             gap: 10px;
+          }
+
+          .game h1 {
+            font-size: 20px;
+          }
+          .dog-image {
+            width: 140px;
+            height: 140px;
+          }
+          .score-lives {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-evenly;
+          }
+          .game-over {
           }
           .score-lives {
             display: flex;
