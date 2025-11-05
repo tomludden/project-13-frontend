@@ -75,12 +75,15 @@ header {
   header {
     position: fixed;
     top: 0;
-    height: 7svh;
+    height: 8svh;
     border-bottom: 0px;
     background: var(--background-color);
   }
   .navbar {
     display: none;
+  }
+  .shop h1 {
+    padding-top: 10svh;
   }
   .mobile-icons {
     display: flex;
