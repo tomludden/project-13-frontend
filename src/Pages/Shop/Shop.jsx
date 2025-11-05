@@ -56,7 +56,7 @@ const Shop = () => {
 
   return (
     <div className='shop'>
-      <h1>Dog Lovers Shop!</h1>
+      <h1>Dog Lovers Shop</h1>
 
       <SearchBar
         value={searchTerm}

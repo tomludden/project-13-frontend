@@ -152,6 +152,10 @@ h2 {
   padding: 0px 20px;
   gap: 15px;
 }
+
+.questionnaire p {
+  color: var(--text-color);
+}
 .questionnaire > div {
   display: flex;
   justify-content: center;

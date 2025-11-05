@@ -1,6 +1,6 @@
 .home h1 {
   color: var(--text-color);
-  margin-top: 60px;
+  margin-top: 15svh;
   font-size: 30px;
   text-align: center;
 }
@@ -42,7 +42,7 @@
 
 .home-btn {
   font-size: 25px;
-  width: 120px;
+  width: 140px;
   transition: transform 0.2s;
 }
 
@@ -141,6 +141,10 @@
     font-size: 30px;
     margin-top: 40px;
   }
+  .home-btn {
+    width: 120px;
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 585px) {
@@ -153,9 +157,6 @@
     width: 300px;
     height: 300px;
   }
-  .home-buttons > .home-btn {
-    font-size: 20px;
-  }
 }
 
 @media (max-width: 375px) {
@@ -163,13 +164,10 @@
     width: 300px;
     height: 300px;
   }
-  .home-buttons > .home-btn {
-    font-size: 20px;
-  }
-  .fun-options > .home-btn {
-    font-size: 20px;
-  }
-  .fun-options > .home-btn:hover {
-    transform: scale(1.05);
-  }
+}
+.fun-options > .home-btn {
+  font-size: 20px;
+}
+.fun-options > .home-btn:hover {
+  transform: scale(1.05);
 }
