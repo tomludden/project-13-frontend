@@ -1,8 +1,9 @@
 .register-container {
   max-width: 300px;
-  height: 500px;
+  height: 420px;
   margin: 50px auto;
   padding: 20px;
+  margin-top: 155svh;
   background-color: var(--alt-card-color);
   border: 1px solid var(--button-border-color);
   border-radius: 12px;
