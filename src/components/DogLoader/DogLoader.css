@@ -11,6 +11,8 @@
 }
 
 .dog-loader-icon {
+  position: absolute;
+  top: 50%;
   width: 150px;
   height: 150px;
   animation: pulse 1s ease-in-out infinite;

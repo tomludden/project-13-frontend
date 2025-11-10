@@ -32,13 +32,13 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
 
     const burst1 = new mojs.Burst({
       parent: buttonRef.current,
-      radius: { 0: 65 },
+      radius: { 0: 55 },
       angle: { 0: 45 },
       y: 0,
       count: 15,
       children: {
         shape: 'circle',
-        radius: 32,
+        radius: 25,
         fill: ['var(--accent-color)'],
         strokeWidth: 4,
         duration: 500
@@ -47,13 +47,13 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
 
     const burst2 = new mojs.Burst({
       parent: buttonRef.current,
-      radius: { 0: 65 },
+      radius: { 0: 55 },
       angle: { 0: -45 },
       y: 0,
       count: 20,
       children: {
         shape: 'circle',
-        radius: 32,
+        radius: 25,
         fill: ['var(--alt-card-color)'],
         strokeWidth: 7,
         duration: 600
