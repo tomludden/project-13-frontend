@@ -1,6 +1,6 @@
 .home h1 {
   color: var(--text-color);
-  margin-top: 15svh;
+  margin-top: 10svh;
   font-size: 30px;
   text-align: center;
 }
@@ -137,9 +137,7 @@
 
 @media (max-width: 622px) {
   .home h1 {
-    padding-top: 10svh;
     font-size: 30px;
-    margin-top: 40px;
   }
   .home-btn {
     width: 120px;
