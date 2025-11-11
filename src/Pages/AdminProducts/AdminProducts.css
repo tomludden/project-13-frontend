@@ -4,7 +4,7 @@
 
 .admin-products h1 {
   color: var(--text-color);
-  margin-top: 15svh;
+  margin-top: 10svh;
   font-size: 30px;
   text-align: center;
   margin-bottom: 20px;
@@ -73,8 +73,8 @@
 
 .admin-add-btn {
   position: fixed;
-  top: 208px;
-  right: 10px;
+  top: 11%;
+  right: 7px;
   background: #fff;
   color: #8e44ad;
   font-size: 40px;

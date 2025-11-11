@@ -11,7 +11,7 @@
 .questionnaire h1 {
   color: var(--text-color);
   font-size: 30px;
-  margin-top: 15svh;
+  margin-top: 10svh;
   padding: 20px;
   text-align: center;
 }

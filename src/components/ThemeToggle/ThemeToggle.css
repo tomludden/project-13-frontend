@@ -28,9 +28,6 @@
 }
 
 .toggle.active .icon {
-  position: absolute;
-  top: 3px;
-  right: 3px;
   color: var(--text-color);
 }
 
@@ -81,27 +78,28 @@ body.dark-theme {
   width: 30px;
   height: 30px;
   position: absolute;
-  top: 88px;
-  left: 10px;
+  top: 11svh;
+  left: 15px;
   background: transparent;
   cursor: pointer;
   z-index: 10;
 }
 @media (max-width: 900px) {
-  .toggle.active {
+
+  .switch {
+    top:2svh
+  }
+  /* .toggle.active {
     position: fixed;
     top: -80px;
     left: -850px;
   }
-  .switch {
-    top: 15px;
-    left: 12px;
-  }
+  
   .toggle {
     top: -2px;
   }
   .toggle.active {
     top: 14px;
     left: 12px;
-  }
+  } */
 }

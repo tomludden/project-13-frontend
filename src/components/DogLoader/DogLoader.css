@@ -1,5 +1,7 @@
 .dog-loader-overlay {
   position: fixed;
+  background: var(--background-color);
+  opacity: 92%;
   top: 0;
   left: 0;
   width: 100%;
@@ -11,8 +13,6 @@
 }
 
 .dog-loader-icon {
-  position: absolute;
-  top: 45%;
   width: 150px;
   height: 150px;
   animation: pulse 1s ease-in-out infinite;
