@@ -60,11 +60,6 @@ const Hamburger = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to='/suitable-dog' onClick={onClick}>
-          My Perfect Dog
-        </NavLink>
-      </li>
-      <li>
         <NavLink to='/fun-dog-facts' onClick={onClick}>
           Fun Dog Facts
         </NavLink>
@@ -79,6 +74,16 @@ const Hamburger = () => {
 
   const UserLinks = ({ isAdmin, onClick, onLogout }) => (
     <>
+      <li>
+        <NavLink to='/suitable-dog' onClick={onClick}>
+          My Perfect Dog
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to='/dog-search' onClick={onClick}>
+          Dog Search
+        </NavLink>
+      </li>
       <li>
         <NavLink to='/favourites' onClick={onClick}>
           Favourites

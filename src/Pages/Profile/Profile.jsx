@@ -18,17 +18,15 @@ const Profile = () => {
   const { user, setUser } = useContext(AuthContext)
   const usernameRef = useRef(null)
   const navigate = useNavigate()
-
+  const [loading, setLoading] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [emailError, setEmailError] = useState('')
   const [formData, setFormData] = useState({
     userName: '',
     email: '',
     password: '',
     confirmPassword: ''
   })
-
-  const [loading, setLoading] = useState(false)
-  const [confirmDelete, setConfirmDelete] = useState(false)
-  const [emailError, setEmailError] = useState('')
 
   useEffect(() => {
     if (!user?._id) return
@@ -39,7 +37,7 @@ const Profile = () => {
       confirmPassword: ''
     })
     usernameRef.current?.focus()
-  }, [])
+  }, [user])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -58,29 +56,36 @@ const Profile = () => {
 
   const handleUpdate = async () => {
     if (!validateEmail()) return
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password && formData.password !== formData.confirmPassword) {
       showPopup('Passwords do not match', 'error')
       return
     }
 
     try {
       setLoading(true)
-      const res = await apiFetch(`/users/${user._id}`, {
+      const updateData = { userName: formData.userName, email: formData.email }
+      if (formData.password) updateData.password = formData.password
+
+      await apiFetch(`/users/${user._id}`, {
         method: 'PUT',
-        data: formData,
+        data: updateData,
         headers: { Authorization: `Bearer ${user.token}` }
       })
 
-      setUser(res)
-      showPopup('Profile updated successfully!', 'success')
+      const newUser = { ...user, ...updateData }
+      setUser(newUser)
+      localStorage.setItem('user', JSON.stringify(newUser))
+
       setFormData({
-        userName: res.userName || '',
-        email: res.email || '',
+        userName: newUser.userName,
+        email: newUser.email,
         password: '',
         confirmPassword: ''
       })
+
+      showPopup('Profile updated successfully!', 'success')
     } catch (err) {
-      console.error('Update error:', err)
+      console.error(err)
       showPopup('Failed to update profile', 'error')
     } finally {
       setLoading(false)
@@ -93,14 +98,13 @@ const Profile = () => {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${user.token}` }
       })
-
       setUser(null)
       localStorage.removeItem('user')
       sessionStorage.clear()
       showPopup('Account deleted successfully', 'success')
       navigate('/', { replace: true })
     } catch (err) {
-      console.error('Delete error:', err)
+      console.error(err)
       showPopup('Failed to delete account', 'error')
     } finally {
       setConfirmDelete(false)
@@ -114,10 +118,11 @@ const Profile = () => {
         <label>
           Username
           <FormInput
-            name='name'
+            name='userName'
             value={formData.userName}
             onChange={handleChange}
             placeholder='Name'
+            ref={usernameRef}
           />
         </label>
 
@@ -135,6 +140,7 @@ const Profile = () => {
         <label>
           New Password
           <PasswordInput
+            name='password'
             value={formData.password}
             onChange={handleChange}
             placeholder='New Password'
@@ -144,6 +150,7 @@ const Profile = () => {
         <label>
           Confirm New Password
           <PasswordInput
+            name='confirmPassword'
             value={formData.confirmPassword}
             onChange={handleChange}
             placeholder='Confirm Password'
@@ -160,7 +167,6 @@ const Profile = () => {
           >
             Update Account
           </Button>
-
           <Button
             variant='primary'
             className='profile-delete-button'

@@ -17,6 +17,7 @@
   transition: border-color 0.2s, box-shadow 0.2s;
   cursor: pointer;
   width: 150px;
+  height: 38px;
 }
 
 .filter select:hover,

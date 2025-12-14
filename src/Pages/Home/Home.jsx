@@ -2,6 +2,7 @@ import './Home.css'
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Buttons/Button'
+import { showPopup } from '../../components/ShowPopup/ShowPopup'
 
 const Home = () => {
   const [showButtons, setShowButtons] = useState(false)
@@ -15,6 +16,19 @@ const Home = () => {
 
   const goTo = useCallback((path) => navigate(path), [navigate])
   const toggleFunOptions = useCallback(() => setShowFunOptions(true), [])
+
+  const requireLogin = useCallback(
+    (path) => {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
+      if (isLoggedIn) {
+        navigate(path)
+      } else {
+        showPopup('You must register or log in to access this page!')
+        navigate('/login')
+      }
+    },
+    [navigate]
+  )
 
   const mainButtons = useMemo(
     () => (
@@ -42,11 +56,13 @@ const Home = () => {
     () => (
       <div className='fun-options fade-in'>
         <Button onClick={() => goTo('/guess-the-dog')}>Dog Game</Button>
-        <Button onClick={() => goTo('/suitable-dog')}>My Perfect Dog</Button>
+        <Button onClick={() => requireLogin('/suitable-dog')}>
+          My Perfect Dog
+        </Button>
         <Button onClick={() => goTo('/fun-dog-facts')}>Fun Dog Facts</Button>
       </div>
     ),
-    [goTo]
+    [goTo, requireLogin]
   )
 
   return (

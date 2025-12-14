@@ -1,4 +1,5 @@
 .dog-fact-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,9 +17,8 @@
   color: var(--text-color);
 }
 .dog-fact {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin: 1rem 0;
-  margin-bottom: 30px;
   color: #333;
 }
 
@@ -31,97 +31,27 @@
   margin-bottom: 25px;
 }
 
-.new-fact-btn,
-.fact-details-btn {
+.new-fact-btn {
   width: 140px;
-  margin: 0px 20px;
+  margin-bottom: 15px;
   border: none;
 }
 
-.dog-img {
-  margin: auto;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.42);
-  border-bottom: 2px solid rgb(6, 5, 5);
-}
-
-.fact-close-btn {
-  position: absolute;
-  top: 5px;
-  left: 15px;
-  font-size: 40px;
-  cursor: pointer;
-}
-
-.fact-close-btn:hover {
-  transform: scale(1.2);
-  color: var(--accent-color);
-}
-
-.modal-inner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.popup-content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background: white;
-  padding: 20px;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  border-radius: 8px;
-  position: relative;
-}
-
-.popup-content h3 {
-  font-size: 24px;
-  color: var(--accent-color);
-  margin-bottom: 5px;
-  padding-top: 10px;
-}
-
-.popup-content p {
-  color: (--alt-text-color);
-  margin: 0;
-}
-.popup-img {
-  margin: auto;
-  max-width: 300px;
-  max-height: 260px;
-  border-radius: 12px;
-  margin-bottom: 25px;
-}
-
 @media (max-width: 459px) {
-  .new-fact-btn,
-  .fact-details-btn {
-    width: 120px;
-  }
-  .fact-details-btn {
-    margin-left: 10px;
-    margin-right: 0px;
-  }
   .new-fact-btn {
+    width: 120px;
     margin-right: 10px;
     margin-left: 0px;
+  }
+}
+@media screen and (max-width: 941px) and (orientation: landscape) {
+  .dog-fact-container {
+    width: 80%;
+    height: 65svh;
+  }
+  .new-fact-btn {
+    position: absolute;
+    bottom: 2%;
+    left: 37.5%;
   }
 }

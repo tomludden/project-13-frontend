@@ -207,15 +207,19 @@ export default function SuitableDog() {
               className='dogCard'
               onClick={() => openPopup(dog)}
             >
-              {dog.image_link && (
-                <img src={dog.image_link} alt={dog.name} className='dogImg' />
-              )}
-              <h3 style={{ fontSize: dog.name.length > 19 ? '16px' : '20px' }}>
-                {dog.name}
-              </h3>
-              <p>
-                <strong>Total Match:</strong> {dog.score}%
-              </p>
+              <div className='dogCardInner'>
+                {dog.image_link && (
+                  <img src={dog.image_link} alt={dog.name} className='dogImg' />
+                )}
+                <h3
+                  style={{ fontSize: dog.name.length > 25 ? '16px' : '16px' }}
+                >
+                  {dog.name}
+                </h3>
+                <p>
+                  <strong>Total Match:</strong> {dog.score}%
+                </p>
+              </div>
             </div>
           ))}
         </div>
@@ -247,26 +251,28 @@ export default function SuitableDog() {
                   className='dogImgLarge'
                 />
               )}
-              {selectedDog.weight && (
-                <p>
-                  <strong>Weight:</strong> {selectedDog.weight} kg
-                </p>
-              )}
-              {selectedDog.height && (
-                <p>
-                  <strong>Height:</strong> {selectedDog.height} cm
-                </p>
-              )}
-              {selectedDog.temperament && (
-                <p>
-                  <strong>Temperament:</strong> {selectedDog.temperament}
-                </p>
-              )}
-              {selectedDog.life_span && (
-                <p>
-                  <strong>Life Span:</strong> {selectedDog.life_span} years
-                </p>
-              )}
+              <div className='popup-text'>
+                {selectedDog.weight && (
+                  <p>
+                    <strong>Weight:</strong> {selectedDog.weight} kg
+                  </p>
+                )}
+                {selectedDog.height && (
+                  <p>
+                    <strong>Height:</strong> {selectedDog.height} cm
+                  </p>
+                )}
+                {selectedDog.temperament && (
+                  <p>
+                    <strong>Temperament:</strong> {selectedDog.temperament}
+                  </p>
+                )}
+                {selectedDog.life_span && (
+                  <p>
+                    <strong>Life Span:</strong> {selectedDog.life_span} years
+                  </p>
+                )}
+              </div>
             </div>
           )}
         </Modal>

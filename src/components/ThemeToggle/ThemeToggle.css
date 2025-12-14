@@ -84,22 +84,15 @@ body.dark-theme {
   cursor: pointer;
   z-index: 10;
 }
-@media (max-width: 900px) {
+@media (max-width: 941px) {
 
   .switch {
     top:2svh
   }
-  /* .toggle.active {
-    position: fixed;
-    top: -80px;
-    left: -850px;
-  }
   
-  .toggle {
-    top: -2px;
-  }
+}
+@media screen and (max-width: 941px) and (orientation: landscape) {
   .toggle.active {
-    top: 14px;
-    left: 12px;
-  } */
+    top: 2px
+  }
 }

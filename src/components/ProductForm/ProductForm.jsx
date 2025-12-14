@@ -1,8 +1,19 @@
 import './ProductForm.css'
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import Button from '../Buttons/Button'
+import Spinner from '../Spinner/Spinner'
+import { apiFetch } from '../apiFetch'
 
 const PLACEHOLDER = './assets/images/placeholder.png'
+
+const isValidProductUrl = (url) => {
+  try {
+    const u = new URL(url)
+    return u.protocol === 'http:' || u.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
 
 function DropZone({ handleFileChange }) {
   const fileInputRef = useRef(null)
@@ -38,12 +49,15 @@ export default function ProductForm({
   isSubmitting,
   onCancel
 }) {
-  const [name, setName] = useState(initialData.name || '')
-  const [price, setPrice] = useState(initialData.price || '')
-  const [preview, setPreview] = useState(initialData.imageUrl || '')
-  const [imageUrl, setImageUrl] = useState(initialData.imageUrl || '')
-  const [publicId, setPublicId] = useState(initialData.imagePublicId || '')
+  const [name, setName] = useState('')
+  const [price, setPrice] = useState('')
+  const [preview, setPreview] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
+  const [productUrl, setProductUrl] = useState('')
+  const [publicId, setPublicId] = useState('')
   const [uploading, setUploading] = useState(false)
+  const [fetchingMetadata, setFetchingMetadata] = useState(false)
+  const [metadata, setMetadata] = useState({})
   const previewUrlRef = useRef(null)
 
   useEffect(() => {
@@ -52,22 +66,54 @@ export default function ProductForm({
     setPreview(initialData.imageUrl || '')
     setImageUrl(initialData.imageUrl || '')
     setPublicId(initialData.imagePublicId || '')
+    setProductUrl(initialData.url || '')
   }, [initialData])
+
+  useEffect(() => {
+    if (initialData?._id) return
+    if (!isValidProductUrl(productUrl)) return
+
+    const fetchMetadata = async () => {
+      setFetchingMetadata(true)
+      try {
+        const res = await apiFetch('/products/fetch-metadata', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: productUrl.trim() })
+        })
+        if (!res.ok) throw new Error('Failed to fetch metadata')
+        const data = await res.json()
+        setMetadata(data)
+      } finally {
+        setFetchingMetadata(false)
+      }
+    }
+    fetchMetadata()
+  }, [productUrl, initialData?._id])
+
+  useEffect(() => {
+    if (metadata.name) setName(metadata.name)
+    if (metadata.price != null) setPrice(String(metadata.price))
+    if (metadata.imageUrl) {
+      setPreview(metadata.imageUrl)
+      setImageUrl(metadata.imageUrl)
+    }
+  }, [metadata])
 
   const handleFileChange = useCallback(async (e) => {
     const file = e.target.files?.[0]
     if (!file) return
 
     if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current)
+
     const localUrl = URL.createObjectURL(file)
     previewUrlRef.current = localUrl
     setPreview(localUrl)
-
     setUploading(true)
+
     try {
       const cloudName = import.meta.env.VITE_CLOUD_NAME
       const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET
-
       const formData = new FormData()
       formData.append('file', file)
       formData.append('upload_preset', uploadPreset)
@@ -77,14 +123,11 @@ export default function ProductForm({
         { method: 'POST', body: formData }
       )
       const data = await res.json()
-
       if (data.secure_url) {
         setImageUrl(data.secure_url)
         setPublicId(data.public_id)
         setPreview(data.secure_url)
       }
-    } catch {
-      alert('Image upload failed. Please try again.')
     } finally {
       setUploading(false)
     }
@@ -92,15 +135,12 @@ export default function ProductForm({
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit({ name, price, imageUrl, publicId })
+    console.log('FORM onSubmit triggered')
+    console.log({ name, price, imageUrl, publicId, url: productUrl })
+    onSubmit({ name, price, imageUrl, publicId, url: productUrl })
   }
 
   const previewSrc = useMemo(() => preview || PLACEHOLDER, [preview])
-
-  const MemoizedDropZone = useMemo(
-    () => <DropZone handleFileChange={handleFileChange} />,
-    [handleFileChange]
-  )
 
   return (
     <div className='modal-content' onClick={(e) => e.stopPropagation()}>
@@ -114,7 +154,6 @@ export default function ProductForm({
           onChange={(e) => setName(e.target.value)}
           required
         />
-
         <input
           type='number'
           step='0.01'
@@ -124,7 +163,34 @@ export default function ProductForm({
           required
         />
 
-        {MemoizedDropZone}
+        <div className='url-link'>
+          <input
+            type='url'
+            placeholder='Product URL'
+            value={productUrl}
+            onChange={(e) => setProductUrl(e.target.value)}
+            required
+          />
+          {productUrl && (
+            <a
+              href={productUrl}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='test-link-btn'
+            >
+              Test Link
+            </a>
+          )}
+        </div>
+
+        {fetchingMetadata && (
+          <div className='metadata-spinner'>
+            <Spinner />
+            <p>Fetching metadata...</p>
+          </div>
+        )}
+
+        <DropZone handleFileChange={handleFileChange} />
 
         <div className='preview-image'>
           <img
@@ -139,12 +205,11 @@ export default function ProductForm({
             type='submit'
             variant='primary'
             loading={isSubmitting || uploading}
-            showSpinner={true}
-            loadingText={uploading ? <>Uploading </> : <>Saving </>}
+            showSpinner
+            loadingText={uploading ? 'Uploading' : 'Saving'}
           >
-            {initialData?._id ? 'Save' : 'Add'}
+            {initialData._id ? 'Save' : 'Add'}
           </Button>
-
           <button type='button' onClick={onCancel}>
             Cancel
           </button>

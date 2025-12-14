@@ -9,7 +9,6 @@ import ProductForm from '../../components/ProductForm/ProductForm'
 import DogLoader from '../../components/DogLoader/DogLoader'
 import './AdminProducts.css'
 import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
-import { apiFetch } from '../../components/apiFetch'
 import Button from '../../components/Buttons/Button.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
 
@@ -69,63 +68,75 @@ const AdminProducts = () => {
   }, [])
 
   const handleSave = useCallback(
-    async ({ name, price, description, imageUrl, publicId }) => {
+    async ({ name, price, description = '', imageUrl, publicId, url }) => {
       setIsSubmitting(true)
+      console.log('handleSave called')
+
+      const payload = {
+        ...(editingProduct ? { _id: editingProduct._id } : {}),
+        name,
+        price,
+        description,
+        imageUrl,
+        publicId,
+        url
+      }
+
+      console.log('Submitting payload to API:', payload)
+
       try {
         const token = localStorage.getItem('token')
-        const payload = {
-          id: editingProduct?._id,
-          name,
-          price,
-          description,
-          imageUrl,
-          publicId
+        console.log('Token:', token)
+
+        const res = await apiFetch('/products/save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        })
+
+        console.log('API response status:', res.status)
+        const text = await res.text()
+        console.log('API raw response:', text)
+
+        let data
+        try {
+          data = JSON.parse(text)
+        } catch (err) {
+          console.error('Failed to parse API response JSON:', err)
+          showPopup('Failed to save product', 'error')
+          return
         }
 
-        const data = await apiFetch('/products/save', {
-          method: 'POST',
-          data: payload,
-          headers: { Authorization: `Bearer ${token}` }
-        })
+        const product = data?.product || data?.data || data
+        if (!product?._id) {
+          console.error('API did not return a product _id')
+          showPopup('Failed to save product', 'error')
+          return
+        }
 
         if (editingProduct) {
           setProducts((prev) =>
-            prev.map((p) => (p._id === data.product._id ? data.product : p))
+            prev.map((p) => (p._id === product._id ? product : p))
           )
           showPopup('Product edited successfully')
         } else {
-          setProducts((prev) => [...prev, data.product])
+          setProducts((prev) => [...prev, product])
           showPopup('Product added successfully')
         }
 
         closeModal()
       } catch (err) {
-        console.error(err.message)
+        console.error('Error saving product:', err)
+        showPopup('Failed to save product', 'error')
       } finally {
         setIsSubmitting(false)
       }
     },
     [editingProduct, closeModal, setProducts]
   )
-
-  const confirmDelete = useCallback(async () => {
-    setIsDeleting(true)
-    const token = localStorage.getItem('token')
-    try {
-      await apiFetch(`/products/delete/${selectedProduct._id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` }
-      })
-
-      setProducts((prev) => prev.filter((p) => p._id !== selectedProduct._id))
-      closeDeleteModal()
-      showPopup('Product deleted successfully')
-    } catch (err) {
-      console.error(err.message)
-    } finally {
-      setIsDeleting(false)
-    }
-  }, [selectedProduct, closeDeleteModal, setProducts])
 
   const handleClearFilters = useCallback(() => {
     clearFilters()
@@ -164,39 +175,41 @@ const AdminProducts = () => {
         <>
           <div className='product-list'>
             {visibleProducts.length > 0 ? (
-              visibleProducts.map((p) => (
-                <div key={p._id} className='product-card'>
-                  <a
-                    href={p.url || '#'}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='product-link'
-                  >
+              visibleProducts.filter(Boolean).map((p) => {
+                if (!p?._id) return null
+                return (
+                  <div key={p._id} className='admin-product-card'>
                     <img
-                      src={p.imageUrl || PLACEHOLDER}
-                      alt={p.name}
+                      src={p?.imageUrl || PLACEHOLDER}
+                      alt={p?.name || 'Unnamed'}
                       loading='lazy'
                     />
-                    <h4>{p.name || 'Unnamed'}</h4>
-                  </a>
-                  <p>€{Number(p.price).toFixed(2)}</p>
-                  {p.rating && <p>Rating: {p.rating} ⭐</p>}
-                  <div className='card-buttons'>
-                    <Button variant='primary' onClick={() => openModal(p)}>
-                      Edit
-                    </Button>
-
-                    <Button
-                      variant='primary'
-                      onClick={() => {
-                        openDeleteModal(p)
-                      }}
-                    >
-                      Delete
-                    </Button>
+                    <div className='admin-product-card-info'>
+                      <a
+                        href={p?.url || '#'}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='product-link'
+                      >
+                        <h4>{p?.name || 'Unnamed'}</h4>
+                      </a>
+                      <p>€{Number(p?.price || 0).toFixed(2)}</p>
+                      {p?.rating && <p>Rating: {p.rating} ⭐</p>}
+                      <div className='card-buttons'>
+                        <Button variant='primary' onClick={() => openModal(p)}>
+                          Edit
+                        </Button>
+                        <Button
+                          variant='primary'
+                          onClick={() => openDeleteModal(p)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))
+                )
+              })
             ) : (
               <p>No products found.</p>
             )}
@@ -214,7 +227,6 @@ const AdminProducts = () => {
       {showModal && (
         <Modal isOpen={showModal} onClose={closeModal}>
           <ProductForm
-            className='edit-form'
             initialData={editingProduct || {}}
             isSubmitting={isSubmitting}
             onCancel={closeModal}
@@ -235,14 +247,13 @@ const AdminProducts = () => {
               <Button
                 variant='secondary'
                 className='confirm-btn'
-                onClick={confirmDelete}
+                onClick={() => {}}
                 loading={isDeleting}
                 loadingText='Deleting'
-                showSpinner={true}
+                showSpinner
               >
                 Delete
               </Button>
-
               <Button
                 variant='primary'
                 className='cancel-btn'

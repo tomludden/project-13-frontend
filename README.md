@@ -1,6 +1,6 @@
 # Dog Lovers
 
-A fun React app that includes a **Guess the Dog Game** & a page to learn **Fun Dog facts**. Also a cool questionnaire that help you to find your **perfect buddy**, and a **shop** to find the perfect toys for your best friend.
+**Dog Lovers** is a fun React app for anyone that loves to know about dogs that includes a **Guess the Dog Game** & a page to learn **Fun Dog facts**. Also a cool questionnaire that help you to find your **perfect buddy**, and a **shop** to find the perfect toys for your best friend.
 
 # Guess the Dog Breed Game
 
@@ -11,6 +11,14 @@ There is an API I have created named **Dog Character API** that contains collect
 
 A page that displays fun facts about dogs. The page uses the **Dog Facts API** made by me for this project to fetch random dog facts and display them.
 
+# Dog Questionnaire
+
+A fun questionnaire that helps you to find your perfect dog buddy. The questionnaire uses the **Dog Character API** to fetch information on different dog breeds and match them with the user's answers to find the best match.
+
+# Shop
+
+A page where users can find the perfect toys for their dogs. The page uses the **Dog Character API** to fetch information on different dog breeds and their corresponding toys. Users can filter the toys by breed, price, and rating.
+
 # APIs Used
 
 - **Dog Image API:**  
@@ -20,6 +28,8 @@ A page that displays fun facts about dogs. The page uses the **Dog Facts API** m
   https://dog-facts-api.onrender.com/
 
 ## Features
+
+# Dog Game
 
 - Guess the dog breed from images (Dog CEO API)
 - Score tracking
@@ -72,6 +82,8 @@ A full-stack admin dashboard for managing products with image uploads, scraping,
 
 ## Setup Instructions
 
+Deployment Url - https://starlit-semolina-e24ea6.netlify.app/
+
 - clone the repo
 - npm run dev
 - npm run scrape(if needs to be tested)
@@ -91,25 +103,6 @@ node createAdmin.js
 | GET    | `/api/products/scrape`     | Scrape products     |
 
 > All admin routes require header: `Authorization: Bearer <your_token>`
-
-### Daily Scheduled Task
-
-- **Time**: Every day at **2:00 AM & 4:00 AM**
-- **Tool**: `node-cron`
-- **File**: `cron.js`
-
-#### What It Does:
-
-1. **Scrapes products** from Amazon.ie using Cheerio + Axios
-2. **Uploads images** to Cloudinary
-3. **Upserts products** into MongoDB
-4. **Cleans favourites** by removing references to deleted products
-
-#### Logs:
-
-- Success messages for scrape and cleanup
-- Error messages with stack trace
--
 
 ## Project Structure
 
@@ -156,41 +149,6 @@ node createAdmin.js
 - React icons
 - Lucide React
 - React Router
-
-**Backend**
-
-- Node.js
-- Express
-- Mongoose (MongoDB)
-- Cron
-- Puppeteer
-- Cheerio
-- Axios
-- Multer
-- Cloudinary
-- bcrypt
-- dotenv
-
-**Authentication**
-
-- JWT (JSON Web Tokens)
-- bcrypt (password hashing)
-
-**Image Upload**
-
-- Cloudinary
-- Multer
-- multer-storage-cloudinary
-
-**Scraping**
-
-- Puppeteer
-- Axios
-- Cheerio
-
-**Scheduling**
-
-- node-cron
 
 **Dev Tools**
 

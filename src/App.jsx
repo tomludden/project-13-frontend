@@ -14,6 +14,7 @@ import LoginPage from './Pages/Login/Login.jsx'
 import FavouritesPage from './Pages/FavouritesPage/FavouritesPage.jsx'
 import Profile from './Pages/Profile/Profile.jsx'
 import AdminProducts from './Pages/AdminProducts/AdminProducts.jsx'
+import DogSearch from './Pages/DogSearch/DogSearch.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Modal from './components/Modal/Modal.jsx'
@@ -61,6 +62,7 @@ const App = () => {
             <Route path='/shop' element={<Shop />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/login' element={<LoginPage />} />
+            <Route path='/dog-search' element={<DogSearch />} />
             <Route path='/favourites' element={<FavouritesPage />} />
             <Route path='/profile' element={<Profile />} />
             <Route

@@ -81,12 +81,28 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
         rel='noopener noreferrer'
         className='product-link'
       >
-        {product.imageUrl && <img src={product.imageUrl} alt={product.name} />}
-        <h2>{product.name || 'Unnamed'}</h2>
+        <img
+          className='product-img'
+          src={product.imageUrl}
+          alt={product.name}
+        />
       </a>
 
-      <p>Price: €{product.price?.toFixed(2) || '0.00'}</p>
-      {product.rating && <p className='rating'>Rating: {product.rating} ⭐️</p>}
+      <div className='product-info'>
+        <a
+          href={product.url || '#'}
+          target='_blank'
+          rel='noopener noreferrer'
+          className='product-link'
+        >
+          <h2>{product.name || 'Unnamed'}</h2>
+        </a>
+
+        <p className='price'>Price: €{product.price?.toFixed(2) || '0.00'}</p>
+        {product.rating && (
+          <p className='rating'>Rating: {product.rating} ⭐️</p>
+        )}
+      </div>
 
       <button
         ref={buttonRef}

@@ -5,13 +5,19 @@ export const initialState = {
   lives: 5,
   gameOver: false,
   timer: 5,
+  paused: false,
   started: false
 }
 
 export const gameReducer = (state, action) => {
   switch (action.type) {
     case 'START_GAME':
-      return { ...state, started: true }
+      return {
+        ...state,
+        started: true,
+        paused: false,
+        gameOver: false
+      }
 
     case 'SET_DOGS':
       return {
@@ -41,6 +47,12 @@ export const gameReducer = (state, action) => {
 
     case 'LOAD_STATE':
       return { ...state, ...action.payload }
+
+    case 'TOGGLE_PAUSE':
+      return {
+        ...state,
+        paused: !state.paused
+      }
 
     default:
       return state

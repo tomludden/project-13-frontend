@@ -1,5 +1,4 @@
 .edit-form {
-  max-width: 320px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -8,13 +7,14 @@
 h3 {
   text-align: center;
   margin-bottom: 15px;
+  color: var(--alt-text-color);
 }
 
 .edit-form input {
   width: 100%;
   margin-bottom: 10px;
   font-size: 0.9rem;
-  cursor: pointer;
+  cursor: text;
 }
 
 .edit-form input:hover {
@@ -49,12 +49,15 @@ h3 {
 
 .edit-form input[type='text'],
 .edit-form input[type='number'],
-.edit-form input[type='file'] {
+.edit-form input[type='file'],
+.edit-form input[type='url'] {
   padding: 8px 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
 }
-
+.edit-form input[type='url'] {
+  position: relative;
+}
 .file-label {
   font-size: 14px;
   font-weight: 500;
@@ -65,8 +68,8 @@ h3 {
 }
 
 .preview-image img {
-  width: 250px;
-  height: 250px;
+  width: 210px;
+  height: 210px;
   object-fit: scale-down;
   margin: auto;
   border-radius: 10px;
@@ -78,7 +81,7 @@ h3 {
 .drop-zone {
   border: 1px dashed #ccc;
   border-radius: 10px;
-  padding: 30px;
+  padding: 10px;
   text-align: center;
   color: var(--button-text-color);
   cursor: pointer;
@@ -208,4 +211,24 @@ h3 {
   max-width: 100%;
   max-height: 100%;
   border-radius: 10px;
+}
+.test-link-btn {
+  position: absolute;
+  right: 0px;
+  width: 48px;
+  height: 37px;
+  font-size: 12px;
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: var(--fill-button-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+.test-link-btn:hover {
+  background-color: var(--fill-button-hover-color);
+}
+.url-link {
+  position: relative;
 }

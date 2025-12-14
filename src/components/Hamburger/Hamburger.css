@@ -6,7 +6,7 @@
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 941px) {
   .hamburger-btn {
     color: var(--alt-card-color);
     transition: filter 0.3s ease;
@@ -110,5 +110,13 @@
   .hamburger-menu a:hover {
     color: var(--accent-color);
     border-bottom: 1px solid black;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hamburger-menu {
+    max-height: 70svh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }

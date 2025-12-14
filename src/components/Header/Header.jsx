@@ -4,6 +4,7 @@ import './Header.css'
 import { AuthContext } from '../../components/AuthContext.jsx'
 import Button from '../Buttons/Button.jsx'
 import Hamburger from '../Hamburger/Hamburger.jsx'
+import DogSearch from '../../Pages/DogSearch/DogSearch'
 
 const Header = React.memo(() => {
   const { user, logout } = useContext(AuthContext)
@@ -34,9 +35,6 @@ const Header = React.memo(() => {
               <NavLink to='/guess-the-dog'>Guess the Dog</NavLink>
             </li>
             <li>
-              <NavLink to='/suitable-dog'>My Perfect Dog</NavLink>
-            </li>
-            <li>
               <NavLink to='/fun-dog-facts'>Fun Dog Facts</NavLink>
             </li>
             <li>
@@ -45,6 +43,12 @@ const Header = React.memo(() => {
 
             {isLoggedIn && (
               <>
+                <li>
+                  <NavLink to='/dog-search'>Dog Search</NavLink>
+                </li>
+                <li>
+                  <NavLink to='/suitable-dog'>My Perfect Dog</NavLink>
+                </li>
                 <li>
                   <NavLink to='/favourites'>Favourites</NavLink>
                 </li>

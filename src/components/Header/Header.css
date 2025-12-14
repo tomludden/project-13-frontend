@@ -68,12 +68,22 @@ header {
 .mobile-icons {
   display: none;
 }
-@media (max-width: 1016px) {
+@media (max-width: 1068px) {
   .nav-list li a {
     font-size: 14.5px;
   }
 }
-@media (max-width: 900px) {
+
+@media (max-width: 998px) {
+  .nav-list li a {
+    font-size: 14px;
+  }
+  .navbar {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 941px) {
   header {
     position: fixed;
     top: 0;

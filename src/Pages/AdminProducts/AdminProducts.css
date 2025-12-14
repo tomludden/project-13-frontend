@@ -22,7 +22,7 @@
   margin-bottom: 30px;
 }
 
-.product-card {
+.admin-product-card {
   width: 320px;
   background-color: #fff;
   border-radius: 12px;
@@ -37,11 +37,11 @@
   margin-bottom: 15px;
 }
 
-.product-card:hover {
+.admin-product-card:hover {
   transform: translateY(-5px);
 }
 
-.product-card img {
+.admin-product-card img {
   width: 250px;
   height: 250px;
   object-fit: contain;
@@ -49,13 +49,17 @@
   margin-bottom: 10px;
 }
 
-.product-card h2 {
+.admin-product-card h2 {
   font-size: 1rem;
   margin-bottom: 8px;
   text-align: center;
 }
 
-.product-card p {
+.admin-product-card h4 {
+  color: var(--accent-color);
+}
+
+.admin-product-card p {
   color: var(--alt-text-color);
   margin-bottom: 10px;
 }
@@ -105,9 +109,106 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
   animation: fadeIn 0.3s ease;
 }
+.modal-inner {
+  height: 90svh;
+  width: 60svh;
+}
+.modal-overlay {
+  z-index: 10;
+}
 
 @media (max-width: 900px) {
   .admin-add-btn {
     display: none;
+  }
+}
+
+.product-card {
+  width: 80%;
+  height: 270px;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+@media screen and (max-width: 941px) and (orientation: landscape) {
+  .admin-product-card {
+    position: relative;
+    width: 80%;
+    height: 270px;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .admin-product-card img {
+    width: 220px;
+    height: 240px;
+  }
+  .admin-product-card-info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .admin-product-card-info h4 {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  .admin-product-card-info p {
+    font-size: 14px;
+  }
+  .admin-product-card-info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .admin-product-card-info h4 {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  .admin-product-card-info p {
+    font-size: 14px;
+  }
+  .card-buttons {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+  }
+  .modal-content {
+    width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .delete-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 320px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.3s ease;
+    width: 420px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .delete-modal-content h3 {
+    font-size: 18px;
+  }
+  .delete-modal-content p {
+    text-align: center;
+  }
+  .edit-form {
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .drop-zone p {
+    font-size: 16px;
+  }
+  .edit-form h3 {
+    font-size: 18px;
+    margin-bottom: 0px;
   }
 }

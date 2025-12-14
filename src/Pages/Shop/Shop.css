@@ -51,6 +51,32 @@
   padding: 15px;
 }
 
+@media (max-width: 768px) {
+  .products div {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .products div {
+    width: 100%;
+  }
+}
+
+.filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.filter input,
+.filter select {
+  padding: 15px;
+  border-radius: 8px;
+}
+
 @media (max-width: 671px) {
   .filter input,
   .filter select {

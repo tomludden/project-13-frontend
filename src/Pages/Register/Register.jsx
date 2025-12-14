@@ -106,6 +106,15 @@ const RegisterPage = () => {
           Register
         </Button>
       </form>
+      <h3>
+        If you have an account already{' '}
+        <span
+          className='register-login-link'
+          onClick={() => navigate('/login')}
+        >
+          Login here
+        </span>
+      </h3>
     </div>
   )
 }
