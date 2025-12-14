@@ -81,6 +81,7 @@ export default function ProductForm({
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url: productUrl.trim() })
         })
+
         if (!res.ok) throw new Error('Failed to fetch metadata')
         const data = await res.json()
         setMetadata(data)
