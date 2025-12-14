@@ -76,15 +76,20 @@ export default function ProductForm({
     const fetchMetadata = async () => {
       setFetchingMetadata(true)
       try {
-        const res = await apiFetch('/products/fetch-metadata', {
+        if (!productUrl || !productUrl.trim()) {
+          console.warn('No product URL provided, skipping metadata fetch')
+          return
+        }
+        console.log('Fetching metadata for URL:', productUrl)
+
+        const data = await apiFetch('/products/fetch-metadata', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: productUrl.trim() })
+          data: { url: productUrl.trim() }
         })
 
-        if (!res.ok) throw new Error('Failed to fetch metadata')
-        const data = await res.json()
         setMetadata(data)
+      } catch (err) {
+        console.error('Failed to fetch metadata:', err)
       } finally {
         setFetchingMetadata(false)
       }

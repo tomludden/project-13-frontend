@@ -11,6 +11,7 @@ import './AdminProducts.css'
 import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
 import Button from '../../components/Buttons/Button.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
+import { apiFetch } from '../../components/apiFetch.js'
 
 const PLACEHOLDER = './assets/images/placeholder.png'
 
@@ -91,26 +92,14 @@ const AdminProducts = () => {
         const res = await apiFetch('/products/save', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
           },
-          body: JSON.stringify(payload)
+          data: payload // ✅ axios uses `data`
         })
 
-        console.log('API response status:', res.status)
-        const text = await res.text()
-        console.log('API raw response:', text)
+        console.log('API response:', res)
 
-        let data
-        try {
-          data = JSON.parse(text)
-        } catch (err) {
-          console.error('Failed to parse API response JSON:', err)
-          showPopup('Failed to save product', 'error')
-          return
-        }
-
-        const product = data?.product || data?.data || data
+        const product = res?.product || res?.data || res
         if (!product?._id) {
           console.error('API did not return a product _id')
           showPopup('Failed to save product', 'error')
