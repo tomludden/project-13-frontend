@@ -1,3 +1,4 @@
+// App.js
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { useState, useEffect, useCallback } from 'react'
 import Header from './components/Header/Header.jsx'
@@ -20,11 +21,14 @@ import Footer from './components/Footer/Footer.jsx'
 import Modal from './components/Modal/Modal.jsx'
 import ProductForm from './components/ProductForm/ProductForm.jsx'
 import ThemeToggle from './components/ThemeToggle/ThemeToggle.jsx'
+import { apiFetch } from './components/apiFetch.js'
 
 const App = () => {
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [products, setProducts] = useState([]) // optional local state
   const location = useLocation()
 
   useEffect(() => {
@@ -46,6 +50,58 @@ const App = () => {
     setEditingProduct(null)
     setShowModal(false)
   }, [])
+
+  // ✅ handleSave function
+  const handleSave = useCallback(
+    async ({ name, price, description = '', imageUrl, publicId, url }) => {
+      setIsSubmitting(true)
+      console.log('handleSave called')
+
+      const payload = {
+        ...(editingProduct ? { _id: editingProduct._id } : {}),
+        name,
+        price,
+        description,
+        imageUrl,
+        publicId,
+        url
+      }
+
+      console.log('Submitting payload:', payload)
+
+      try {
+        const token = localStorage.getItem('token')
+        const res = await apiFetch('/products/save', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+          data: payload
+        })
+
+        console.log('Raw API response:', res)
+        const product = res?.product || res?.data || res
+
+        if (!product?._id) {
+          console.error('API did not return a product _id')
+          return
+        }
+
+        if (editingProduct) {
+          setProducts((prev) =>
+            prev.map((p) => (p._id === product._id ? product : p))
+          )
+        } else {
+          setProducts((prev) => [...prev, product])
+        }
+
+        closeModal()
+      } catch (err) {
+        console.error('Error saving product:', err)
+      } finally {
+        setIsSubmitting(false)
+      }
+    },
+    [editingProduct, closeModal]
+  )
 
   return (
     <div>
@@ -81,8 +137,9 @@ const App = () => {
             <Modal isOpen={showModal} onClose={closeModal}>
               <ProductForm
                 initialData={editingProduct || {}}
+                isSubmitting={isSubmitting}
                 onCancel={closeModal}
-                onSubmit={closeModal}
+                onSubmit={handleSave}
               />
             </Modal>
           )}

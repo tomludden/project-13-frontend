@@ -82,13 +82,10 @@ export default function ProductForm({
         }
         console.log('Fetching metadata for URL:', productUrl)
 
-        const data = await fetch(
-          'http://localhost:3000/api/v1/products/fetch-metadata',
-          {
-            method: 'POST',
-            data: { url: productUrl.trim() }
-          }
-        )
+        const data = await apiFetch('/products/fetch-metadata', {
+          method: 'POST',
+          data: { url: productUrl.trim() }
+        })
         console.log('Metadata retrieved:', data)
         setMetadata(data)
       } catch (err) {
@@ -144,8 +141,8 @@ export default function ProductForm({
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('FORM onSubmit triggered')
-    console.log({ name, price, imageUrl, publicId, url: productUrl })
+    console.log('FORM onSubmit triggered') // 👈 should appear
+    console.log('onSubmit prop:', onSubmit) // 👈 check if it’s defined
     onSubmit({
       name,
       price: Number(price),
