@@ -94,7 +94,7 @@ const AdminProducts = () => {
           headers: {
             Authorization: `Bearer ${token}`
           },
-          data: payload // ✅ axios uses `data`
+          data: payload
         })
 
         console.log('API response:', res)
@@ -126,6 +126,32 @@ const AdminProducts = () => {
     },
     [editingProduct, closeModal, setProducts]
   )
+
+  const handleDelete = useCallback(async () => {
+    if (!selectedProduct?._id) return
+    setIsDeleting(true)
+
+    try {
+      const token = localStorage.getItem('token')
+      const res = await apiFetch(`/products/${selectedProduct._id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      console.log('Delete response:', res)
+
+      setProducts((prev) => prev.filter((p) => p._id !== selectedProduct._id))
+      showPopup('Product deleted successfully')
+      closeDeleteModal()
+    } catch (err) {
+      console.error('Error deleting product:', err)
+      showPopup('Failed to delete product', 'error')
+    } finally {
+      setIsDeleting(false)
+    }
+  }, [selectedProduct, setProducts, closeDeleteModal])
 
   const handleClearFilters = useCallback(() => {
     clearFilters()
@@ -236,7 +262,7 @@ const AdminProducts = () => {
               <Button
                 variant='secondary'
                 className='confirm-btn'
-                onClick={() => {}}
+                onClick={handleDelete}
                 loading={isDeleting}
                 loadingText='Deleting'
                 showSpinner

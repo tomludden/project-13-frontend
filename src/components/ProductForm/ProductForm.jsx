@@ -82,11 +82,14 @@ export default function ProductForm({
         }
         console.log('Fetching metadata for URL:', productUrl)
 
-        const data = await apiFetch('/products/fetch-metadata', {
-          method: 'POST',
-          data: { url: productUrl.trim() }
-        })
-
+        const data = await fetch(
+          'http://localhost:3000/api/v1/products/fetch-metadata',
+          {
+            method: 'POST',
+            data: { url: productUrl.trim() }
+          }
+        )
+        console.log('Metadata retrieved:', data)
         setMetadata(data)
       } catch (err) {
         console.error('Failed to fetch metadata:', err)
@@ -143,7 +146,13 @@ export default function ProductForm({
     e.preventDefault()
     console.log('FORM onSubmit triggered')
     console.log({ name, price, imageUrl, publicId, url: productUrl })
-    onSubmit({ name, price, imageUrl, publicId, url: productUrl })
+    onSubmit({
+      name,
+      price: Number(price),
+      imageUrl,
+      publicId,
+      url: productUrl
+    })
   }
 
   const previewSrc = useMemo(() => preview || PLACEHOLDER, [preview])
