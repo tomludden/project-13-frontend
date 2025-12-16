@@ -86,6 +86,7 @@ const Shop = () => {
 
             return (
               <ProductCard
+                className='product-card'
                 key={product._id}
                 product={product}
                 isFavourite={isFavourite}

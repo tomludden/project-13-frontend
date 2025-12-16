@@ -30,7 +30,7 @@ const Footer = ({ openModal }) => {
         {isLoggedIn && isAdmin && isOnAdminPage && (
           <button
             className='footer-add-btn'
-            onClick={() => openModal()}
+            onClick={() => openModal && openModal()}
             title='Add Product'
             aria-label='Add Product'
           >

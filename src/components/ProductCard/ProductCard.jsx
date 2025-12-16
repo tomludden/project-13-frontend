@@ -97,9 +97,8 @@ const ProductCard = ({ product, isFavourite, onToggleFavourite }) => {
         >
           <h2>{product.name || 'Unnamed'}</h2>
         </a>
-
         <p className='price'>Price: €{product.price?.toFixed(2) || '0.00'}</p>
-        {product.rating && (
+        {product.rating != null && (
           <p className='rating'>Rating: {product.rating} ⭐️</p>
         )}
       </div>

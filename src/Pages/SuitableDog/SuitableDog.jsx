@@ -2,8 +2,8 @@ import './SuitableDog.css'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import DogLoader from '../../components/DogLoader/DogLoader'
 import Button from '../../components/Buttons/Button'
-import Modal from '../../components/Modal/Modal'
 import { useModal } from '../../Hooks/useModal.js'
+import DogPopup from '../../components/DogPopup'
 
 const STORAGE_KEY = 'suitableDogState'
 
@@ -131,7 +131,6 @@ export default function SuitableDog() {
           let totalScore = 0
           let count = 0
           let breakdown = []
-
           for (let q of questions) {
             const userVal = answers[q.id]
             const dogVal = dog[q.id]
@@ -143,7 +142,6 @@ export default function SuitableDog() {
               breakdown.push({ trait: q.text, match })
             }
           }
-
           const percent = count > 0 ? Math.round(totalScore / count) : 0
           return { ...dog, score: percent, breakdown }
         })
@@ -209,13 +207,13 @@ export default function SuitableDog() {
             >
               <div className='dogCardInner'>
                 {dog.image_link && (
-                  <img src={dog.image_link} alt={dog.name} className='dogImg' />
+                  <img
+                    src={dog.image_link}
+                    alt={dog.name}
+                    className='suitable-dog-img'
+                  />
                 )}
-                <h3
-                  style={{ fontSize: dog.name.length > 25 ? '16px' : '16px' }}
-                >
-                  {dog.name}
-                </h3>
+                <h3 style={{ fontSize: '16px' }}>{dog.name}</h3>
                 <p>
                   <strong>Total Match:</strong> {dog.score}%
                 </p>
@@ -223,7 +221,6 @@ export default function SuitableDog() {
             </div>
           ))}
         </div>
-
         <div className='repeat'>
           <Button
             variant='primary'
@@ -233,49 +230,7 @@ export default function SuitableDog() {
             Repeat
           </Button>
         </div>
-
-        <Modal isOpen={isOpen} onClose={closePopup}>
-          {selectedDog && (
-            <div
-              className='suitable-dog-popup-content'
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button className='modal-close' onClick={closePopup}>
-                &times;
-              </button>
-              <h2>{selectedDog.name}</h2>
-              {selectedDog.image_link && (
-                <img
-                  src={selectedDog.image_link}
-                  alt={selectedDog.name}
-                  className='dogImgLarge'
-                />
-              )}
-              <div className='popup-text'>
-                {selectedDog.weight && (
-                  <p>
-                    <strong>Weight:</strong> {selectedDog.weight} kg
-                  </p>
-                )}
-                {selectedDog.height && (
-                  <p>
-                    <strong>Height:</strong> {selectedDog.height} cm
-                  </p>
-                )}
-                {selectedDog.temperament && (
-                  <p>
-                    <strong>Temperament:</strong> {selectedDog.temperament}
-                  </p>
-                )}
-                {selectedDog.life_span && (
-                  <p>
-                    <strong>Life Span:</strong> {selectedDog.life_span} years
-                  </p>
-                )}
-              </div>
-            </div>
-          )}
-        </Modal>
+        <DogPopup isOpen={isOpen} closePopup={closePopup} dog={selectedDog} />
       </div>
     )
   }
@@ -289,7 +244,6 @@ export default function SuitableDog() {
         Question {current + 1} of {questions.length}
       </h2>
       <p>{question.text}</p>
-
       <div className='options'>
         {question.options.map((opt) => (
           <Button
@@ -302,7 +256,6 @@ export default function SuitableDog() {
           </Button>
         ))}
       </div>
-
       <Button
         variant='primary'
         className='questionnaire-back-btn'
@@ -311,6 +264,7 @@ export default function SuitableDog() {
       >
         Back
       </Button>
+      <DogPopup isOpen={isOpen} closePopup={closePopup} dog={selectedDog} />
     </div>
   )
 }

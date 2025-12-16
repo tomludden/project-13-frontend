@@ -33,6 +33,7 @@
   display: flex;
   gap: 15px;
   flex-direction: column;
+  align-items: center;
   height: 600px;
   margin-bottom: 15px;
 }
@@ -109,10 +110,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
   animation: fadeIn 0.3s ease;
 }
-.modal-inner {
-  height: 90svh;
-  width: 60svh;
-}
+
 .modal-overlay {
   z-index: 10;
 }
@@ -122,15 +120,6 @@
     display: none;
   }
 }
-
-.product-card {
-  width: 80%;
-  height: 270px;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 20px;
-}
-
 @media screen and (max-width: 941px) and (orientation: landscape) {
   .admin-product-card {
     position: relative;

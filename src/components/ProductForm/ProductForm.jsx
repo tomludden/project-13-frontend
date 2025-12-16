@@ -58,6 +58,7 @@ export default function ProductForm({
   const [uploading, setUploading] = useState(false)
   const [fetchingMetadata, setFetchingMetadata] = useState(false)
   const [metadata, setMetadata] = useState({})
+  const [rating, setRating] = useState('')
   const previewUrlRef = useRef(null)
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export default function ProductForm({
     setPrice(initialData.price || '')
     setPreview(initialData.imageUrl || '')
     setImageUrl(initialData.imageUrl || '')
+    setRating(initialData.rating || '')
     setPublicId(initialData.imagePublicId || '')
     setProductUrl(initialData.url || '')
   }, [initialData])
@@ -77,16 +79,12 @@ export default function ProductForm({
       setFetchingMetadata(true)
       try {
         if (!productUrl || !productUrl.trim()) {
-          console.warn('No product URL provided, skipping metadata fetch')
           return
         }
-        console.log('Fetching metadata for URL:', productUrl)
-
-        const data = await apiFetch('/products/fetch-metadata', {
+        const data = await apiFetch('/products/scrape-single', {
           method: 'POST',
           data: { url: productUrl.trim() }
         })
-        console.log('Metadata retrieved:', data)
         setMetadata(data)
       } catch (err) {
         console.error('Failed to fetch metadata:', err)
@@ -104,6 +102,7 @@ export default function ProductForm({
       setPreview(metadata.imageUrl)
       setImageUrl(metadata.imageUrl)
     }
+    if (metadata.rating) setRating(metadata.rating)
   }, [metadata])
 
   const handleFileChange = useCallback(async (e) => {
@@ -141,14 +140,13 @@ export default function ProductForm({
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('FORM onSubmit triggered') // 👈 should appear
-    console.log('onSubmit prop:', onSubmit) // 👈 check if it’s defined
     onSubmit({
       name,
       price: Number(price),
       imageUrl,
       publicId,
-      url: productUrl
+      url: productUrl,
+      rating
     })
   }
 
@@ -198,7 +196,7 @@ export default function ProductForm({
         {fetchingMetadata && (
           <div className='metadata-spinner'>
             <Spinner />
-            <p>Fetching metadata...</p>
+            <p>Fetching metadata</p>
           </div>
         )}
 

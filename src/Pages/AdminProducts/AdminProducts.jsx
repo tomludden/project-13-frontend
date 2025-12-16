@@ -12,6 +12,7 @@ import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
 import Button from '../../components/Buttons/Button.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
 import { apiFetch } from '../../components/apiFetch.js'
+import Footer from '../../components/Footer/Footer.jsx'
 
 const PLACEHOLDER = './assets/images/placeholder.png'
 
@@ -50,6 +51,7 @@ const AdminProducts = () => {
 
   const openModal = useCallback((product = null) => {
     setEditingProduct(product)
+    setIsSubmitting(false)
     setShowModal(true)
   }, [])
 
@@ -69,13 +71,19 @@ const AdminProducts = () => {
   }, [])
 
   const handleSave = useCallback(
-    async ({ name, price, description = '', imageUrl, publicId, url }) => {
-      setIsSubmitting(true)
-      console.log('handleSave called')
-
+    async ({
+      name,
+      price,
+      rating,
+      description = '',
+      imageUrl,
+      publicId,
+      url
+    }) => {
       const payload = {
         ...(editingProduct ? { _id: editingProduct._id } : {}),
         name,
+        rating,
         price,
         description,
         imageUrl,
@@ -83,30 +91,21 @@ const AdminProducts = () => {
         url
       }
 
-      console.log('Submitting payload to API:', payload)
-
+      console.log(payload)
       try {
         const token = localStorage.getItem('token')
-        console.log('Token:', token)
-
         const res = await apiFetch('/products/save', {
           method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
+          headers: { Authorization: `Bearer ${token}` },
           data: payload
         })
-
-        console.log('API response:', res)
-
         const product = res?.product || res?.data || res
+        setIsSubmitting(true)
         if (!product?._id) {
-          console.error('API did not return a product _id')
           showPopup('Failed to save product', 'error')
           return
         }
-
-        if (editingProduct) {
+        if (editingProduct && editingProduct._id) {
           setProducts((prev) =>
             prev.map((p) => (p._id === product._id ? product : p))
           )
@@ -115,10 +114,8 @@ const AdminProducts = () => {
           setProducts((prev) => [...prev, product])
           showPopup('Product added successfully')
         }
-
         closeModal()
       } catch (err) {
-        console.error('Error saving product:', err)
         showPopup('Failed to save product', 'error')
       } finally {
         setIsSubmitting(false)
@@ -130,23 +127,16 @@ const AdminProducts = () => {
   const handleDelete = useCallback(async () => {
     if (!selectedProduct?._id) return
     setIsDeleting(true)
-
     try {
       const token = localStorage.getItem('token')
-      const res = await apiFetch(`/products/${selectedProduct._id}`, {
+      await apiFetch(`/products/${selectedProduct._id}`, {
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` }
       })
-
-      console.log('Delete response:', res)
-
       setProducts((prev) => prev.filter((p) => p._id !== selectedProduct._id))
       showPopup('Product deleted successfully')
       closeDeleteModal()
     } catch (err) {
-      console.error('Error deleting product:', err)
       showPopup('Failed to delete product', 'error')
     } finally {
       setIsDeleting(false)
@@ -161,13 +151,11 @@ const AdminProducts = () => {
   return (
     <div className='admin-products'>
       <h1>Admin Dashboard</h1>
-
       <SearchBar
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder='Search products...'
       />
-
       <FilterControls
         size={size}
         setSize={setSize}
@@ -177,11 +165,9 @@ const AdminProducts = () => {
         setMinRating={setMinRating}
         clearFilters={handleClearFilters}
       />
-
       <button className='admin-add-btn' onClick={() => openModal()}>
         +
       </button>
-
       {loading ? (
         <DogLoader />
       ) : error ? (
@@ -229,7 +215,6 @@ const AdminProducts = () => {
               <p>No products found.</p>
             )}
           </div>
-
           <PaginationControls
             currentPage={currentPage}
             totalPages={totalPages}
@@ -238,7 +223,6 @@ const AdminProducts = () => {
           />
         </>
       )}
-
       {showModal && (
         <Modal isOpen={showModal} onClose={closeModal}>
           <ProductForm
@@ -249,7 +233,6 @@ const AdminProducts = () => {
           />
         </Modal>
       )}
-
       {deleteModal && (
         <Modal isOpen={deleteModal} onClose={closeDeleteModal}>
           <div className='modal-content'>
@@ -280,6 +263,7 @@ const AdminProducts = () => {
           </div>
         </Modal>
       )}
+      <Footer openModal={openModal} />
     </div>
   )
 }

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import DogLoader from '../../components/DogLoader/DogLoader'
 import SearchBar from '../../components/SearchBar/SearchBar.jsx'
 import PaginationControls from '../../components/PaginationControls/PaginationControls.jsx'
-import Modal from '../../components/Modal/Modal'
+import DogPopup from '../../components/DogPopup.jsx'
 
 const ITEMS_PER_PAGE = 8
 
@@ -145,7 +145,7 @@ export default function DogSearchPaginated() {
       {currentDogs.length === 0 ? (
         <p className='resultsText'>No dog breeds match your search.</p>
       ) : (
-        <div className='cardDiv'>
+        <div className='dog-grid'>
           {currentDogs.map((dog) => (
             <div
               key={dog.id}
@@ -167,44 +167,11 @@ export default function DogSearchPaginated() {
         goPrev={() => setCurrentPage((p) => Math.max(1, p - 1))}
         goNext={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
       />
-
-      {selectedDog && (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <div className='suitable-dog-popup-content'>
-            <button className='modal-close' onClick={closeModal}>
-              &times;
-            </button>
-            <h2>{selectedDog.name}</h2>
-            {selectedDog.image_link && (
-              <img
-                src={selectedDog.image_link}
-                alt={selectedDog.name}
-                className='dogImgLarge'
-              />
-            )}
-            {selectedDog.weight && (
-              <p>
-                <strong>Weight:</strong> {selectedDog.weight} kg
-              </p>
-            )}
-            {selectedDog.height && (
-              <p>
-                <strong>Height:</strong> {selectedDog.height} cm
-              </p>
-            )}
-            {selectedDog.temperament && (
-              <p>
-                <strong>Temperament:</strong> {selectedDog.temperament}
-              </p>
-            )}
-            {selectedDog.life_span && (
-              <p>
-                <strong>Life Span:</strong> {selectedDog.life_span} years
-              </p>
-            )}
-          </div>
-        </Modal>
-      )}
+      <DogPopup
+        isOpen={isModalOpen}
+        closePopup={closeModal}
+        dog={selectedDog}
+      />
     </div>
   )
 }
