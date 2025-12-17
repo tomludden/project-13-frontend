@@ -10,6 +10,12 @@
   margin-bottom: 20px;
 }
 
+.admin-product-card-info {
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+}
+
 .product-list {
   display: flex;
   flex-wrap: wrap;
@@ -23,6 +29,8 @@
 }
 
 .admin-product-card {
+  position: relative;
+  height: 600px;
   width: 320px;
   background-color: #fff;
   border-radius: 12px;
@@ -34,7 +42,6 @@
   gap: 15px;
   flex-direction: column;
   align-items: center;
-  height: 600px;
   margin-bottom: 15px;
 }
 
@@ -43,7 +50,7 @@
 }
 
 .admin-product-card img {
-  width: 250px;
+  width: 290px;
   height: 250px;
   object-fit: contain;
   border-radius: 10px;
@@ -65,11 +72,12 @@
   margin-bottom: 10px;
 }
 
-.card-buttons {
+.admin-card-buttons {
+  position: absolute;
+  bottom: 15px;
+  right: 55px;
   display: flex;
-  justify-content: space-between;
   gap: 10px;
-  margin-top: auto;
 }
 
 .card-buttons button {
@@ -124,16 +132,27 @@
   .admin-product-card {
     position: relative;
     width: 80%;
-    height: 270px;
+    height: 280px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s;
+    display: flex;
     flex-direction: row;
     align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 15px;
   }
+
   .admin-product-card img {
     width: 220px;
     height: 240px;
   }
   .admin-product-card-info {
     display: flex;
+    gap: 0px;
     flex-direction: column;
     margin-top: 10px;
   }
@@ -144,11 +163,7 @@
   .admin-product-card-info p {
     font-size: 14px;
   }
-  .admin-product-card-info {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-  }
+
   .admin-product-card-info h4 {
     font-size: 14px;
     margin-bottom: 15px;
@@ -156,10 +171,12 @@
   .admin-product-card-info p {
     font-size: 14px;
   }
-  .card-buttons {
+  .admin-card-buttons {
     position: absolute;
-    bottom: 25px;
+    bottom: 15px;
     right: 25px;
+    display: flex;
+    gap: 10px;
   }
   .modal-content {
     width: 420px;

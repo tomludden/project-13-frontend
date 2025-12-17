@@ -196,7 +196,7 @@ const AdminProducts = () => {
                       </a>
                       <p>€{Number(p?.price || 0).toFixed(2)}</p>
                       {p?.rating && <p>Rating: {p.rating} ⭐</p>}
-                      <div className='card-buttons'>
+                      <div className='admin-card-buttons'>
                         <Button variant='primary' onClick={() => openModal(p)}>
                           Edit
                         </Button>

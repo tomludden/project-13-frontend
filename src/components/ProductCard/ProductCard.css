@@ -1,9 +1,9 @@
 .product-card {
   display: flex;
-  height: 450px;
+  height: 600px;
+  width: 320px;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
   position: relative;
   padding: 10px;
   border-bottom: 1px solid black;
@@ -91,10 +91,9 @@
 @media screen and (max-width: 900px) and (orientation: landscape) {
   .product-card {
     width: 80%;
-    height: 270px;
+    height: 280px;
     flex-direction: row;
     align-items: flex-start;
-    gap: 20px;
   }
 
   .product-img {
