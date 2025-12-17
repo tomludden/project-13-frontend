@@ -81,7 +81,7 @@ export default function ProductForm({
         if (!productUrl || !productUrl.trim()) {
           return
         }
-        const data = await apiFetch('/products/scrape-single', {
+        const data = await apiFetch('/products/fetch-metadata', {
           method: 'POST',
           data: { url: productUrl.trim() }
         })
