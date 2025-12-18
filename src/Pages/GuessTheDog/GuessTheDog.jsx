@@ -131,10 +131,10 @@ const GuessTheDog = () => {
           Score: <span>{score}</span>
         </p>
 
-        {!gameOver && <p className='timer'>Time: {timer}s</p>}
+        {!gameOver && <p className='timer'> Time: {timer}s</p>}
 
         <p className='lives'>
-          <span className='heart'>♡</span> Lives: {lives}
+          <span className='heart'>♡ </span>Lives: {lives}
         </p>
       </div>
     ),

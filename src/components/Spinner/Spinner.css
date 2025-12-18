@@ -3,10 +3,11 @@
   height: 20px;
   color: var(--accent-color);
   border: 2px solid var(--accent-color);
-  border-top: 2px solid var(--alt-card-color);
+  border-top: transparent;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: auto;
+  margin-top: 20px;
 }
 
 @keyframes spin {

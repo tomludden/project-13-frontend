@@ -1,15 +1,16 @@
 import './Footer.css'
-import React, { useContext } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useContext } from 'react'
+import { AuthContext } from '../AuthContext'
+import { useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import {
-  HiOutlineUser,
   HiOutlineHeart,
   HiOutlineShoppingBag,
+  HiOutlineUser,
   HiOutlineHome
 } from 'react-icons/hi2'
-import { AuthContext } from '../AuthContext.jsx'
 
-const Footer = ({ openModal }) => {
+export const Footer = ({ openModal }) => {
   const { user } = useContext(AuthContext)
   const location = useLocation()
   const isLoggedIn = Boolean(user)
@@ -27,16 +28,19 @@ const Footer = ({ openModal }) => {
           <HiOutlineShoppingBag size={32} />
         </NavLink>
 
-        {isLoggedIn && isAdmin && isOnAdminPage && (
-          <button
-            className='footer-add-btn'
-            onClick={() => openModal && openModal()}
-            title='Add Product'
-            aria-label='Add Product'
-          >
-            +
-          </button>
-        )}
+        {isLoggedIn &&
+          isAdmin &&
+          isOnAdminPage &&
+          typeof openModal === 'function' && (
+            <button
+              className='footer-add-btn'
+              onClick={() => openModal()}
+              title='Add Product'
+              aria-label='Add Product'
+            >
+              +
+            </button>
+          )}
 
         {isLoggedIn && (
           <>
@@ -52,5 +56,3 @@ const Footer = ({ openModal }) => {
     </footer>
   )
 }
-
-export default Footer

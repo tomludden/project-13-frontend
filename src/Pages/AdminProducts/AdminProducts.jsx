@@ -12,7 +12,7 @@ import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
 import Button from '../../components/Buttons/Button.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
 import { apiFetch } from '../../components/apiFetch.js'
-import Footer from '../../components/Footer/Footer.jsx'
+import { Footer } from '../../components/Footer/Footer.jsx'
 
 const PLACEHOLDER = './assets/images/placeholder.png'
 
@@ -235,7 +235,7 @@ const AdminProducts = () => {
       )}
       {deleteModal && (
         <Modal isOpen={deleteModal} onClose={closeDeleteModal}>
-          <div className='modal-content'>
+          <div className='delete-modal-content'>
             <h3>Confirm Delete</h3>
             <p>
               Are you sure you want to delete{' '}

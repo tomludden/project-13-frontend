@@ -35,7 +35,7 @@ export default function FunDogFacts() {
         {loading ? (
           <div className='loading-dog-fact'>
             <p>Loading dog fact</p>
-            <Spinner size={32} />
+            <Spinner className='fact-spinner' size={32} />
           </div>
         ) : (
           <p className='fact-text'>{fact}</p>

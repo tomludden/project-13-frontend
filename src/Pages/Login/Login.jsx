@@ -102,7 +102,7 @@ const LoginPage = () => {
           Login
         </Button>
       </form>
-      <h3>
+      <h4>
         If you dont have an account already{' '}
         <span
           className='login-register-link'
@@ -110,7 +110,7 @@ const LoginPage = () => {
         >
           Register here
         </span>
-      </h3>
+      </h4>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 .game {
+  position: relative;
   text-align: center;
   padding: 15px;
 }
@@ -6,16 +7,31 @@
   color: var(--text-color);
   font-size: 30px;
   text-align: center;
-  padding-top: 5svh;
   margin-bottom: 15px;
 }
+.score-lives {
+  position: absolute;
+  left: 5svw;
+  top: 15svh;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}
+/* .score-lives {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+} */
 .question-text {
   color: var(--text-color);
   font-size: 22px;
 }
 
 .game h2 {
-  margin-top: 15px;
+  margin-bottom: 70px;
+  margin-top: 80px;
 }
 
 .game-text {
@@ -57,7 +73,7 @@
 }
 
 .dog-grid {
-  margin-top: 35px;
+  /* margin-top: 35px; */
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -65,8 +81,8 @@
 }
 
 .dog-image {
-  width: 300px;
-  height: 300px;
+  width: 270px;
+  height: 270px;
   object-fit: cover;
   cursor: pointer;
   border-radius: 10px;
@@ -99,6 +115,18 @@
   height: 30px;
 }
 
+.pause-btn {
+  position: absolute;
+  top: 18svh;
+  right: 8svw;
+  width: 40px;
+  height: 32px;
+}
+
+.paused {
+  margin-top: 25svh;
+}
+
 .game-over {
   font-size: 30px;
   color: var(--accent-color);
@@ -118,109 +146,101 @@
   font-weight: bold;
   margin-bottom: 1rem;
 }
+.footer-container {
+  height: 55px;
+}
 
-@media (max-width: 967px) {
-  .dog-image {
+@media (max-width: 941px) {
+  .dog-grid {
+    width: 100%;
+  }
+  /* .dog-image {
     width: 250px;
     height: 280px;
-  }
-}
-@media screen and (max-width: 941px) and (orientation: landscape) {
-  .dog-grid {
-    margin-top: 20px;
-    margin-bottom: 30px;
-  }
-
+  } */
   .game h1 {
-    font-size: 20px;
-    padding-top: 5svh;
+    margin-top: 7svh;
   }
   .game h2 {
-    margin-top: -50px;
-  }
-  .question-text[data-long='true'] {
-    font-size: 18px;
-  }
-
-  .dog-image {
-    width: 160px;
-    height: 160px;
-  }
-  .score-lives {
-    width: 100px;
-  }
-
-  .game h1 {
-    font-size: 28px;
-  }
-
-  .timer,
-  .score,
-  .lives {
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
-  .pause-btn {
-    position: absolute;
-    top: 20%;
-    right: 5%;
-    background: var(--fill-button-color);
-    color: #f6f0f6;
-    transition: all 0.1s ease;
-    width: 40px;
-    height: 34px;
-  }
-  .paused {
-    color: var(--text-color);
-    font-size: 20px;
-  }
-  .toggle.active {
-    position: absolute;
-    top: 2px;
+    margin-bottom: 20px;
   }
 }
-/* 
-@media (max-width: 757px) {
-  .dog-image {
-    width: 200px;
-    height: 230px;
-  }
-  @media (max-width: 668px) {
-    .dog-image {
-      width: 180px;
-      height: 210px;
-    }
-    @media (max-width: 609px) {
-      .dog-image {
-        width: 160px;
-        height: 160px;
-      } */
-@media (max-width: 450px) {
+@media (max-width: 900px) {
   .dog-grid {
-    margin-top: 20px;
-    gap: 10px;
+    width: 100%;
+    /* margin-top: 90px; */
   }
-
+  /* .dog-image {
+    width: 250px;
+    height: 280px;
+  } */
   .game h1 {
-    font-size: 20px;
+    margin-top: 8svh;
   }
   .game h2 {
-    margin-top: 10px;
+    margin-bottom: 20px;
   }
-  .question-text[data-long='true'] {
-    font-size: 18px;
+  .footer-container {
+    height: 55px;
   }
-
+}
+@media (max-width: 819px) {
   .dog-image {
-    width: 140px;
-    height: 140px;
+    width: 220px;
+    height: 220px;
   }
+}
+@media (max-width: 741px) {
   .score-lives {
+    width: 100%;
+    left: 0px;
+
     display: flex;
-    align-items: baseline;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+    align-content: center;
+    align-items: center;
+  }
+
+  .pause-btn {
+    top: 20svh;
+    right: 50%;
+    transform: translateX(50%);
+  }
+  .game h2 {
+    margin-top: 110px;
+  }
+}
+
+@media (max-width: 550px) {
+  .game h1 {
+    font-size: 20px;
+    /* padding-top: 3svh; */
+  }
+  .game h2 {
+    /*  margin-top: 90px; */
+    margin-bottom: 20px;
+  }
+  .question-text[data-long='true'] {
+    font-size: 18px;
+  }
+
+  .dog-image {
+    width: 190px;
+    height: 190px;
+  }
+  .score-lives {
+    position: absolute;
+    left: 5svw;
+    top: 18svh;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
     justify-content: space-evenly;
   }
-
   .game h1 {
     font-size: 28px;
   }
@@ -232,15 +252,122 @@
     margin-bottom: 5px;
   }
   .pause-btn {
-    margin: 10px 0px;
-    background: var(--fill-button-color);
-    color: #f6f0f6;
-    transition: all 0.1s ease;
-    width: 40px;
-    height: 34px;
+    position: absolute;
+    top: 22svh;
+    right: 50%;
+    transform: translateX(50%);
   }
   .paused {
     color: var(--text-color);
     font-size: 20px;
+  }
+}
+@media (max-width: 450px) {
+  .dog-image {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+@media screen and (max-width: 935px) and (orientation: landscape) {
+  .dog-grid {
+    margin-top: 35px;
+    margin-bottom: 50px;
+    gap: 20px;
+  }
+
+  .game h1 {
+    font-size: 20px;
+    padding-top: 3svh;
+    margin-bottom: 25px;
+  }
+  .game h2 {
+    margin-bottom: 10px;
+    margin-top: 0px;
+  }
+
+  .question-text[data-long='true'] {
+    font-size: 18px;
+  }
+
+  .dog-image {
+    margin-top: 10px;
+    width: 250px;
+    height: 240px;
+  }
+  .score-lives {
+    position: absolute;
+    left: 5svw;
+    /* top: 20svh; */
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+.game h1 {
+  font-size: 28px;
+}
+
+.timer,
+.score,
+.lives {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* .pause-btn {
+  position: absolute;
+  top: 24svh;
+  right: 8svw;
+} */
+.paused {
+  color: var(--text-color);
+  font-size: 20px;
+}
+.toggle.active {
+  position: absolute;
+  top: 2px;
+}
+@media screen and (max-width: 897px) and (orientation: landscape) {
+  .dog-image {
+    width: 240px;
+    height: 210px;
+  }
+  .game h1 {
+    margin-top: 7svh;
+  }
+}
+@media screen and (max-width: 850px) and (orientation: landscape) {
+  .dog-image {
+    width: 220px;
+    height: 220px;
+  }
+  .game h1 {
+    margin-top: 7svh;
+  }
+}
+@media screen and (max-width: 785px) and (orientation: landscape) {
+  .dog-grid {
+    margin-top: 5px;
+    margin-bottom: 50px;
+    gap: 20px;
+  }
+  .dog-image {
+    width: 180px;
+    height: 160px;
+  }
+  .game h1 {
+    margin-bottom: 15px;
+  }
+  /* .game h2 {
+    margin-bottom: 25px;
+  } */
+}
+@media screen and (max-width: 680px) and (orientation: landscape) {
+  .pause-btn {
+    right: 8svh;
   }
 }

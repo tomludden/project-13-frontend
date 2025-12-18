@@ -145,7 +145,7 @@ export default function DogSearchPaginated() {
       {currentDogs.length === 0 ? (
         <p className='resultsText'>No dog breeds match your search.</p>
       ) : (
-        <div className='dog-grid'>
+        <div className='dog-search-grid'>
           {currentDogs.map((dog) => (
             <div
               key={dog.id}

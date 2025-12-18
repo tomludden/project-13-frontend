@@ -1,3 +1,7 @@
+.home-container {
+  margin-top: 10svh;
+}
+
 .home h1 {
   color: var(--text-color);
   margin-top: 10svh;
@@ -54,7 +58,7 @@
 .fun-options {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 10px;
   margin-top: 20px;
   opacity: 0;
 }
@@ -168,4 +172,70 @@
 }
 .fun-options > .home-btn:hover {
   transform: scale(1.05);
+}
+@media screen and (max-width: 742px) and (orientation: landscape) {
+  .home {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .dog-grid {
+    margin-top: 15px;
+  }
+  .home h2 {
+    margin-top: -8svh;
+  }
+  .home-img {
+    width: 55%;
+    height: 60svh;
+    margin: 0px;
+  }
+
+  .score-lives {
+    width: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-content: space-between;
+    flex-direction: column;
+  }
+
+  .pause-btn {
+    transform: translateX(50%);
+    position: absolute;
+    top: 30svh;
+    right: 10svw;
+    background: var(--fill-button-color);
+    color: #f6f0f6;
+    transition: all 0.1s ease;
+    width: 40px;
+    height: 34px;
+  }
+  .home-buttons {
+    display: flex;
+    width: 32%;
+    margin: 0px;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 15px;
+    margin-bottom: 0px;
+    gap: 20px;
+    opacity: 0;
+    flex-direction: column;
+  }
+
+  .home-buttons.fade-in {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .fun-options {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
 }

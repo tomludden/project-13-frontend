@@ -66,18 +66,20 @@ const Home = () => {
   )
 
   return (
-    <div className='home'>
+    <div className='home-container'>
       <h1>Welcome Dog Lovers!</h1>
-      <img
-        className='home-img'
-        src='./assets/images/home-dog-image.jpg'
-        alt='Cute Dog'
-      />
-      {showButtons && (
-        <div className='home-buttons fade-in'>
-          {!showFunOptions ? mainButtons : funButtons}
-        </div>
-      )}
+      <div className='home'>
+        <img
+          className='home-img'
+          src='./assets/images/home-dog-image.jpg'
+          alt='Cute Dog'
+        />
+        {showButtons && (
+          <div className='home-buttons fade-in'>
+            {!showFunOptions ? mainButtons : funButtons}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

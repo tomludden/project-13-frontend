@@ -106,7 +106,7 @@ const RegisterPage = () => {
           Register
         </Button>
       </form>
-      <h3>
+      <h4>
         If you have an account already{' '}
         <span
           className='register-login-link'
@@ -114,7 +114,7 @@ const RegisterPage = () => {
         >
           Login here
         </span>
-      </h3>
+      </h4>
     </div>
   )
 }

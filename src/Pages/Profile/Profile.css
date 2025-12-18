@@ -54,6 +54,8 @@
 @media (max-width: 704px) {
   .profile-container {
     padding: 15px;
+    width: 90%;
+    margin-top: 9svh;
   }
   .profile-form input {
     .profile-container h1 {

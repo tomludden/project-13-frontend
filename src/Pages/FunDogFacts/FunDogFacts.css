@@ -22,6 +22,14 @@
   color: #333;
 }
 
+.fact-spinner {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -65%);
+  color: var(--accent-color);
+}
+
 .loading-dog-fact {
   color: var(--text-color);
 }
