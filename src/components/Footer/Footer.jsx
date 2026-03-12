@@ -17,6 +17,7 @@ export const Footer = ({ openModal }) => {
   const isAdmin = user?.role === 'admin'
   const isOnAdminPage = location.pathname.startsWith('/admin')
 
+
   return (
     <footer className='footer-container'>
       <div className='footer-links'>
@@ -53,6 +54,7 @@ export const Footer = ({ openModal }) => {
           </>
         )}
       </div>
+      
     </footer>
   )
 }

@@ -1,9 +1,8 @@
 .profile-container {
   max-width: 600px;
-  margin: 70px auto;
-  margin-top: 10%;
+  height: 480px;
+  margin: 50px auto 25px;
   padding: 20px;
-  background-color: var(--alt-card-color);
   border: 1px solid var(--button-border-color);
   border-radius: 12px;
 }
@@ -12,7 +11,7 @@
   text-align: center;
   font-size: 36px;
   margin-bottom: 15px;
-  color: var(--text-color, #333);
+  color: var(--text-color);
   margin-top: 0;
 }
 
@@ -26,7 +25,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  color: var(--text-color, #333);
+  color: var(--text-color);
   font-size: 16px;
 }
 
@@ -43,21 +42,18 @@
   width: 150px;
 }
 
-.delete-modal-text {
-  color: var(--alt-text-color);
+@media (max-width: 952px){
+.profile-container{
+  margin-top: 15svh;
 }
-
-.modal-buttons:first-child {
-  color: var(--text-color);
 }
 
 @media (max-width: 704px) {
   .profile-container {
     padding: 15px;
     width: 90%;
-    margin-top: 9svh;
   }
-  .profile-form input {
+ 
     .profile-container h1 {
       font-size: 28px;
     }
@@ -66,10 +62,35 @@
     .delete-btn {
       font-size: 16px;
     }
-  }
+  
 }
-@media screen and (max-width: 941px) and (orientation: landscape) {
-  .profile-container {
-    width: 80%;
+
+@media (max-height: 520px){
+  .profile-container{
+    width: 400px;
+        border-radius: 18px;
+        height: 260px;
+        padding:0px;
+        border: 1px solid var(--button-border-color);
   }
+  
+  .profile-container h1{
+    font-size: 28px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+
+  .profile-form{
+    scale: 0.6;
+    margin-top: -19svh;
+    gap: 10px;
+  }
+
+  .profile-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 5px;
+    width: 100%;
+}
 }

@@ -1,28 +1,25 @@
 import './Login.css'
-import React, { useState, useContext, useCallback, useMemo } from 'react'
+import { useState, useContext, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../components/AuthContext'
-import { showPopup } from '../../components/ShowPopup/ShowPopup'
+import ShowPopup from '../../components/ShowPopup/ShowPopup'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import { apiFetch } from '../../components/apiFetch'
 import Button from '../../components/Buttons/Button'
 import FormInput from '../../components/FormInput/FormInput'
+import Intro from '../../components/Intro/Intro'
 
 const LoginPage = () => {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+  
   const { login } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const handleUserNameChange = useCallback(
-    (e) => setUserName(e.target.value),
-    []
-  )
-  const handlePasswordChange = useCallback(
-    (e) => setPassword(e.target.value),
-    []
-  )
+  const handleUserNameChange = useCallback((e) => setUserName(e.target.value), [])
+  const handlePasswordChange = useCallback((e) => setPassword(e.target.value), [])
 
   const payload = useMemo(() => ({ userName, password }), [userName, password])
 
@@ -30,7 +27,7 @@ const LoginPage = () => {
     async (ev) => {
       ev.preventDefault()
       if (!userName || !password) {
-        showPopup('Username and password are required', 'error')
+        ShowPopup('Username and password are required', 'error')
         return
       }
 
@@ -43,8 +40,7 @@ const LoginPage = () => {
         })
 
         if (!data.user || !data.token) {
-          showPopup('Login failed: incomplete response from server', 'error')
-          return
+          throw new Error('Incomplete response from server')
         }
 
         localStorage.setItem('token', data.token)
@@ -59,16 +55,28 @@ const LoginPage = () => {
         }
 
         login(loggedInUser)
-        showPopup('Logged in successfully', 'success')
-        navigate('/')
+        setIsLoggingIn(true) 
+        
       } catch (err) {
-        showPopup(err.message || 'Login failed. Please try again.', 'error')
-      } finally {
+        ShowPopup(err.message || 'Login failed. Please try again.', 'error')
         setLoading(false)
       }
     },
-    [userName, password, payload, login, navigate]
+    [payload, login] 
   )
+
+  if (isLoggingIn) {
+    return (
+      <Intro 
+        onFinished={() => {
+          navigate('/')
+          setTimeout(() => {
+            ShowPopup('Logged in successfully', 'success')
+          }, 500)
+        }} 
+      />
+    )
+  }
 
   return (
     <div className='login-container'>
@@ -80,33 +88,37 @@ const LoginPage = () => {
           onChange={handleUserNameChange}
           placeholder='Username'
           required
+          disabled={loading}
         />
 
         <PasswordInput
           name='password'
           value={password}
           onChange={handlePasswordChange}
-          type='password'
           placeholder='Password'
           required
+          disabled={loading}
         />
 
         <Button
           variant='primary'
           className='login-button'
           type='submit'
+          disabled={loading} 
           loading={loading}
-          loadingText='Logging in'
+          loadingText='Logging in..'
           showSpinner={true}
         >
           Login
         </Button>
       </form>
+      
       <h4>
-        If you dont have an account already{' '}
+        If you don't have an account already{' '}
         <span
           className='login-register-link'
           onClick={() => navigate('/register')}
+          style={{ cursor: 'pointer' }}
         >
           Register here
         </span>

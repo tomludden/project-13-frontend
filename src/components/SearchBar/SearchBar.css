@@ -1,31 +1,30 @@
 .search-bar {
-  position: relative;
   width: 80%;
+  position: relative;
   max-width: 400px;
-  margin: 20px auto;
 }
 
 .search-bar input {
-  width: 80%;
+  width: 100%;
   display: flex;
   margin: auto;
   padding: 8px 30px 8px 10px;
   margin-bottom: 20px;
   border-radius: 8px;
-  background: var(--button-color);
+  background: var(--input-color);
   color: var(--text-color);
   border: 1px solid var(--button-border-color);
   font-size: 1rem;
 }
 
 .search-bar input::placeholder {
-  color: rgb(192, 184, 184);
+  color: var(--placeholder-color)
 }
-.search-bar .clear-search {
+
+.clear-search {
   position: absolute;
-  right: 50px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 10px;
+  top: 4px;
   cursor: pointer;
   font-size: 25px;
   color: var(--text-color);

@@ -1,130 +1,112 @@
-import { useState, useCallback, useEffect } from 'react'
-import { useProducts } from '../../Hooks/useProducts'
-import SearchBar from '../../components/SearchBar/SearchBar'
-import FilterControls from '../../FilterControls/FilterControls.jsx'
-import { useFilters } from '../../Hooks/useFilters.js'
-import PaginationControls from '../../components/PaginationControls/PaginationControls'
-import { usePagination } from '../../Hooks/usePagination.js'
-import ProductForm from '../../components/ProductForm/ProductForm'
-import DogLoader from '../../components/DogLoader/DogLoader'
 import './AdminProducts.css'
-import { showPopup } from '../../components/ShowPopup/ShowPopup.js'
-import Button from '../../components/Buttons/Button.jsx'
-import Modal from '../../components/Modal/Modal.jsx'
-import { apiFetch } from '../../components/apiFetch.js'
-import { Footer } from '../../components/Footer/Footer.jsx'
-
-const PLACEHOLDER = './assets/images/placeholder.png'
+import { useRef, useEffect, useState, useMemo } from 'react'
+import { useProducts } from '../../Hooks/useProducts'
+import { useFilters } from '../../Hooks/useFilters'
+import { usePagination } from '../../Hooks/usePagination'
+import { useAdminActions } from '../../Hooks/useAdminActions'
+import { apiFetch } from '../../components/apiFetch'
+import ShowPopup from '../../components/ShowPopup/ShowPopup'
+import AdminLayout from '../../components/AdminLayout/AdminLayout'
+import SearchBar from '../../components/SearchBar/SearchBar'
+import FilterControls from '../../FilterControls/FilterControls'
+import PaginationControls from '../../components/PaginationControls/PaginationControls'
+import ProductCard from '../../components/ProductCard/ProductCard'
+import ProductForm from '../../components/ProductForm/ProductForm'
+import Loader from '../../components/Loader/Loader'
+import DeleteModal from '../../components/DeleteModal/DeleteModal'
+import { AdminContext } from '../../components/AdminContext'
 
 const AdminProducts = () => {
+  const dashboardRef = useRef(null)
   const { products, setProducts, loading, error } = useProducts()
-  const [editingProduct, setEditingProduct] = useState(null)
-  const [showModal, setShowModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [activeCategory, setActiveCategory] = useState('All')
 
   const {
-    searchTerm,
-    setSearchTerm,
-    size,
-    setSize,
-    maxPrice,
-    setMaxPrice,
-    minRating,
-    setMinRating,
-    filteredProducts,
-    clearFilters
-  } = useFilters(products)
+    editingItem: editingProduct,
+    showModal, closeModal,
+    deleteModal, setDeleteModal,
+    selectedItem: selectedProduct,
+    isSubmitting, setIsSubmitting,
+    isDeleting, setIsDeleting,
+    openModal, openDeleteModal,
+  } = useAdminActions(dashboardRef)
+
+  const { searchTerm, setSearchTerm, size, setSize, maxPrice, setMaxPrice, minRating, setMinRating, filteredProducts, clearFilters } = useFilters(products, null, "admin")
+
+  const categoryFilteredProducts = useMemo(() => {
+    if (activeCategory === 'All') return filteredProducts
+    return filteredProducts.filter(p => p.category?.toLowerCase() === activeCategory.toLowerCase())
+  }, [filteredProducts, activeCategory])
 
   const {
     paginatedData: visibleProducts,
     totalPages,
     currentPage,
+    nextPage,
+    prevPage,
     setPage
-  } = usePagination(filteredProducts, 8)
+  } = usePagination(categoryFilteredProducts, 8, 'admin_products_page')
+
+  const handleCloseAll = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {})
+    }
+    closeModal()
+    setDeleteModal(false)
+  }
+
+  const handleCategoryChange = (cat) => {
+    setActiveCategory(cat)
+    setPage(1)
+  }
 
   useEffect(() => {
-    setPage(1)
-  }, [searchTerm, size, maxPrice, minRating, setPage])
+    const savedScroll = sessionStorage.getItem('admin_products_scroll')
+    if (savedScroll && !loading && visibleProducts.length > 0) {
+      setTimeout(() => {
+        window.scrollTo({ top: parseInt(savedScroll), behavior: 'instant' })
+      }, 100)
+    }
 
-  const openModal = useCallback((product = null) => {
-    setEditingProduct(product)
-    setIsSubmitting(false)
-    setShowModal(true)
-  }, [])
+    const handleScroll = () => {
+      sessionStorage.setItem('admin_products_scroll', window.scrollY)
+    }
 
-  const closeModal = useCallback(() => {
-    setEditingProduct(null)
-    setShowModal(false)
-  }, [])
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [loading, visibleProducts.length])
 
-  const openDeleteModal = useCallback((product) => {
-    setSelectedProduct(product)
-    setDeleteModal(true)
-  }, [])
+  const handleSaveProduct = async (formData) => {
+    setIsSubmitting(true)
+    try {
+      const token = localStorage.getItem('token')
+      const payload = editingProduct ? { ...formData, _id: editingProduct._id } : formData
 
-  const closeDeleteModal = useCallback(() => {
-    setSelectedProduct(null)
-    setDeleteModal(false)
-  }, [])
+      const res = await apiFetch('/products/save', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        data: payload
+      })
 
-  const handleSave = useCallback(
-    async ({
-      name,
-      price,
-      rating,
-      description = '',
-      imageUrl,
-      publicId,
-      url
-    }) => {
-      const payload = {
-        ...(editingProduct ? { _id: editingProduct._id } : {}),
-        name,
-        rating,
-        price,
-        description,
-        imageUrl,
-        publicId,
-        url
-      }
+      const savedProduct = res?.product || res?.data || res
+      if (!savedProduct?._id) throw new Error()
 
-      console.log(payload)
-      try {
-        const token = localStorage.getItem('token')
-        const res = await apiFetch('/products/save', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${token}` },
-          data: payload
-        })
-        const product = res?.product || res?.data || res
-        setIsSubmitting(true)
-        if (!product?._id) {
-          showPopup('Failed to save product', 'error')
-          return
-        }
-        if (editingProduct && editingProduct._id) {
-          setProducts((prev) =>
-            prev.map((p) => (p._id === product._id ? product : p))
-          )
-          showPopup('Product edited successfully')
-        } else {
-          setProducts((prev) => [...prev, product])
-          showPopup('Product added successfully')
-        }
-        closeModal()
-      } catch (err) {
-        showPopup('Failed to save product', 'error')
-      } finally {
-        setIsSubmitting(false)
-      }
-    },
-    [editingProduct, closeModal, setProducts]
-  )
+      setProducts(prev =>
+        editingProduct
+          ? prev.map(p => p._id === savedProduct._id ? savedProduct : p)
+          : [...prev, savedProduct]
+      )
 
-  const handleDelete = useCallback(async () => {
+      ShowPopup(`Product ${editingProduct ? 'updated' : 'added'} successfully`)
+      handleCloseAll()
+    } catch {
+      ShowPopup('Failed to save product', 'error')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleDelete = async () => {
     if (!selectedProduct?._id) return
     setIsDeleting(true)
     try {
@@ -133,138 +115,113 @@ const AdminProducts = () => {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       })
-      setProducts((prev) => prev.filter((p) => p._id !== selectedProduct._id))
-      showPopup('Product deleted successfully')
-      closeDeleteModal()
-    } catch (err) {
-      showPopup('Failed to delete product', 'error')
+      setProducts(prev => prev.filter(p => p._id !== selectedProduct._id))
+      ShowPopup('Product deleted successfully')
+      handleCloseAll()
+    } catch {
+      ShowPopup('Failed to delete', 'error')
     } finally {
       setIsDeleting(false)
     }
-  }, [selectedProduct, setProducts, closeDeleteModal])
+  }
 
-  const handleClearFilters = useCallback(() => {
+  const handleClearAll = () => {
     clearFilters()
+    setActiveCategory('All')
     setPage(1)
-  }, [clearFilters, setPage])
+    sessionStorage.removeItem('admin_products_scroll')
+    sessionStorage.setItem('admin_products_page', '1')
+    window.scrollTo(0, 0)
+  }
 
   return (
-    <div className='admin-products'>
-      <h1>Admin Dashboard</h1>
-      <SearchBar
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder='Search products...'
-      />
-      <FilterControls
-        size={size}
-        setSize={setSize}
-        maxPrice={maxPrice}
-        setMaxPrice={setMaxPrice}
-        minRating={minRating}
-        setMinRating={setMinRating}
-        clearFilters={handleClearFilters}
-      />
-      <button className='admin-add-btn' onClick={() => openModal()}>
-        +
-      </button>
-      {loading ? (
-        <DogLoader />
-      ) : error ? (
-        <p>Error: {error}</p>
-      ) : (
-        <>
-          <div className='product-list'>
-            {visibleProducts.length > 0 ? (
-              visibleProducts.filter(Boolean).map((p) => {
-                if (!p?._id) return null
-                return (
-                  <div key={p._id} className='admin-product-card'>
-                    <img
-                      src={p?.imageUrl || PLACEHOLDER}
-                      alt={p?.name || 'Unnamed'}
-                      loading='lazy'
-                    />
-                    <div className='admin-product-card-info'>
-                      <a
-                        href={p?.url || '#'}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='product-link'
-                      >
-                        <h4>{p?.name || 'Unnamed'}</h4>
-                      </a>
-                      <p>€{Number(p?.price || 0).toFixed(2)}</p>
-                      {p?.rating && <p>Rating: {p.rating} ⭐</p>}
-                      <div className='admin-card-buttons'>
-                        <Button variant='primary' onClick={() => openModal(p)}>
-                          Edit
-                        </Button>
-                        <Button
-                          variant='primary'
-                          onClick={() => openDeleteModal(p)}
-                        >
-                          Delete
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })
-            ) : (
-              <p>No products found.</p>
-            )}
+    <AdminContext.Provider value={{ openModal }}>
+      <AdminLayout
+        title="Admin Product Dashboard"
+        dashboardRef={dashboardRef}
+        onAddClick={() => openModal()}
+        searchBar={
+          <>
+            <div className="category-tabs">
+              {['All', 'Toys', 'Food', 'Clothing'].map(cat => (
+                <button
+                  key={cat}
+                  className={`tab-btn ${activeCategory === cat ? 'active' : ''}`}
+                  onClick={() => handleCategoryChange(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+            <SearchBar
+              value={searchTerm}
+              onChange={(e) => { setSearchTerm(e.target.value); setPage(1) }}
+              placeholder='Search products...'
+            />
+          </>
+        }
+        filterControls={
+          <div className="admin-filter-wrapper">
+            <FilterControls
+              size={size}
+              setSize={(val) => { setSize(val); setPage(1) }}
+              maxPrice={maxPrice}
+              setMaxPrice={(val) => { setMaxPrice(val); setPage(1) }}
+              minRating={minRating}
+              setMinRating={(val) => { setMinRating(val); setPage(1) }}
+              clearFilters={handleClearAll}
+              mode="admin"
+            />
+            <p className="results-text">
+              Showing {visibleProducts.length} of {categoryFilteredProducts.length} items
+            </p>
           </div>
-          <PaginationControls
-            currentPage={currentPage}
-            totalPages={totalPages}
-            goPrev={() => setPage(currentPage - 1)}
-            goNext={() => setPage(currentPage + 1)}
-          />
-        </>
-      )}
-      {showModal && (
-        <Modal isOpen={showModal} onClose={closeModal}>
+        }
+      >
+        {loading ? <Loader /> : error ? <p className="error">{error}</p> : (
+          <>
+            <div className="admin-product-grid">
+              {visibleProducts.length ? visibleProducts.map(p => (
+                <ProductCard
+                  key={p._id}
+                  product={p}
+                  showAdminActions={true}
+                  showHeart={false}
+                  onEdit={() => openModal(p)}
+                  onDelete={() => openDeleteModal(p)}
+                />
+              )) : <p>No products found in this category.</p>}
+            </div>
+
+            {totalPages > 1 && (
+              <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                goPrev={prevPage}
+                goNext={nextPage}
+              />
+            )}
+          </>
+        )}
+
+        {showModal && (
           <ProductForm
             initialData={editingProduct || {}}
             isSubmitting={isSubmitting}
-            onCancel={closeModal}
-            onSubmit={handleSave}
+            onCancel={handleCloseAll}
+            onSubmit={handleSaveProduct}
           />
-        </Modal>
-      )}
-      {deleteModal && (
-        <Modal isOpen={deleteModal} onClose={closeDeleteModal}>
-          <div className='delete-modal-content'>
-            <h3>Confirm Delete</h3>
-            <p>
-              Are you sure you want to delete{' '}
-              <strong>{selectedProduct?.name}</strong>?
-            </p>
-            <div className='modal-buttons'>
-              <Button
-                variant='secondary'
-                className='confirm-btn'
-                onClick={handleDelete}
-                loading={isDeleting}
-                loadingText='Deleting'
-                showSpinner
-              >
-                Delete
-              </Button>
-              <Button
-                variant='primary'
-                className='cancel-btn'
-                onClick={closeDeleteModal}
-              >
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </Modal>
-      )}
-      <Footer openModal={openModal} />
-    </div>
+        )}
+
+        <DeleteModal
+          isOpen={deleteModal}
+          onClose={handleCloseAll}
+          onConfirm={handleDelete}
+          isDeleting={isDeleting}
+          itemName={selectedProduct?.name}
+        />
+      </AdminLayout>
+    </AdminContext.Provider>
   )
 }
 

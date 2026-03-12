@@ -1,5 +1,5 @@
 import './GuessTheDog.css'
-import React, {
+import {
   useEffect,
   useReducer,
   useCallback,
@@ -9,9 +9,12 @@ import React, {
 } from 'react'
 import Button from '../../components/Buttons/Button.jsx'
 import { Pause, Play } from 'lucide-react'
-import { gameReducer, initialState } from '../../Reducers/GameReducer.jsx'
+import { dogGameReducer, initialState } from '../../Reducers/DogGameReducer.jsx'
 import { useLocalStorage } from '../../Hooks/useLocalStorage.js'
-import DogLoader from '../../components/DogLoader/DogLoader.jsx'
+import Loader from '../../components/Loader/Loader.jsx'
+import { Maximize, Minimize } from 'lucide-react'
+import IdeaBulb from '../../components/IdeaBulb/IdeaBulb.jsx'
+import { useScreenToggle } from '../../Hooks/useScreenToggle.js'
 
 const STORAGE_KEY = 'dogGameState'
 const getBreedFromUrl = (url) => {
@@ -20,7 +23,8 @@ const getBreedFromUrl = (url) => {
 }
 
 const GuessTheDog = () => {
-  const [state, dispatch] = useReducer(gameReducer, initialState)
+  const { isFullscreen, toggleFullscreen } = useScreenToggle()
+  const [state, dispatch] = useReducer(dogGameReducer, initialState)
   const [savedState, setSavedState] = useLocalStorage(STORAGE_KEY, initialState)
   const {
     dogImages,
@@ -134,7 +138,7 @@ const GuessTheDog = () => {
         {!gameOver && <p className='timer'> Time: {timer}s</p>}
 
         <p className='lives'>
-          <span className='heart'>♡ </span>Lives: {lives}
+          Lives: {lives}
         </p>
       </div>
     ),
@@ -142,7 +146,7 @@ const GuessTheDog = () => {
   )
 
   const DogGrid = useMemo(() => {
-    if (firstLoad && loading) return <DogLoader />
+    if (firstLoad && loading) return <Loader />
     return (
       <div className='dog-grid'>
         {dogImages.map((img, idx) => (
@@ -161,7 +165,18 @@ const GuessTheDog = () => {
   }, [dogImages, loading, firstLoad, handleGuess])
 
   return (
+    
     <div className='game'>
+      <div className='idea-fullscreen-wrapper'>
+      <button className="dog-game-fullscreen-btn" onClick={toggleFullscreen}>
+  {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+</button>
+<IdeaBulb
+                className='guess-the-dog-tip'
+                tip="GuessTheDog"
+                storageKey="has_seen_guess_the_dog_tip"
+              />
+</div>
       <h1>Guess the Dog Breed</h1>
       {!started && (
         <>

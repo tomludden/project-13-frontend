@@ -2,17 +2,19 @@
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 952px) {
   .footer-container {
     position: fixed;
-    bottom: 0;
+    bottom: -1px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     height: 55px;
+    opacity: 98%;
     width: 100%;
-    border-top: 1px solid var(--button-color);
-    background-color: var(--background-color);
+    border-top: 1px solid var(--background-color);
+    z-index: 20;
+    background: var(--background-color);
   }
 
   .footer-links {
@@ -24,12 +26,7 @@
     transition: color 0.2s ease;
   }
 
-  .spinner {
-    position: absolute;
-    top: 35%;
-    left: 45%;
-    transform: translateX(45%);
-  }
+ 
   .modal-content p {
     margin-top: 5px;
     margin-bottom: 0px;
@@ -61,7 +58,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 100;
   }
 
   .footer-add-btn:hover {
@@ -70,11 +67,4 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   }
 }
-@media screen and (max-width: 900px) and (orientation: landscape) {
-  .spinner {
-    position: absolute;
-    top: 34%;
-    left: 47.5%;
-    transform: translateX(47.5%);
-  }
-}
+

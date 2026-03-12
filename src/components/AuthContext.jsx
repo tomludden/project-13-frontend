@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
+import ShowPopup from './ShowPopup/ShowPopup'
 
 export const AuthContext = createContext()
 
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }) => {
     setFavourites([])
     localStorage.removeItem('user')
     localStorage.removeItem('favourites')
+    ShowPopup('Logged out successfully')
   }
 
   useEffect(() => {

@@ -1,25 +1,25 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react';
 
-export const usePagination = (data = [], itemsPerPage = 10) => {
-  const [currentPage, setCurrentPage] = useState(1)
-
-  const totalPages = useMemo(() => {
-    return Math.max(1, Math.ceil(data.length / itemsPerPage))
-  }, [data.length, itemsPerPage])
+export const usePagination = (data, itemsPerPage, key) => {
+  const [currentPage, setCurrentPage] = useState(() => {
+    const saved = sessionStorage.getItem(key);
+    return saved ? parseInt(saved) : 1;
+  });
 
   useEffect(() => {
-    if (currentPage > totalPages) setCurrentPage(1)
-  }, [currentPage, totalPages])
+    sessionStorage.setItem(key, currentPage);
+  }, [currentPage, key]);
 
-  const paginatedData = useMemo(() => {
-    const start = (currentPage - 1) * itemsPerPage
-    return Array.isArray(data) ? data.slice(start, start + itemsPerPage) : []
-  }, [data, currentPage, itemsPerPage])
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
 
   return {
-    currentPage,
-    totalPages,
     paginatedData,
-    setPage: setCurrentPage
-  }
-}
+    totalPages,
+    currentPage,
+    setPage: setCurrentPage,
+    nextPage: () => setCurrentPage(p => Math.min(p + 1, totalPages)),
+    prevPage: () => setCurrentPage(p => Math.max(p - 1, 1))
+  };
+};

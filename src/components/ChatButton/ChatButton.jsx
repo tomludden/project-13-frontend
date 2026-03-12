@@ -1,8 +1,7 @@
+import './ChatButton.css'
 import React, { useState, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { MessageCircle } from 'lucide-react'
-
-import './ChatButton.css'
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
@@ -48,7 +47,7 @@ export default function ChatWidget() {
           <div className='message-circle-wrapper'>
             <MessageCircle size={48} className='message-circle-icon' />
             <img
-              src='./assets/images/dog-2.svg'
+              src='../dog-2.svg'
               alt='Chat icon'
               className='chat-image'
             />

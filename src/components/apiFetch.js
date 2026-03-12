@@ -1,10 +1,12 @@
 import axios from 'axios'
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1'
+const API_BASE = 'https://project-13-backend-1.onrender.com/api/v1'
 
 export const apiFetch = async (endpoint, options = {}) => {
   try {
     const { method = 'GET', data, headers = {}, params } = options
+    
+    const token = localStorage.getItem('token')
 
     const res = await axios({
       url: `${API_BASE}${endpoint}`,
@@ -12,6 +14,7 @@ export const apiFetch = async (endpoint, options = {}) => {
       data,
       headers: {
         'Content-Type': 'application/json',
+        ...(token && { 'Authorization': `Bearer ${token}` }),
         ...headers
       },
       params

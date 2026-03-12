@@ -1,0 +1,98 @@
+import './AdminLayout.css';
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import PageLayout from '../PageLayout/PageLayout';
+import { Footer } from '../Footer/Footer';
+import { useAdminContext } from '../AdminContext'
+
+
+const AdminLayout = ({ 
+  title, 
+  searchBar, 
+  filterControls, 
+  alphabetFilter, 
+  children, 
+  onAddClick, 
+  dashboardRef, 
+  onLayoutClick,
+  helpIcon
+}) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+ const activeTab = location.pathname.includes('/admin-cats') 
+  ? 'cats' 
+  : location.pathname.includes('/admin-dogs') 
+    ? 'dogs' 
+    : 'products';
+
+  const tabs = (
+    <div className="admin-tabs">
+      <button 
+        className={`admin-tab ${activeTab === 'products' ? 'active' : ''}`} 
+        onClick={(e) => { e.stopPropagation(); navigate('/admin-products'); }}
+      >
+        Products
+      </button>
+
+      <button 
+        className={`admin-tab ${activeTab === 'dogs' ? 'active' : ''}`} 
+        onClick={(e) => { e.stopPropagation(); navigate('/admin-dogs'); }}
+      >
+        Dogs
+      </button>
+
+      <button 
+        className={`admin-tab ${activeTab === 'cats' ? 'active' : ''}`} 
+        onClick={(e) => { e.stopPropagation(); navigate('/admin-cats'); }}
+      >
+        Cats
+      </button>
+    </div>
+    
+  );
+
+  const adminContext = useAdminContext()
+
+  return (
+    <div 
+      className="admin-wrapper" 
+      ref={dashboardRef} 
+      onClick={onLayoutClick}
+      style={{ outline: 'none' }}
+      tabIndex="-1"
+    >
+    {adminContext?.openModal && (
+  <button
+    className='admin-add-btn'
+    onClick={() => adminContext.openModal()}
+    title='Add'
+    aria-label='Add'
+  >
+    +
+  </button>
+)}
+
+      <PageLayout 
+        title={title} 
+        topContent={
+          <div className="admin-header">
+            {tabs}
+            {helpIcon && <div className="help-icon">{helpIcon}</div>}
+          </div>
+        }
+        searchBar={searchBar} 
+        filterControls={filterControls}
+      >
+        {alphabetFilter}
+      </PageLayout>
+
+      <div className='card-list'>
+        {children}
+      </div>
+
+      <Footer openModal={onAddClick} />
+    </div>
+  );
+};
+
+export default AdminLayout;

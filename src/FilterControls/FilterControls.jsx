@@ -1,6 +1,7 @@
 import './FilterControls.css'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import Button from '../components/Buttons/Button'
+import IdeaBulb from '../components/IdeaBulb/IdeaBulb'
 
 const FilterControls = ({
   size,
@@ -9,7 +10,9 @@ const FilterControls = ({
   setMaxPrice,
   minRating,
   setMinRating,
-  clearFilters
+  clearFilters,
+  mode = "default",
+  showSize = true
 }) => {
   const handleSizeChange = useCallback(
     (e) => setSize(e.target.value),
@@ -26,46 +29,82 @@ const FilterControls = ({
     [setMinRating]
   )
 
-  const handleClear = useCallback(() => {
+  const handleClear = () => {
     clearFilters()
-  }, [clearFilters])
+    sessionStorage.removeItem('admin_products_scroll')
+    window.scrollTo(0, 0)
+  }
 
   return (
-    <div className='filter'>
-      <select className='select' value={size} onChange={handleSizeChange}>
-        <option value=''>Dog Size</option>
-        <option value='small'>Small</option>
-        <option value='medium'>Medium</option>
-        <option value='large'>Large</option>
-      </select>
+    <div className="filter-wrapper">
+      <div className='filter'>
+        {showSize && setSize && (
+          <select className='size-filter' value={size} onChange={handleSizeChange}>
+            <option value=''>Dog Size</option>
+            <option value='small'>Small</option>
+            <option value='medium'>Medium</option>
+            <option value='large'>Large</option>
+          </select>
+        )}
 
-      <input
-        className='input'
-        type='number'
-        placeholder='Max Price'
-        value={maxPrice}
-        onChange={handlePriceChange}
-      />
+        {setMaxPrice && (
+          mode === "admin" ? (
+            <select className='price-filter' value={maxPrice} onChange={handlePriceChange}>
+              <option value=''>Price</option>
+              <option value='under10'>Under €10</option>
+              <option value='10to25'>€10 – €25</option>
+              <option value='25to50'>€25 – €50</option>
+              <option value='50plus'>€50 and more</option>
+            </select>
+          ) : (
+            <input
+              className='max-price-filter'
+              type='number'
+              placeholder='Max Price'
+              value={maxPrice}
+              onChange={handlePriceChange}
+            />
+          )
+        )}
 
-      <select
-        className='select'
-        value={minRating}
-        onChange={handleRatingChange}
-      >
-        <option value=''>Rating</option>
-        <option value='1'>⭐ 1+</option>
-        <option value='2'>⭐ 2+</option>
-        <option value='3'>⭐ 3+</option>
-        <option value='4'>⭐ 4+</option>
-      </select>
+        {setMinRating && (
+          <select className='rating-filter' value={minRating} onChange={handleRatingChange}>
+            {mode === "admin" ? (
+              <>
+                <option value=''>Rating</option>
+                <option value='1'>⭐ 1 and under</option>
+                <option value='2'>⭐ 2 and under</option>
+                <option value='3'>⭐ 3 and under</option>
+                <option value='4'>⭐ 4 and under</option>
+              </>
+            ) : (
+              <>
+                <option value=''>Rating</option>
+                <option value='1'>⭐ 1+</option>
+                <option value='2'>⭐ 2+</option>
+                <option value='3'>⭐ 3+</option>
+                <option value='4'>⭐ 4+</option>
+              </>
+            )}
+          </select>
+        )}
 
-      <Button
-        variant='secondary'
-        className='filter-button'
-        onClick={handleClear}
-      >
-        Clear Filters
-      </Button>
+        <div className='clear-filter-wrapper'>
+          <Button
+            variant='secondary'
+            className='clear-filters-button'
+            onClick={handleClear}
+          >
+            Clear Filters
+          </Button>
+
+          <IdeaBulb 
+            tip="Shop" 
+            storageKey="has_seen_filter_tip" 
+            className="filter-tip" 
+          />
+        </div>
+      </div>
     </div>
   )
 }
